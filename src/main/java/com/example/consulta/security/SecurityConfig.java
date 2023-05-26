@@ -19,7 +19,10 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).
 		authorizeHttpRequests((requests) -> requests.
-						requestMatchers("/**").permitAll().anyRequest().authenticated());
+				requestMatchers("/api/admin/**").hasRole("ADMIN").
+				requestMatchers("/api/user/**").hasRole("USER").
+				requestMatchers("/api/all/**").hasAnyRole("USER","ADMIN").				
+				requestMatchers("/**").permitAll().anyRequest().authenticated());
 		return http.build();
 	}
 
