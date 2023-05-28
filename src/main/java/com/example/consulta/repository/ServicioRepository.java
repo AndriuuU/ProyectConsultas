@@ -10,6 +10,6 @@ import com.example.consulta.entity.Servicio;
 @Repository("servicioRepository")
 public interface ServicioRepository extends JpaRepository<Servicio,Serializable> {
 	
-	public abstract Servicio findByIdServicio(long id);
+	public abstract Servicio findById(long id);
 
 }

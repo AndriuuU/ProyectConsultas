@@ -10,6 +10,6 @@ import com.example.consulta.entity.Historial;
 @Repository("historialRepository")
 public interface HistorialRepository extends JpaRepository<Historial,Serializable> {
 	
-	public abstract Historial findByIdHistorial(long id);
+	public abstract Historial findById(long id);
 
 }

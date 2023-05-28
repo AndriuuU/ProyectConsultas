@@ -10,6 +10,6 @@ import com.example.consulta.entity.Citas;
 @Repository("citasRepository")
 public interface CitasRepository extends JpaRepository<Citas,Serializable> {
 	
-	public abstract Citas findByIdCitas(long id);
+	public abstract Citas findById(long id);
 	
 }

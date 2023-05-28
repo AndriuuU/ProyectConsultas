@@ -19,6 +19,7 @@ public class Citas {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
 	@Column(name = "fecha", unique = true, nullable = false)
 	private Date fecha;
 	

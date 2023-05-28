@@ -10,6 +10,6 @@ import com.example.consulta.entity.Tratamiento;
 @Repository("tratamientoRepository")
 public interface TratamientoRepository extends JpaRepository<Tratamiento,Serializable> {
 	
-	public abstract Tratamiento findByIdTratamiento(long id);
+	public abstract Tratamiento findById(long id);
 
 }

@@ -19,10 +19,10 @@ public class CitasServicioImpl implements CitasService {
 	@Autowired
 	@Qualifier("citasRepository")
 	private CitasRepository citasRepository;
-	
-	@Autowired
-	@Qualifier("citasServiceImpl")
-	private CitasService citasService;
+//	
+//	@Autowired
+//	@Qualifier("citasServicioImpl")
+//	private CitasService citasService;
 
 	
 	@Override
@@ -34,12 +34,12 @@ public class CitasServicioImpl implements CitasService {
 
 	@Override
 	public Citas findCitasById(long id) {
-		return citasRepository.findByIdCitas(id);
+		return citasRepository.findById(id);
 	}
 
 	@Override
 	public CitasModel findCitasByIdModel(long id) {
-		return transform(citasRepository.findByIdCitas(id));
+		return transform(citasRepository.findById(id));
 
 	}
 
@@ -50,7 +50,7 @@ public class CitasServicioImpl implements CitasService {
 
 	@Override
 	public boolean removeCitas(long id) {
-		if(citasRepository.findByIdCitas(id)!=null) {
+		if(citasRepository.findById(id)!=null) {
 			citasRepository.deleteById(id);
 			return true;
 		}

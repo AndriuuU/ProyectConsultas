@@ -22,9 +22,9 @@ public class TratamientoServiceImpl implements TratamientoService {
 	@Qualifier("tratamientoRepository")
 	private TratamientoRepository tratamientoRepository;
 	
-	@Autowired
-	@Qualifier("tratamientoServiceImpl")
-	private TratamientoService tratamientoService;
+//	@Autowired
+//	@Qualifier("tratamientoServiceImpl")
+//	private TratamientoService tratamientoService;
 
 	
 	@Override
@@ -36,12 +36,12 @@ public class TratamientoServiceImpl implements TratamientoService {
 
 	@Override
 	public Tratamiento findTratamientoById(long id) {
-		return tratamientoRepository.findByIdTratamiento(id);
+		return tratamientoRepository.findById(id);
 	}
 
 	@Override
 	public TratamientoModel findTratamientoByIdModel(long id) {
-		return transform(tratamientoRepository.findByIdTratamiento(id));
+		return transform(tratamientoRepository.findById(id));
 
 	}
 
@@ -52,7 +52,7 @@ public class TratamientoServiceImpl implements TratamientoService {
 
 	@Override
 	public boolean removeTratamiento(long id) {
-		if(tratamientoRepository.findByIdTratamiento(id)!=null) {
+		if(tratamientoRepository.findById(id)!=null) {
 			tratamientoRepository.deleteById(id);
 			return true;
 		}

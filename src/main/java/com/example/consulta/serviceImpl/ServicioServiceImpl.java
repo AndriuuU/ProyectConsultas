@@ -21,9 +21,9 @@ public class ServicioServiceImpl implements ServicioService {
 	@Qualifier("servicioRepository")
 	private ServicioRepository servicioRepository;
 	
-	@Autowired
-	@Qualifier("servicioServiceImpl")
-	private ServicioService servicioService;
+//	@Autowired
+//	@Qualifier("servicioServiceImpl")
+//	private ServicioService servicioService;
 
 	
 	@Override
@@ -35,12 +35,12 @@ public class ServicioServiceImpl implements ServicioService {
 
 	@Override
 	public Servicio findServicioById(long id) {
-		return servicioRepository.findByIdServicio(id);
+		return servicioRepository.findById(id);
 	}
 
 	@Override
 	public ServicioModel findServicioByIdModel(long id) {
-		return transform(servicioRepository.findByIdServicio(id));
+		return transform(servicioRepository.findById(id));
 
 	}
 
@@ -51,7 +51,7 @@ public class ServicioServiceImpl implements ServicioService {
 
 	@Override
 	public boolean removeServicio(long id) {
-		if(servicioRepository.findByIdServicio(id)!=null) {
+		if(servicioRepository.findById(id)!=null) {
 			servicioRepository.deleteById(id);
 			return true;
 		}

@@ -1,5 +1,5 @@
-package com.example.consulta.controller;
-
-public class CitasController {
-
-}
+//package com.example.consulta.controller;
+//
+//public class CitasController {
+//
+//}

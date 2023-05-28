@@ -20,9 +20,9 @@ public class HistorialServiceImpl implements HistorialService {
 	@Qualifier("historialRepository")
 	private HistorialRepository historialRepository;
 	
-	@Autowired
-	@Qualifier("historialServiceImpl")
-	private HistorialService historialService;
+//	@Autowired
+//	@Qualifier("historialServiceImpl")
+//	private HistorialService historialService;
 
 	
 	@Override
@@ -34,12 +34,12 @@ public class HistorialServiceImpl implements HistorialService {
 
 	@Override
 	public Historial findHistorialById(long id) {
-		return historialRepository.findByIdHistorial(id);
+		return historialRepository.findById(id);
 	}
 
 	@Override
 	public HistorialModel findHistorialByIdModel(long id) {
-		return transform(historialRepository.findByIdHistorial(id));
+		return transform(historialRepository.findById(id));
 
 	}
 
@@ -50,7 +50,7 @@ public class HistorialServiceImpl implements HistorialService {
 
 	@Override
 	public boolean removeHistorial(long id) {
-		if(historialRepository.findByIdHistorial(id)!=null) {
+		if(historialRepository.findById(id)!=null) {
 			historialRepository.deleteById(id);
 			return true;
 		}

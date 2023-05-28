@@ -17,8 +17,11 @@ import jakarta.persistence.OneToMany;
 public class Cliente {
 
 	@Id	
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id",unique=true,nullable=false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", unique = true, nullable = false)
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private User usuario;
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
@@ -40,9 +43,11 @@ public class Cliente {
 		super();
 	}
 
-	public Cliente(User usuario, String nombre, String email, boolean seguro, String direccion, String telefono,
-			List<Citas> citas, Historial historial) {
+
+	public Cliente(Long id, User usuario, String nombre, String email, boolean seguro, String direccion,
+			String telefono, List<Citas> citas, Historial historial) {
 		super();
+		this.id = id;
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.email = email;
@@ -51,6 +56,16 @@ public class Cliente {
 		this.telefono = telefono;
 		this.citas = citas;
 		this.historial = historial;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 
