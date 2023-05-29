@@ -7,21 +7,21 @@ import com.example.consulta.model.ClienteModel;
 
 public interface ClienteService {
 
-	public abstract List<ClienteModel> listAllAlumnos();
+	public abstract List<ClienteModel> listAllClientes();
 	
 	public abstract Cliente findByEmail(String email);
 	
-	public abstract Cliente addAlumno(ClienteModel alumnosModel);
+	public abstract Cliente addCliente(ClienteModel ClientesModel);
 
-	public abstract int removeAlumno(int id);
+	public abstract int removeCliente(int id);
 	
-	public abstract Cliente updateAlumno(ClienteModel alumnosModel);
+	public abstract Cliente updateCliente(ClienteModel ClientesModel);
 	
-	public abstract Cliente transform(ClienteModel alumnosModel);
+	public abstract Cliente transform(ClienteModel ClientesModel);
 	
-	public abstract ClienteModel transform(Cliente alumnos);
+	public abstract ClienteModel transform(Cliente Clientes);
 	
-	public abstract ClienteModel findAlumno(int id);
+	public abstract ClienteModel findCliente(int id);
 	
-	public abstract ClienteModel findAlumno(String email);
+	public abstract ClienteModel findCliente(String email);
 }

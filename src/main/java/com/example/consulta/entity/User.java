@@ -3,20 +3,28 @@ package com.example.consulta.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
+	
 	@Column(name = "password", nullable = false)
+	@Size(max=100)
 	private String password;
+	
 	private boolean enable;
+	
 	private String role;
+	
 	private String token;
 
 	public User(long id, String username, String password, boolean enable, String role, String token) {

@@ -64,11 +64,11 @@ public class LoginController {
 	@PostMapping("/auth/register")
 	public String register(@ModelAttribute Cliente cliente,RedirectAttributes flash) {	
 		if(userRepository.findByUsername(cliente.getEmail())==null) {
-			clienteService.addAlumno(clienteService.transform(cliente));
+			clienteService.addCliente(clienteService.transform(cliente));
 			User user = new User();
 			user.setUsername(cliente.getEmail());
 			user.setPassword(cliente.getPassword());
-			user.setRole("ROL_CLIENTE");
+			user.setRole("ROLE_USER");
 			userService.registrar(user);
 			flash.addFlashAttribute("success","User registered successfully");
 			return Constantes.LOGIN_VIEW;

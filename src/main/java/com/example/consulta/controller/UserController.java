@@ -31,8 +31,6 @@ public class UserController {
 	@Qualifier("userService")
 	private UserService userService;
 	
-	
-	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 		

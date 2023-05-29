@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+	<html xmlns:th=http://www.thymeleaf.org
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/header.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<title>Lista de alumnos</title>
+</head>
+<body>
+	<table class="table table-bordered">
+
+		<thead class="thead-light">
+			<tr>
+				<th>Nombre</th>
+				<th>Email</th>
+				<th>direccion</th>
+				<th>telefono</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody th:each="cliente: ${clientes}">
+			<tr>
+				<th th:text=${cliente.nombre}></th>
+				<th th:text=${cliente.email}></th>
+				<th th:text=${cliente.direccion}></th>
+				<th th:text=${cliente.telefono}></th>
+				<th>
+<!-- 					<div style="text-align: center; margin: auto;"> -->
+<!-- 						<a th:href="@{/clientes/activarUsuario/} + ${cliente.email}"> -->
+<!-- 							<button type="button" class="btn btn-primary">Activar/Descactivar</button> -->
+<!-- 						</a> <a th:href="@{/clientes/deletecliente/} + ${cliente.idcliente}" -->
+<!-- 							th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');"> -->
+<!-- 							<button type="button" class="btn btn-danger">Borrar</button> -->
+<!-- 						</a> -->
+<!-- 					</div> -->
+				</th>
+			</tr>
+	</table>
+</body>
+</html>

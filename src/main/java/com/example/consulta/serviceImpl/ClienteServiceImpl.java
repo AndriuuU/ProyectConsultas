@@ -24,7 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private UserService userService;
 	
 	@Override
-	public List<ClienteModel> listAllAlumnos() {
+	public List<ClienteModel> listAllClientes() {
 		return clienteRepository.findAll().stream()
 				.map(c->transform(c)).collect(Collectors.toList());
 	}
@@ -36,43 +36,43 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Cliente addAlumno(ClienteModel clienteModel) {
+	public Cliente addCliente(ClienteModel clienteModel) {
 		clienteModel.setPassword(userService.passwordEncoder().encode(clienteModel.getPassword()));
 		return clienteRepository.save(transform(clienteModel));
 	}
 
 	@Override
-	public int removeAlumno(int id) {
+	public int removeCliente(int id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Cliente updateAlumno(ClienteModel alumnosModel) {
+	public Cliente updateCliente(ClienteModel ClientesModel) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Cliente transform(ClienteModel alumnosModel) {
+	public Cliente transform(ClienteModel ClientesModel) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ClienteModel transform(Cliente alumnos) {
+	public ClienteModel transform(Cliente Clientes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ClienteModel findAlumno(int id) {
+	public ClienteModel findCliente(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ClienteModel findAlumno(String email) {
+	public ClienteModel findCliente(String email) {
 		// TODO Auto-generated method stub
 		return null;
 	}

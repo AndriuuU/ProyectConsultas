@@ -8,5 +8,7 @@ public class Constantes {
 	
 	public static final String REGISTER_VIEW= "register";
 	
-	public static final String CLIENTE_VIEW="clienteview";
+	public static final String CRUD_CLIENTE_VIEW="CRUD-Clientes";
+	
+	public static final String CRUD_USER_VIEW="CRUD-USER";
 }

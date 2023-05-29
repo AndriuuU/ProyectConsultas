@@ -14,6 +14,7 @@ public class ClienteModel {
 	private boolean seguro;
 	private String direccion;
 	private String telefono;
+	private String password;
 	private List<Citas> citas;
 	private User usuario;
 	private Historial historial;
@@ -25,7 +26,7 @@ public class ClienteModel {
 	
 
 	public ClienteModel(long idCliente, String nombre, String email, boolean seguro, String direccion, String telefono,
-			List<Citas> citas, User usuario, Historial historial) {
+			String password, List<Citas> citas, User usuario, Historial historial) {
 		super();
 		this.idCliente = idCliente;
 		this.nombre = nombre;
@@ -33,6 +34,7 @@ public class ClienteModel {
 		this.seguro = seguro;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.password = password;
 		this.citas = citas;
 		this.usuario = usuario;
 		this.historial = historial;
@@ -127,6 +129,16 @@ public class ClienteModel {
 	public void setHistorial(Historial historial) {
 		this.historial = historial;
 	}
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 
 	@Override
@@ -137,16 +149,6 @@ public class ClienteModel {
 	}
 
 
-	public CharSequence getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public void setPassword(String encode) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

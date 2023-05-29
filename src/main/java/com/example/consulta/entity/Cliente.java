@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -18,18 +19,25 @@ public class Cliente {
 
 	@Id	
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
-	@ManyToOne
-	@JoinColumn(name = "usuario_id")
-	private User usuario;
+	
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
+	
 	@Column(name = "email", unique= true, nullable = false)
 	private String email;
+	
 	private boolean seguro;
+	
 	private String direccion;
+	
 	private String telefono;
+	
+	private String password;
+	
+	@OneToOne
+	@JoinColumn(name="idUsuario", referencedColumnName="id")
+	private User usuario;
 
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
 	private List<Citas> citas;
@@ -43,17 +51,17 @@ public class Cliente {
 		super();
 	}
 
-
-	public Cliente(Long id, User usuario, String nombre, String email, boolean seguro, String direccion,
-			String telefono, List<Citas> citas, Historial historial) {
+	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password, User usuario, List<Citas> citas, Historial historial) {
 		super();
 		this.id = id;
-		this.usuario = usuario;
 		this.nombre = nombre;
 		this.email = email;
 		this.seguro = seguro;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.password = password;
+		this.usuario = usuario;
 		this.citas = citas;
 		this.historial = historial;
 	}
@@ -149,6 +157,14 @@ public class Cliente {
 	}
 
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "Cliente nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
@@ -156,11 +172,6 @@ public class Cliente {
 				+ ", historial=" + historial + "]";
 	}
 
-
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 
