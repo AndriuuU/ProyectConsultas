@@ -49,12 +49,13 @@ public class ClienteController {
 		mav.addObject("clientes", clienteService.listAllClientes());
 		return mav;
 	}
-	@GetMapping("/listUsers")
+	@GetMapping("/admin/listUsers")
 	public ModelAndView listUsers() {
 		ModelAndView mav =new ModelAndView(Constantes.CRUD_USER_VIEW);
 		mav.addObject("users", userService.listAllUsuarios());
 		return mav;
 	}
+	
 	
 //	@PostMapping("/addCliente")
 //	public String addCliente(@Valid @ModelAttribute("Cliente") ClienteModel clienteModel, BindingResult bindingResult,

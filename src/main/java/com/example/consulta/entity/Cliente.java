@@ -35,24 +35,24 @@ public class Cliente {
 	
 	private String password;
 	
-	@OneToOne
-	@JoinColumn(name="idUsuario", referencedColumnName="id")
-	private User usuario;
+//	@OneToOne
+//	@JoinColumn(name="idUsuario", referencedColumnName="id")
+//	private User usuario;
 
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
 	private List<Citas> citas;
 
 
-	@ManyToOne
-	@JoinColumn(name="clienteId")
-	private Historial historial;
+	@OneToMany(cascade= CascadeType.ALL,mappedBy = "cliente")
+    private List<Historial> historiales;
 
 	public Cliente() {
 		super();
 	}
 
+
 	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, User usuario, List<Citas> citas, Historial historial) {
+			String password, List<Citas> citas, List<Historial> historiales) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -61,9 +61,8 @@ public class Cliente {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
-		this.usuario = usuario;
 		this.citas = citas;
-		this.historial = historial;
+		this.historiales = historiales;
 	}
 
 
@@ -136,24 +135,13 @@ public class Cliente {
 		this.citas = citas;
 	}
 
-
-	public User getUsuario() {
-		return usuario;
+	public List<Historial> getHistoriales() {
+		return historiales;
 	}
 
 
-	public void setUsuario(User usuario) {
-		this.usuario = usuario;
-	}
-
-
-	public Historial getHistorial() {
-		return historial;
-	}
-
-
-	public void setHistorial(Historial historial) {
-		this.historial = historial;
+	public void setHistoriales(List<Historial> historiales) {
+		this.historiales = historiales;
 	}
 
 
@@ -165,12 +153,16 @@ public class Cliente {
 		this.password = password;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Cliente nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", citas=" + citas + ", usuario=" + usuario
-				+ ", historial=" + historial + "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro + ", direccion="
+				+ direccion + ", telefono=" + telefono + ", password=" + password + ", citas="
+				+ citas + ", historiales=" + historiales + "]";
 	}
+
+
 
 
 

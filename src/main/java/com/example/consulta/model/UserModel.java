@@ -14,6 +14,15 @@ public class UserModel {
 		super();
 	}
 	
+	public UserModel(String username, String password, boolean enable, String role, String token) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.enable = enable;
+		this.role = role;
+		this.token = token;
+	}
+
 	public UserModel(long id, String username, String password, boolean enable, String role, String token) {
 		super();
 		this.id = id;

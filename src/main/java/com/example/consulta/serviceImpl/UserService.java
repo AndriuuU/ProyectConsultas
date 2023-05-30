@@ -49,6 +49,7 @@ import com.example.consulta.repository.UserRepository;
 	}
 
 	public com.example.consulta.entity.User registrar(com.example.consulta.entity.User user) {
+		user.setId(user.getId());
 		user.setUsername(user.getUsername());
 		user.setPassword(passwordEncoder().encode(user.getPassword()));
 		user.setEnable(true);

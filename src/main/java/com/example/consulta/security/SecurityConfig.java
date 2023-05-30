@@ -17,37 +17,39 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.csrf().disable().addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).
-//		authorizeHttpRequests((requests) -> requests.
-		http.authorizeRequests((requests)->requests.
-			requestMatchers("/api/admin/**").hasRole("ADMIN").
-			requestMatchers("/api/user/**").hasRole("USER").
-			requestMatchers("/api/all/**").hasAnyRole("USER","ADMIN").				
-			//WEB
-			requestMatchers("/admin/**").hasRole("ADMIN").
-	//				requestMatchers("/home/**").hasRole("ROLE_USER").
-			requestMatchers("/**").permitAll().anyRequest().authenticated())
-		
-		 .formLogin((form)->form
-			        .loginPage("/auth/login")
-			        .defaultSuccessUrl("/home",true)
-			        .permitAll())
-			        
-	      .logout((logout)->logout.permitAll()
-	    		  .logoutUrl("/auth/logout")
-	    		  .logoutSuccessUrl("/auth/login?logout"));
+		http.csrf().disable().addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).
+		authorizeHttpRequests((requests) -> requests.
+//			requestMatchers("/", "/imgs/","/photos/","/auth/**","/webjars/**","/css/**","/noticias/**","/files/**").permitAll().
+//			requestMatchers("/api/admin/**").hasRole("ADMIN").
+//			requestMatchers("/api/user/**").hasRole("USER").
+//			requestMatchers("/api/all/**").hasAnyRole("USER","ADMIN").	
+			requestMatchers("/api/**").permitAll());
+//			//WEB
+//			
+//		
+//		http.authorizeRequests((requests)->requests
+//			.requestMatchers("/cliente/admin/**","/emple/admin/**","/cita/admin/**where").hasRole("ADMIN")
+//			.requestMatchers("/**").permitAll().anyRequest().authenticated())
+//			.formLogin((form)->form
+//			       .loginPage("/auth/login")
+//			       .defaultSuccessUrl("/home",true)
+//			       .permitAll())
+////			        
+//			.logout((logout)->logout.permitAll()
+//					.logoutUrl("/auth/logout")
+//					.logoutSuccessUrl("/auth/login?logout"));
 
 		return http.build();
 	}
-//	protected void configure(HttpSecurity http) throws Exception {
-//	      http
-//	          .logout(logout -> logout                                                
-//	              .logoutUrl("/auth/logout")                                            
-//	              .logoutSuccessUrl("/auth/login")                                      
-//	              .invalidateHttpSession(true)
-//	                                      
-//	          );
-//	  }
+	protected void configure(HttpSecurity http) throws Exception {
+	      http
+	          .logout(logout -> logout                                                
+	              .logoutUrl("/auth/logout")                                            
+	              .logoutSuccessUrl("/auth/login")                                      
+	              .invalidateHttpSession(true)
+	                                      
+	          );
+	  }
 
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{

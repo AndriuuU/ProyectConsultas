@@ -1,22 +1,28 @@
- <!DOCTYPE html>
-<html lang="en"
-	xmlns:th=http://www.thymeleaf.org
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th=http://www.thymeleaf.org
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'><link rel="stylesheet" href="./css/home.css">
-   <title>Inicio</title>
+<meta charset="UTF-8">
+<link rel='stylesheet'
+	href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+<link rel="stylesheet" href="./css/home.css">
+
+<title>Inicio</title>
 </head>
 <body>
 
-		 <section layout:fragment="custom-content">	  	
-<ul>
-  <li sec:authorize="hasAuthority('ROLE_USER')"><a class="nav-item" th:href="@{/usuario/listUsuario/}">Crud Usuarios</a></li>
-  <li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li style="float:right"><a class="active" href="#about">About</a></li>
-</ul>
- </section>
+	<section layout:fragment="custom-content">
+		<div th:replace="fragments/header :: header"></div>
+	</section>
+   <div class="alert alert-success" th:if="${success != null}"
+						th:text="${success}"></div>
+					<div class="alert alert-danger" th:if="${error != null}"
+						th:text="${error}"></div>
+					<div class="alert alert-warning" th:if="${warning != null}"
+						th:text="${warning}"></div>
+					<div class="alert alert-info" th:if="${info != null}"
+						th:text="${info}"></div>
+	</div>
 </body>
 </html>

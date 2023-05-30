@@ -16,20 +16,29 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.consulta.model.ClienteModel;
+import com.example.consulta.service.ClienteService;
 import com.example.consulta.serviceImpl.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
 	@Qualifier("userService")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("clienteService")
+	private ClienteService clienteService;
+	
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -48,6 +57,7 @@ public class UserController {
 		return usuario;
 	}
 
+	
 
 	@PostMapping("/register")
 	public ResponseEntity<?> saveUser(@RequestBody com.example.consulta.entity.User user){
@@ -57,6 +67,21 @@ public class UserController {
 		}else {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registrar(user));
 		}
+	}
+	
+	//Crea un nuevo cliente
+	@PostMapping("/register/cliente")
+	public ResponseEntity<?> createCliente(@RequestBody ClienteModel cliente) {
+		boolean exist = userService.findUsuario(cliente.getEmail())!=null;
+		if(exist) {
+			return ResponseEntity.internalServerError().body(null);
+		}else if(clienteService.addCliente(cliente)!=null){
+			return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.addCliente(cliente));
+			
+		}else
+			return ResponseEntity.internalServerError().body(null);
+			
+		
 	}
 
 	private String getJWTToken(String username) {

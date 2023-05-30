@@ -27,6 +27,16 @@ public class User {
 	
 	private String token;
 
+	
+	public User(String username, @Size(max = 100) String password, boolean enable, String role, String token) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.enable = enable;
+		this.role = role;
+		this.token = token;
+	}
+
 	public User(long id, String username, String password, boolean enable, String role, String token) {
 		super();
 		this.id = id;

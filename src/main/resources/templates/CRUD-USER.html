@@ -10,6 +10,7 @@
 <link th:href="@{/css/styles.css}" rel="stylesheet" />
 <link th:href="@{/css/header.css}" rel="stylesheet" />
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link rel="stylesheet" href="css/font-awesome.min.css">
 
 <title>Lista de users</title>
@@ -29,9 +30,9 @@
     <thead class="thead-light">
       <tr>
         <th scope="col">Id</th>
-		<th scope="col">Username</th>
-		<th scope="col">activado</th>
-		<th scope="col">Action</th>
+		<th scope="col">USERNAME</th>
+		<th scope="col">ROLL</th>
+		<th scope="col">ENABLE</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -41,10 +42,10 @@
         <td scope="row">[[${user.username}]]</td>
         <td scope="row">[[${user.role}]]</td>
         <td>
-          <a th:if="${user.enable == true}" class="fa-regular fa-square-check"
-            th:href="@{'/admin/user/' + ${user.id} + '/enable/false'}" title=""></a>
-          <a th:if="${user.enable == false}" class="fa-regular fa-square icon-dark"
-            th:href="@{'/admin/user/' + ${user.id} + '/enable/true'}" title=""></a>
+          <a th:if="${user.enable == 1}" class="bi bi-check-square"
+            th:href="@{'/admin/user/' + ${user.id} + '/enable/false'}" title="a"></a>
+          <a th:if="${user.enable == 0}" class="bi bi-check-square icon-dark"
+            th:href="@{'/admin/user/' + ${user.id} + '/enable/true'}" title="b"></a>
         </td>
         <td>
           <a th:href="@{'/moduser/' + ${user.id}}" title="Edit this tutorial"
