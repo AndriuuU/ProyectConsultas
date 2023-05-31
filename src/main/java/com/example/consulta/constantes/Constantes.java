@@ -11,4 +11,9 @@ public class Constantes {
 	public static final String CRUD_CLIENTE_VIEW="CRUD-Clientes";
 	
 	public static final String CRUD_USER_VIEW="CRUD-USER";
+	
+	public static final String CRUD_HISTORIAL_VIEW="CRUD-Historial";
+	
+	public static final String CRUD_TRATAMIENTO_VIEW="CRUD-Tratamiento";
+
 }

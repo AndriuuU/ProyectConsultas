@@ -13,15 +13,16 @@ public interface ClienteService {
 	
 	public abstract Cliente addCliente(ClienteModel ClientesModel);
 
-	public abstract int removeCliente(int id);
+	public abstract boolean removeCliente(long id) throws Exception;
 	
-	public abstract Cliente updateCliente(ClienteModel ClientesModel);
+	public abstract ClienteModel updateCliente(ClienteModel ClientesModel);
 	
 	public abstract Cliente transform(ClienteModel ClientesModel);
 	
 	public abstract ClienteModel transform(Cliente Clientes);
 	
-	public abstract ClienteModel findCliente(int id);
+	public abstract Cliente findCliente(long id);
+
 	
-	public abstract ClienteModel findCliente(String email);
+
 }

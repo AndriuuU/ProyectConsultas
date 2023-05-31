@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.consulta.repository.UserRepository;
 
-	@Service("userService")
-	public class UserService implements UserDetailsService {
+@Service("userService")
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	@Qualifier("userRepository")
@@ -56,6 +56,10 @@ import com.example.consulta.repository.UserRepository;
 		user.setRole("ROLE_USER");
 		return userRepository.save(user);
 	}
+	
+	public com.example.consulta.entity.User updateUser(com.example.consulta.entity.User user) {
+		return userRepository.save(user);
+	}
 
 	public int activar(String username) {
 		int a = 0;
@@ -89,6 +93,11 @@ import com.example.consulta.repository.UserRepository;
 
 	public com.example.consulta.entity.User findUsuario(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	public com.example.consulta.entity.User findUsuario(long id) {
+		return userRepository.findById(id);
+
 	}
 
 }

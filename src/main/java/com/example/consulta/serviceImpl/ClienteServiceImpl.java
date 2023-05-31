@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.User;
 import com.example.consulta.model.ClienteModel;
-import com.example.consulta.model.UserModel;
 import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.repository.UserRepository;
 import com.example.consulta.service.ClienteService;
@@ -22,47 +21,64 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	@Qualifier("clienteRepository")
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	@Qualifier("userService")
 	private UserService userService;
-	
+
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
-	
+
 	@Override
 	public List<ClienteModel> listAllClientes() {
-		return clienteRepository.findAll().stream()
-				.map(c->transform(c)).collect(Collectors.toList());
+		return clienteRepository.findAll().stream().map(c -> transform(c)).collect(Collectors.toList());
 	}
 
 	@Override
 	public Cliente findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return clienteRepository.findByEmail(email);
 	}
 
 	@Override
-	public Cliente addCliente(ClienteModel clienteModel) {
-		clienteModel.setPassword(userService.passwordEncoder().encode(clienteModel.getPassword()));
-		if(userService.registrar(new User(clienteModel.getIdCliente(),clienteModel.getEmail(), clienteModel.getPassword(),true, "ROLE_USER", null))!=null) {
-			userService.registrar(new User(clienteModel.getIdCliente(),clienteModel.getEmail(), clienteModel.getPassword(),true, "ROLE_USER", null));
-			return clienteRepository.save(transform(clienteModel));
-		}
-		return null;
+	public Cliente addCliente(ClienteModel cliente) {
+		User a = userService.registrar(
+				new User(cliente.getId(), cliente.getEmail(), cliente.getPassword(), true, "ROLE_USER", null));
+		cliente.setId(a.getId());
+		cliente.setNombre(cliente.getNombre());
+		cliente.setEmail(cliente.getEmail());
+		cliente.setSeguro(cliente.isSeguro());
+		cliente.setDireccion(cliente.getDireccion());
+		cliente.setTelefono(cliente.getTelefono());
+		cliente.setPassword(userService.passwordEncoder().encode(cliente.getPassword()));
+		cliente.setUsuario(a);
+
+		return clienteRepository.save(transform(cliente));
+
 	}
 
 	@Override
-	public int removeCliente(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean removeCliente(long id) throws Exception  {
+		Cliente c = clienteRepository.findById(id);
+		
+			if (c != null) {
+				clienteRepository.deleteById(id);
+				
+				if (c.getUsuario() != null) {
+
+					userService.deleteUser(c.getUsuario().getUsername());
+
+				}
+				return true;
+			}
+
+		return false;
 	}
 
 	@Override
-	public Cliente updateCliente(ClienteModel ClientesModel) {
-		// TODO Auto-generated method stub
-		return null;
+	public ClienteModel updateCliente(ClienteModel ClientesModel) {
+		clienteRepository.save(transform(ClientesModel));
+		return ClientesModel;
 	}
 
 	@Override
@@ -78,15 +94,9 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public ClienteModel findCliente(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public Cliente findCliente(long id) {
+		return clienteRepository.findById(id);
 
-	@Override
-	public ClienteModel findCliente(String email) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

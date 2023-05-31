@@ -29,13 +29,13 @@
 				<li style="float: right"><a></a></li>
 				
 				<li style="float: right" sec:authorize="!isAuthenticated()" class="nav-item">
-		      		<a class="nav-link active" th:href="@{/auth/login}">Log In</a>
+		      		<a class="nav-link active" th:href="@{/auth/login}"><i class="fas fa-user"></i>Log In</a>
 		        </li>
 		        
 				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item">
 					<form  class="f22orm-inline" th:action="@{/auth/logout}" method="post">
-						<button style="float: right" class="nav-link active" th:href="@{/auth/login}">Log
-							Out</button>
+						<button style="float: right" class="nav-link active" th:href="@{/auth/login}">
+						Log Out</button>
 					</form>
 				</li>
 			</ul>

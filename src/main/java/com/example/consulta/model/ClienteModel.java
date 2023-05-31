@@ -8,7 +8,7 @@ import com.example.consulta.entity.User;
 
 public class ClienteModel {
 
-	private long idCliente;
+	private long id;
 	private String nombre;
 	private String email;
 	private boolean seguro;
@@ -16,19 +16,19 @@ public class ClienteModel {
 	private String telefono;
 	private String password;
 	private List<Citas> citas;
+	private List<Historial> historial;
 	private User usuario;
-	private Historial historial;
-
 	
 	public ClienteModel() {
 		super();
 	}
-	
 
-	public ClienteModel(long idCliente, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, List<Citas> citas, User usuario, Historial historial) {
+
+	
+	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password, List<Citas> citas, List<Historial> historial, User usuario) {
 		super();
-		this.idCliente = idCliente;
+		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
 		this.seguro = seguro;
@@ -36,18 +36,59 @@ public class ClienteModel {
 		this.telefono = telefono;
 		this.password = password;
 		this.citas = citas;
+		this.historial = historial;
 		this.usuario = usuario;
+	}
+
+
+
+	public ClienteModel(String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+	}
+
+
+	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+	}
+
+
+	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password, List<Citas> citas, List<Historial> historial) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+		this.citas = citas;
 		this.historial = historial;
 	}
 
 
-	public long getIdCliente() {
-		return idCliente;
+	public long getId() {
+		return id;
 	}
 
 
-	public void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 
@@ -111,25 +152,6 @@ public class ClienteModel {
 	}
 
 
-	public User getUsuario() {
-		return usuario;
-	}
-
-
-	public void setUsuario(User usuario) {
-		this.usuario = usuario;
-	}
-
-
-	public Historial getHistorial() {
-		return historial;
-	}
-
-
-	public void setHistorial(Historial historial) {
-		this.historial = historial;
-	}
-	
 
 	public String getPassword() {
 		return password;
@@ -141,13 +163,35 @@ public class ClienteModel {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Cliente [idCliente=" + idCliente + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", citas=" + citas + ", usuario=" + usuario
-				+ ", historial=" + historial + "]";
+	public List<Historial> getHistorial() {
+		return historial;
 	}
 
+
+	public void setHistorial(List<Historial> historial) {
+		this.historial = historial;
+	}
+
+	
+
+	public User getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "ClienteModel [id=" + id + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", citas=" + citas
+				+ ", historial=" + historial + "]";
+	}
 
 
 

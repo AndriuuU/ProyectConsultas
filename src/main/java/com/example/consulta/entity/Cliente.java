@@ -35,9 +35,9 @@ public class Cliente {
 	
 	private String password;
 	
-//	@OneToOne
-//	@JoinColumn(name="idUsuario", referencedColumnName="id")
-//	private User usuario;
+	@OneToOne
+	@JoinColumn(name="idUsuario", referencedColumnName="id")
+	private User usuario;
 
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
 	private List<Citas> citas;
@@ -51,8 +51,19 @@ public class Cliente {
 	}
 
 
+	public Cliente(String nombre, String email, boolean seguro, String direccion, String telefono, String password) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+	}
+
+
 	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, List<Citas> citas, List<Historial> historiales) {
+			User usuario,String password) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -61,6 +72,23 @@ public class Cliente {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
+		this.usuario = usuario;
+	}
+
+
+
+
+	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password, User usuario, List<Citas> citas, List<Historial> historiales) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+		this.usuario = usuario;
 		this.citas = citas;
 		this.historiales = historiales;
 	}
@@ -153,6 +181,16 @@ public class Cliente {
 		this.password = password;
 	}
 
+
+
+	public User getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(User usuario) {
+		this.usuario = usuario;
+	}
 
 
 	@Override

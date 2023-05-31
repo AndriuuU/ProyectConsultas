@@ -10,5 +10,6 @@ import com.example.consulta.entity.User;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User,Serializable>{
 	public abstract User findByUsername(String username);
+	public abstract User findById(long id);
 
 }
