@@ -14,7 +14,7 @@ import com.example.consulta.repository.ServicioRepository;
 import com.example.consulta.service.ServicioService;
 
 
-@Service("servicioServiceImpl")
+@Service("servicioService")
 public class ServicioServiceImpl implements ServicioService {
 
 	@Autowired
@@ -27,15 +27,24 @@ public class ServicioServiceImpl implements ServicioService {
 
 	
 	@Override
-	public ServicioModel addServicio(ServicioModel ServicioModel) {
-		servicioRepository.save(transform(ServicioModel));
-		return ServicioModel;
+	public Servicio addServicio(Servicio Servicio) {
+		
+		return servicioRepository.save(Servicio);
 	}
 
-
+	@Override
+	public Servicio addServicio(ServicioModel ServicioModel) {
+		return servicioRepository.save(transform(ServicioModel));
+	}
+	
 	@Override
 	public Servicio findServicioById(long id) {
 		return servicioRepository.findById(id);
+	}
+	
+	@Override
+	public Servicio findServicioByNombre(String nombre) {
+		return servicioRepository.findByNombre(nombre);
 	}
 
 	@Override
@@ -75,5 +84,6 @@ public class ServicioServiceImpl implements ServicioService {
 		return servicioRepository.findAll().stream().map(c -> transform(c)).collect(Collectors.toList());
 
 	}
+
 
 }

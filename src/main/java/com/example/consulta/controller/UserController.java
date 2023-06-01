@@ -25,9 +25,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.consulta.entity.Cliente;
+import com.example.consulta.entity.Servicio;
 import com.example.consulta.entity.User;
 import com.example.consulta.model.ClienteModel;
+import com.example.consulta.model.ServicioModel;
 import com.example.consulta.service.ClienteService;
+import com.example.consulta.service.ServicioService;
 import com.example.consulta.serviceImpl.UserService;
 
 import io.jsonwebtoken.Jwts;
@@ -44,6 +47,10 @@ public class UserController {
 	@Autowired
 	@Qualifier("clienteService")
 	private ClienteService clienteService;
+	
+	@Autowired
+	@Qualifier("servicioService")
+	private ServicioService servicioService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -143,6 +150,16 @@ public class UserController {
 		} else
 			return ResponseEntity.noContent().build();
 	}
+	// Obtener un cliente
+		@GetMapping("/get/cliente/{id}")
+		public ResponseEntity<?> getCliente(@PathVariable long id) {
+			boolean exist = clienteService.findCliente(id) != null;
+			if (exist) {
+				Cliente clientes = clienteService.findCliente(id);
+				return ResponseEntity.ok(clientes);
+			} else
+				return ResponseEntity.noContent().build();
+		}
 
 	// Eliminar cliente
 	@DeleteMapping("/delete/cliente/{id}")
@@ -155,4 +172,54 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 
 	}
+	
+	//Servicios
+	
+	// Obtener todos los servicios
+	@GetMapping("/all/servicios")
+	public ResponseEntity<?> getAllServicios() {
+		boolean exist = servicioService.listAllServicios() != null;
+		if (exist) {
+			List<ServicioModel> servicio = servicioService.listAllServicios();
+			return ResponseEntity.ok(servicio);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+	
+	//Obtener un servicio
+	@GetMapping("/get/servicios/{id}")
+	public ResponseEntity<?> getServicio(@PathVariable long id) {
+		boolean exist = servicioService.findServicioById(id) != null;
+		if (exist) {
+			ServicioModel servicio = servicioService.findServicioByIdModel(id);
+			return ResponseEntity.ok(servicio);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+	
+	// Insertar Servicio
+	@PostMapping("/register/servicio")
+	public ResponseEntity<?> insertServicio(@RequestBody ServicioModel servicio) {
+		boolean exist = servicioService.findServicioByNombre(servicio.getNombre()) != null;
+		if (exist) {
+			return ResponseEntity.internalServerError().body("El usuario ya exliste");
+		} else
+			return ResponseEntity.status(HttpStatus.CREATED).body(servicioService.addServicio(servicio));
+	}
+	
+	// Eliminar Servicio
+	@DeleteMapping("/delete/servicio/{id}")
+	public ResponseEntity<?> deleteServicio(@PathVariable long id) throws Exception {
+		Servicio s = servicioService.findServicioById(id);
+		boolean deleted = servicioService.removeServicio(id);
+		if (deleted)
+			return ResponseEntity.ok(s);
+		else
+			return ResponseEntity.noContent().build();
+
+	}
+	
+	//Historial
+	
+	
 }

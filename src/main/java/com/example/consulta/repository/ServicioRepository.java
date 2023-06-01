@@ -11,5 +11,5 @@ import com.example.consulta.entity.Servicio;
 public interface ServicioRepository extends JpaRepository<Servicio,Serializable> {
 	
 	public abstract Servicio findById(long id);
-
+	public abstract Servicio findByNombre(String nombre);
 }

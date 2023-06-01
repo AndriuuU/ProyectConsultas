@@ -24,16 +24,13 @@ public class Citas {
 	private Date fecha;
 	
 	@ManyToOne
-	@JoinColumn(name="ClienteId")
-	private Cliente cliente;
-	
-	@ManyToOne
-	@JoinColumn(name="historialCitas")
+	@JoinColumn(name="citas")
 	private Historial historial;
 	
 	
-	@ManyToMany(cascade= CascadeType.ALL, mappedBy="citas")
-	private List<Servicio> servicio;
+	@ManyToOne
+	@JoinColumn(name="servicio")
+	private Servicio servicio;
 	
 	
 	private boolean activa;
@@ -44,11 +41,10 @@ public class Citas {
 	}
 
 
-	public Citas(long id, Date fecha, Cliente cliente, List<Servicio> servicio, boolean activa) {
+	public Citas(long id, Date fecha, Servicio servicio, boolean activa) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
-		this.cliente = cliente;
 		this.servicio = servicio;
 		this.activa = activa;
 	}
@@ -74,22 +70,12 @@ public class Citas {
 	}
 
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-
-	public List<Servicio> getServicio() {
+	public Servicio getServicio() {
 		return servicio;
 	}
 
 
-	public void setServicio(List<Servicio> servicio) {
+	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
 	}
 
@@ -106,7 +92,7 @@ public class Citas {
 
 	@Override
 	public String toString() {
-		return "Citas [id=" + id + ", fecha=" + fecha + ", cliente=" + cliente + ", servicio=" + servicio + ", activa="
+		return "Citas [id=" + id + ", fecha=" + fecha + ", servicio=" + servicio + ", activa="
 				+ activa + "]";
 	}
 	

@@ -33,14 +33,15 @@ public class Cliente {
 	
 	private String telefono;
 	
+	@Column(name = "password", nullable = false)
 	private String password;
 	
 	@OneToOne
 	@JoinColumn(name="idUsuario", referencedColumnName="id")
 	private User usuario;
 
-	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
-	private List<Citas> citas;
+//	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
+//	private List<Citas> citas;
 
 
 	@OneToMany(cascade= CascadeType.ALL,mappedBy = "cliente")
@@ -79,7 +80,7 @@ public class Cliente {
 
 
 	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, User usuario, List<Citas> citas, List<Historial> historiales) {
+			String password, User usuario, List<Historial> historiales) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -89,7 +90,6 @@ public class Cliente {
 		this.telefono = telefono;
 		this.password = password;
 		this.usuario = usuario;
-		this.citas = citas;
 		this.historiales = historiales;
 	}
 
@@ -154,14 +154,6 @@ public class Cliente {
 	}
 
 
-	public List<Citas> getCitas() {
-		return citas;
-	}
-
-
-	public void setCitas(List<Citas> citas) {
-		this.citas = citas;
-	}
 
 	public List<Historial> getHistoriales() {
 		return historiales;
@@ -196,8 +188,7 @@ public class Cliente {
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro + ", direccion="
-				+ direccion + ", telefono=" + telefono + ", password=" + password + ", citas="
-				+ citas + ", historiales=" + historiales + "]";
+				+ direccion + ", telefono=" + telefono + ", password=" + password + ", historiales=" + historiales + "]";
 	}
 
 

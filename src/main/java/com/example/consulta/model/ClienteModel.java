@@ -15,7 +15,7 @@ public class ClienteModel {
 	private String direccion;
 	private String telefono;
 	private String password;
-	private List<Citas> citas;
+//	private List<Citas> citas;
 	private List<Historial> historial;
 	private User usuario;
 	
@@ -26,7 +26,7 @@ public class ClienteModel {
 
 	
 	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, List<Citas> citas, List<Historial> historial, User usuario) {
+			String password, List<Historial> historial, User usuario) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -35,7 +35,6 @@ public class ClienteModel {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
-		this.citas = citas;
 		this.historial = historial;
 		this.usuario = usuario;
 	}
@@ -68,7 +67,7 @@ public class ClienteModel {
 
 
 	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, List<Citas> citas, List<Historial> historial) {
+			String password, List<Historial> historial) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -77,7 +76,6 @@ public class ClienteModel {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.password = password;
-		this.citas = citas;
 		this.historial = historial;
 	}
 
@@ -142,17 +140,6 @@ public class ClienteModel {
 	}
 
 
-	public List<Citas> getCitas() {
-		return citas;
-	}
-
-
-	public void setCitas(List<Citas> citas) {
-		this.citas = citas;
-	}
-
-
-
 	public String getPassword() {
 		return password;
 	}
@@ -189,8 +176,7 @@ public class ClienteModel {
 	@Override
 	public String toString() {
 		return "ClienteModel [id=" + id + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", citas=" + citas
-				+ ", historial=" + historial + "]";
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", historial=" + historial + "]";
 	}
 
 

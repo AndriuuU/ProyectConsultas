@@ -12,7 +12,7 @@ public class TratamientoModel {
 	private float precio;
 	private String cadaCuanto;
 	private Date hastaCuando;
-	private List<Servicio> servicio;
+	private Servicio servicio;
 	
 	public TratamientoModel() {
 		super();
@@ -20,7 +20,7 @@ public class TratamientoModel {
 
 	
 	public TratamientoModel(long id, String nombre, float precio, String cadaCuanto, Date hastaCuando,
-			List<Servicio> servicio) {
+			Servicio servicio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -71,12 +71,12 @@ public class TratamientoModel {
 		this.hastaCuando = hastaCuando;
 	}
 
-	public List<Servicio> getServicio() {
+	public Servicio getServicio() {
 		return servicio;
 	}
 
 
-	public void setServicio(List<Servicio> servicio) {
+	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
 	}
 

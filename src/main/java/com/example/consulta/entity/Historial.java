@@ -18,20 +18,26 @@ public class Historial {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
+	private boolean asistio;
+	
+	
 	@ManyToOne
     @JoinColumn(name = "cliente_id")
 	private Cliente cliente;
-//	
+
+	
 	@OneToMany(cascade= CascadeType.ALL, mappedBy="historial")
 	private List<Citas> Citas;
 
 
-	public Historial(long id, Cliente cliente, List<com.example.consulta.entity.Citas> citas) {
-		super();
-		this.id = id;
-		this.cliente = cliente;
-		Citas = citas;
-	}
+
+	public Historial(long id, boolean asistio, Cliente cliente, List<com.example.consulta.entity.Citas> citas) {
+	super();
+	this.id = id;
+	this.asistio = asistio;
+	this.cliente = cliente;
+	Citas = citas;
+}
 	public Historial() {
 		super();
 	}
@@ -54,9 +60,12 @@ public class Historial {
 	public void setCitas(List<Citas> citas) {
 		Citas = citas;
 	}
-	@Override
-	public String toString() {
-		return "Historial [id=" + id + ", cliente=" + cliente + ", Citas=" + Citas + "]";
+	
+	public boolean isAsistio() {
+		return asistio;
+	}
+	public void setAsistio(boolean asistio) {
+		this.asistio = asistio;
 	}
 
 	

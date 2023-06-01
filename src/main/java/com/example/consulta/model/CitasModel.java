@@ -20,7 +20,7 @@ public class CitasModel {
 	private Date fecha;
 	private Cliente cliente;
 	private Historial historial;
-	private List<Servicio> servicio;
+	private Servicio servicio;
 	private boolean activa;
 	
 	
@@ -29,7 +29,7 @@ public class CitasModel {
 	}
 
 
-	public CitasModel(long id, Date fecha, Cliente cliente, Historial historial, List<Servicio> servicio,
+	public CitasModel(long id, Date fecha, Cliente cliente, Historial historial, Servicio servicio,
 			boolean activa) {
 		super();
 		this.id = id;
@@ -81,12 +81,12 @@ public class CitasModel {
 	}
 
 
-	public List<Servicio> getServicio() {
+	public Servicio getServicio() {
 		return servicio;
 	}
 
 
-	public void setServicio(List<Servicio> servicio) {
+	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
 	}
 

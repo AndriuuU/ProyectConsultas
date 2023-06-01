@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Servicio {
@@ -24,22 +25,29 @@ public class Servicio {
 	@Column(name = "precio", nullable = false)
 	private float precio;
 	
-	@JoinTable(
-	        name = "Citas",
-	        joinColumns = @JoinColumn(name = "ID_Servicio", nullable = false),
-	        inverseJoinColumns = @JoinColumn(name="ID_Citas", nullable = false)
-	 )
-	  
-	@ManyToMany(cascade= CascadeType.ALL)
-	private List<Citas> citas;
+//	@JoinTable(
+//	        name = "Citas",
+//	        joinColumns = @JoinColumn(name = "ID_Servicio", nullable = false),
+//	        inverseJoinColumns = @JoinColumn(name="ID_Citas", nullable = false)
+//	 )
+//	  
+//	@ManyToMany(cascade= CascadeType.ALL)
+//	private List<Citas> citas;
+//	
+//	@JoinTable(
+//	        name = "tratamientos",
+//	        joinColumns = @JoinColumn(name = "ID_Servicio", nullable = false),
+//	        inverseJoinColumns = @JoinColumn(name="ID_tratamientos", nullable = false)
+//	 )
+//	@ManyToMany(cascade= CascadeType.ALL)
+//	private List<Tratamiento> tratamientos;
 	
-	@JoinTable(
-	        name = "tratamientos",
-	        joinColumns = @JoinColumn(name = "ID_Servicio", nullable = false),
-	        inverseJoinColumns = @JoinColumn(name="ID_tratamientos", nullable = false)
-	 )
-	@ManyToMany(cascade= CascadeType.ALL)
-	private List<Tratamiento> tratamientos;
+	@OneToMany(cascade= CascadeType.ALL, mappedBy="servicio")
+	private List<Citas> citas;
+
+
+	@OneToMany(cascade= CascadeType.ALL,mappedBy="servicio")
+    private List<Tratamiento> tratamientos;
 
 	public Servicio() {
 		super();

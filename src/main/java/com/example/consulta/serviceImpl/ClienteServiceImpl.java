@@ -1,5 +1,6 @@
 package com.example.consulta.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,11 +10,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.example.consulta.entity.Cliente;
+import com.example.consulta.entity.Historial;
 import com.example.consulta.entity.User;
 import com.example.consulta.model.ClienteModel;
+import com.example.consulta.model.HistorialModel;
 import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.repository.UserRepository;
 import com.example.consulta.service.ClienteService;
+import com.example.consulta.service.HistorialService;
 
 @Service("clienteService")
 public class ClienteServiceImpl implements ClienteService {
@@ -26,6 +30,10 @@ public class ClienteServiceImpl implements ClienteService {
 	@Qualifier("userService")
 	private UserService userService;
 
+	@Autowired
+	@Qualifier("historialService")
+	private HistorialService historialService;
+	
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
@@ -76,9 +84,16 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public ClienteModel updateCliente(ClienteModel ClientesModel) {
-		clienteRepository.save(transform(ClientesModel));
-		return ClientesModel;
+	public Cliente updateCliente(ClienteModel cliente) {
+		cliente.setNombre(cliente.getNombre());
+		cliente.setEmail(cliente.getEmail());
+		cliente.setSeguro(cliente.isSeguro());
+		cliente.setDireccion(cliente.getDireccion());
+		cliente.setTelefono(cliente.getTelefono());
+		cliente.setPassword(userService.passwordEncoder().encode(cliente.getPassword()));
+		cliente.setUsuario(cliente.getUsuario());
+		cliente.setHistorial(null);
+		return clienteRepository.save(transform(cliente));
 	}
 
 	@Override
@@ -98,5 +113,23 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository.findById(id);
 
 	}
+
+	@Override
+	public Cliente insertHistorialCliente(ClienteModel cliente) {
+		cliente.setHistorial(HistorialCliente(cliente));
+		return clienteRepository.save(transform(cliente));
+	}
+	
+	public List<Historial> HistorialCliente(ClienteModel cliente) {
+		List<HistorialModel> listHistorialModel=historialService.listAllHistorials();
+		List<Historial> listHisto=new ArrayList<>();
+		for(HistorialModel hm:listHistorialModel) {
+			if(hm.getCliente().getId()==cliente.getId()) {
+				listHisto.add(historialService.transform(hm));
+			}
+		}
+		return listHisto;
+	}
+	
 
 }

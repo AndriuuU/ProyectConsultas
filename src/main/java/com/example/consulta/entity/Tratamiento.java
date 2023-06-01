@@ -1,15 +1,14 @@
 package com.example.consulta.entity;
 
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Tratamiento {
@@ -26,8 +25,9 @@ public class Tratamiento {
 	private String cadaCuanto;
 	private Date hastaCuando;
 	
-	@ManyToMany(cascade= CascadeType.ALL, mappedBy="tratamientos")
-	private List<Servicio> servicio;
+	@ManyToOne
+	@JoinColumn(name="servicio")
+	private Servicio servicio;
 	
 	public Tratamiento() {
 		super();
@@ -35,7 +35,7 @@ public class Tratamiento {
 
 	
 	public Tratamiento(long id, String nombre, float precio, String cadaCuanto, Date hastaCuando,
-			List<Servicio> servicio) {
+			Servicio servicio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -86,12 +86,12 @@ public class Tratamiento {
 		this.hastaCuando = hastaCuando;
 	}
 
-	public List<Servicio> getServicio() {
+	public Servicio getServicio() {
 		return servicio;
 	}
 
 
-	public void setServicio(List<Servicio> servicio) {
+	public void setServicio(Servicio servicio) {
 		this.servicio = servicio;
 	}
 

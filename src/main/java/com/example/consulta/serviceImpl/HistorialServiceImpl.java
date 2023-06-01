@@ -11,14 +11,16 @@ import org.springframework.stereotype.Service;
 import com.example.consulta.entity.Historial;
 import com.example.consulta.model.HistorialModel;
 import com.example.consulta.repository.HistorialRepository;
+import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.HistorialService;
 
-@Service("historialServiceImpl")
+@Service("historialService")
 public class HistorialServiceImpl implements HistorialService {
 
 	@Autowired
 	@Qualifier("historialRepository")
 	private HistorialRepository historialRepository;
+
 	
 //	@Autowired
 //	@Qualifier("historialServiceImpl")

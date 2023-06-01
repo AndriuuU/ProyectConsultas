@@ -15,7 +15,9 @@ public interface ClienteService {
 
 	public abstract boolean removeCliente(long id) throws Exception;
 	
-	public abstract ClienteModel updateCliente(ClienteModel ClientesModel);
+	public abstract Cliente updateCliente(ClienteModel ClientesModel);
+	
+	public abstract Cliente insertHistorialCliente(ClienteModel ClientesModel);
 	
 	public abstract Cliente transform(ClienteModel ClientesModel);
 	
