@@ -14,7 +14,7 @@ import com.example.consulta.repository.TratamientoRepository;
 import com.example.consulta.service.TratamientoService;
 
 
-@Service("tratamientoServiceImpl")
+@Service("tratamientoService")
 public class TratamientoServiceImpl implements TratamientoService {
 
 	

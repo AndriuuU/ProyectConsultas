@@ -9,11 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +20,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.consulta.entity.Citas;
 import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.Servicio;
+import com.example.consulta.entity.Tratamiento;
 import com.example.consulta.model.CitasModel;
 import com.example.consulta.model.ClienteModel;
 import com.example.consulta.model.ServicioModel;
+import com.example.consulta.model.TratamientoModel;
 import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.ServicioService;
+import com.example.consulta.service.TratamientoService;
 import com.example.consulta.serviceImpl.UserService;
 
 import io.jsonwebtoken.Jwts;
@@ -51,6 +52,11 @@ public class UserController {
 	@Autowired
 	@Qualifier("servicioService")
 	private ServicioService servicioService;
+	
+	@Autowired
+	@Qualifier("tratamientoService")
+	private TratamientoService tratamientoService;
+
 
 	@Autowired
 	@Qualifier("citasService")
@@ -235,6 +241,8 @@ public class UserController {
 		}
 	
 	}
+	
+	
 	//Ver todos
 	@GetMapping("/all/citas")
 	public ResponseEntity<?> Citas() {
@@ -244,10 +252,79 @@ public class UserController {
 			return ResponseEntity.ok(exist);
 		} else
 			return ResponseEntity.noContent().build();
-			
+	}
+	//Ver una cita
+	@GetMapping("/get/citas/{id}")
+	public ResponseEntity<?> Citas(@PathVariable long id) {
+		Citas c = citasService.findCitasById(id);
 
+		if (c!=null) {
+			return ResponseEntity.ok(c);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+	
+	// Eliminar citas
+	@DeleteMapping("/delete/citas/{id}")
+	public ResponseEntity<?> deleteCitas(@PathVariable long id) throws Exception {
+		Citas c = citasService.findCitasById(id);
+		boolean deleted = citasService.removeCitas(id);
+		if (deleted)
+			return ResponseEntity.ok(c);
+		else
+			return ResponseEntity.noContent().build();
+
+	}
+	
+	
+	// Historial
+	
+	
+	// Tratamiento
+	//Obtener todos tratamientos
+	@GetMapping("/all/tratamiento")
+	public ResponseEntity<?> allTratamiento() {
+		List<TratamientoModel> exist = tratamientoService.listAllTratamientos();
+		if (exist!=null) {
+			return ResponseEntity.ok(exist);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/get/tratamiento/{id}")
+	public ResponseEntity<?> getTratamiento(@PathVariable long id) {
+		TratamientoModel exist = tratamientoService.findTratamientoByIdModel(id);
+		if (exist!=null) {
+			return ResponseEntity.ok(exist);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+	
+	
+	//Registrar
+	@PostMapping("/register/tratamiento")
+	public ResponseEntity<?> insertTratamiento(@RequestBody TratamientoModel tratamiento) {
+		boolean exist = tratamientoService.findTratamientoById(tratamiento.getId()) != null;
+		if (exist) {
+			return ResponseEntity.internalServerError().body("El Tratamiento ya existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(tratamientoService.addTratamiento(tratamiento));
+		}
 	
 	}
-	// Historial
+	
+	// Eliminar tratamiento
+	@DeleteMapping("/delete/tratamiento/{id}")
+	public ResponseEntity<?> deleteTratamiento(@PathVariable long id) throws Exception {
+		Tratamiento t = tratamientoService.findTratamientoById(id);
+		boolean deleted =tratamientoService.removeTratamiento(id);
+		if (deleted)
+			return ResponseEntity.ok(t);
+		else
+			return ResponseEntity.noContent().build();
+
+	}
+	
+	
 	
 }

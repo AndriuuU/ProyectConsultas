@@ -1,7 +1,5 @@
 package com.example.consulta.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +21,7 @@ public class Tratamiento {
 	private float precio;
 	
 	private String cadaCuanto;
-	private Date hastaCuando;
+	private String hastaCuando;
 	
 	@ManyToOne
 	@JoinColumn(name="servicio")
@@ -34,7 +32,7 @@ public class Tratamiento {
 	}
 
 	
-	public Tratamiento(long id, String nombre, float precio, String cadaCuanto, Date hastaCuando,
+	public Tratamiento(long id, String nombre, float precio, String cadaCuanto, String hastaCuando,
 			Servicio servicio) {
 		super();
 		this.id = id;
@@ -78,11 +76,11 @@ public class Tratamiento {
 		this.cadaCuanto = cadaCuanto;
 	}
 
-	public Date getHastaCuando() {
+	public String getHastaCuando() {
 		return hastaCuando;
 	}
 
-	public void setHastaCuando(Date hastaCuando) {
+	public void setHastaCuando(String hastaCuando) {
 		this.hastaCuando = hastaCuando;
 	}
 

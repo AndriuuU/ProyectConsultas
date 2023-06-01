@@ -1,7 +1,5 @@
 package com.example.consulta.model;
 
-import java.util.Date;
-import java.util.List;
 
 import com.example.consulta.entity.Servicio;
 
@@ -11,7 +9,7 @@ public class TratamientoModel {
 	private String nombre;
 	private float precio;
 	private String cadaCuanto;
-	private Date hastaCuando;
+	private String hastaCuando;
 	private Servicio servicio;
 	
 	public TratamientoModel() {
@@ -19,7 +17,7 @@ public class TratamientoModel {
 	}
 
 	
-	public TratamientoModel(long id, String nombre, float precio, String cadaCuanto, Date hastaCuando,
+	public TratamientoModel(long id, String nombre, float precio, String cadaCuanto, String hastaCuando,
 			Servicio servicio) {
 		super();
 		this.id = id;
@@ -63,11 +61,11 @@ public class TratamientoModel {
 		this.cadaCuanto = cadaCuanto;
 	}
 
-	public Date getHastaCuando() {
+	public String getHastaCuando() {
 		return hastaCuando;
 	}
 
-	public void setHastaCuando(Date hastaCuando) {
+	public void setHastaCuando(String hastaCuando) {
 		this.hastaCuando = hastaCuando;
 	}
 
