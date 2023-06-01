@@ -7,9 +7,9 @@ import com.example.consulta.model.CitasModel;
 
 public interface CitasService {
 
-	public abstract CitasModel addCitas(CitasModel CitasModel);
+	public abstract Citas addCitas(CitasModel CitasModel);
 	public abstract Citas findCitasById(long id);
-	public abstract CitasModel findCitasByIdModel(long id);
+	public abstract CitasModel findCitasByDate(String string);
 	public abstract CitasModel updateCitas(CitasModel CitasModel);
 	public abstract boolean removeCitas(long id);
 	public abstract Citas transform(CitasModel CitasModel);

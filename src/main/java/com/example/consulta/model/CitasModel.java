@@ -1,23 +1,13 @@
 package com.example.consulta.model;
 
-import java.util.Date;
-import java.util.List;
-
 import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.Historial;
 import com.example.consulta.entity.Servicio;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-
 public class CitasModel {
 
-	
 	private long id;
-	private Date fecha;
+	private String fecha;
 	private Cliente cliente;
 	private Historial historial;
 	private Servicio servicio;
@@ -29,7 +19,7 @@ public class CitasModel {
 	}
 
 
-	public CitasModel(long id, Date fecha, Cliente cliente, Historial historial, Servicio servicio,
+	public CitasModel(long id, String fecha, Cliente cliente, Historial historial, Servicio servicio,
 			boolean activa) {
 		super();
 		this.id = id;
@@ -51,12 +41,12 @@ public class CitasModel {
 	}
 
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 

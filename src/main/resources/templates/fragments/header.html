@@ -20,8 +20,7 @@
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
 					class="nav-item" th:href="@{/admin/usuario/listServicios/}">Crud Servicios</a></li>
 
-				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/usuario/modUser/{id}">Modificar datos</a></li>
+				
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
 					class="nav-item" th:href="@{/usuario/listcitas/}">Mis citas</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a

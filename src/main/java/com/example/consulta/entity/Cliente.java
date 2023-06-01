@@ -33,6 +33,9 @@ public class Cliente {
 	
 	private String telefono;
 	
+	@OneToMany(cascade= CascadeType.ALL, mappedBy="cliente")
+	private List<Citas> citas;
+	
 	@Column(name = "password", nullable = false)
 	private String password;
 	
@@ -76,11 +79,8 @@ public class Cliente {
 		this.usuario = usuario;
 	}
 
-
-
-
 	public Cliente(Long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, User usuario, List<Historial> historiales) {
+			List<Citas> citas, String password, User usuario, List<Historial> historiales) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -88,6 +88,7 @@ public class Cliente {
 		this.seguro = seguro;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.citas = citas;
 		this.password = password;
 		this.usuario = usuario;
 		this.historiales = historiales;
@@ -182,6 +183,16 @@ public class Cliente {
 
 	public void setUsuario(User usuario) {
 		this.usuario = usuario;
+	}
+
+
+	public List<Citas> getCitas() {
+		return citas;
+	}
+
+
+	public void setCitas(List<Citas> citas) {
+		this.citas = citas;
 	}
 
 

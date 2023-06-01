@@ -16,4 +16,6 @@ public class Constantes {
 	
 	public static final String CRUD_TRATAMIENTO_VIEW="CRUD-Tratamiento";
 
+	public static final String OBTENER_CITA = null;
+
 }

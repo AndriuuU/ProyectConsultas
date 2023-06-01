@@ -1,6 +1,5 @@
 package com.example.consulta.entity;
 
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -20,8 +19,11 @@ public class Citas {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "fecha", unique = true, nullable = false)
-	private Date fecha;
+	private String fecha;
+	
+	@ManyToOne
+	@JoinColumn(name="ClienteId")
+	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn(name="citas")
@@ -40,15 +42,31 @@ public class Citas {
 		super();
 	}
 
-
-	public Citas(long id, Date fecha, Servicio servicio, boolean activa) {
+	public Citas(long id, String fecha, Cliente cliente, Historial historial, Servicio servicio, boolean activa) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
+		this.cliente = cliente;
+		this.historial = historial;
 		this.servicio = servicio;
 		this.activa = activa;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Historial getHistorial() {
+		return historial;
+	}
+
+	public void setHistorial(Historial historial) {
+		this.historial = historial;
+	}
 
 	public long getId() {
 		return id;
@@ -59,16 +77,13 @@ public class Citas {
 		this.id = id;
 	}
 
-
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-
 
 	public Servicio getServicio() {
 		return servicio;

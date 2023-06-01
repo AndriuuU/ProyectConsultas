@@ -13,7 +13,7 @@ import com.example.consulta.model.CitasModel;
 import com.example.consulta.repository.CitasRepository;
 import com.example.consulta.service.CitasService;
 
-@Service("citasServicioImpl")
+@Service("citasService")
 public class CitasServicioImpl implements CitasService {
 
 	@Autowired
@@ -26,9 +26,10 @@ public class CitasServicioImpl implements CitasService {
 
 	
 	@Override
-	public CitasModel addCitas(CitasModel CitasModel) {
-		citasRepository.save(transform(CitasModel));
-		return CitasModel;
+	public Citas addCitas(CitasModel citas) {
+		citas.setFecha(citas.getFecha());
+		citas.setActiva(true);
+		return citasRepository.save(transform(citas));
 	}
 
 
@@ -38,8 +39,8 @@ public class CitasServicioImpl implements CitasService {
 	}
 
 	@Override
-	public CitasModel findCitasByIdModel(long id) {
-		return transform(citasRepository.findById(id));
+	public CitasModel findCitasByDate(String fecha) {
+		return transform(citasRepository.findByfecha(fecha));
 
 	}
 

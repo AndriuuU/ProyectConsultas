@@ -15,7 +15,7 @@ public class ClienteModel {
 	private String direccion;
 	private String telefono;
 	private String password;
-//	private List<Citas> citas;
+	private List<Citas> citas;
 	private List<Historial> historial;
 	private User usuario;
 	
@@ -64,6 +64,23 @@ public class ClienteModel {
 		this.telefono = telefono;
 		this.password = password;
 	}
+	
+
+	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
+			String password, List<Citas> citas, List<Historial> historial, User usuario) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.seguro = seguro;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.password = password;
+		this.citas = citas;
+		this.historial = historial;
+		this.usuario = usuario;
+	}
+
 
 
 	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
@@ -170,6 +187,20 @@ public class ClienteModel {
 	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
+
+	
+
+
+	public List<Citas> getCitas() {
+		return citas;
+	}
+
+
+
+	public void setCitas(List<Citas> citas) {
+		this.citas = citas;
+	}
+
 
 
 

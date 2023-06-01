@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,9 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.Servicio;
-import com.example.consulta.entity.User;
+import com.example.consulta.model.CitasModel;
 import com.example.consulta.model.ClienteModel;
 import com.example.consulta.model.ServicioModel;
+import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.ServicioService;
 import com.example.consulta.serviceImpl.UserService;
@@ -47,10 +47,14 @@ public class UserController {
 	@Autowired
 	@Qualifier("clienteService")
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	@Qualifier("servicioService")
 	private ServicioService servicioService;
+
+	@Autowired
+	@Qualifier("citasService")
+	private CitasService citasService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -58,9 +62,7 @@ public class UserController {
 	@PostMapping("/login")
 	public com.example.consulta.entity.User login(@RequestParam("username") String username,
 			@RequestParam("password") String password) {
-		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+
 		com.example.consulta.entity.User usuario = userService.findUsuario(username);
 		String token = getJWTToken(username);
 		usuario.setUsername(username);
@@ -73,7 +75,7 @@ public class UserController {
 	public ResponseEntity<?> saveUser(@RequestBody com.example.consulta.entity.User user) {
 		boolean exist = userService.findUsuario(user.getUsername()) != null;
 		if (exist) {
-			return ResponseEntity.internalServerError().body(null);
+			return ResponseEntity.internalServerError().body("EL USUARIO YA EXISTE");
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.registrar(user));
 		}
@@ -94,33 +96,33 @@ public class UserController {
 	}
 
 	// Usuario
-	
-	//Mostrar usuario
+
+	// Mostrar usuario
 	@GetMapping("/view/user/{id}")
 	public ResponseEntity<?> viewUser(@PathVariable String id) {
 
-			return ResponseEntity.ok(userService.loadUserByUsername(id));
-		
+		return ResponseEntity.ok(userService.loadUserByUsername(id));
+
 	}
-	
+
 	// Activar usuario
 	@PostMapping("/activar/user/{id}")
 	public ResponseEntity<?> enabelUser(@PathVariable long id) {
 		int enable = userService.activar(userService.findUsuario(id).getUsername());
-		com.example.consulta.entity.User user=userService.findUsuario(id);
-		if (user!=null)
+		com.example.consulta.entity.User user = userService.findUsuario(id);
+		if (user != null)
 			return ResponseEntity.ok(user);
 		else
 			return ResponseEntity.noContent().build();
 
 	}
-	
+
 	// Modificar Usuario
-	//Actualiza una categoría si existe
-	//Buscar Otra manera
+	// Actualiza una categoría si existe
+	// Buscar Otra manera
 	@PostMapping("/update/user/")
 	public ResponseEntity<?> updateUser(@RequestBody com.example.consulta.entity.User user) {
-		boolean exist = userService.findUsuario(user.getId())!=null;
+		boolean exist = userService.findUsuario(user.getId()) != null;
 		if (!exist) {
 			return ResponseEntity.internalServerError().body(null);
 		} else {
@@ -135,7 +137,7 @@ public class UserController {
 	public ResponseEntity<?> createCliente(@RequestBody ClienteModel cliente) {
 		boolean exist = clienteService.findByEmail(cliente.getEmail()) != null;
 		if (exist) {
-			return ResponseEntity.internalServerError().body("El usuario ya exliste");
+			return ResponseEntity.internalServerError().body("El usuario ya existe");
 		} else
 			return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.addCliente(cliente));
 	}
@@ -150,21 +152,22 @@ public class UserController {
 		} else
 			return ResponseEntity.noContent().build();
 	}
+
 	// Obtener un cliente
-		@GetMapping("/get/cliente/{id}")
-		public ResponseEntity<?> getCliente(@PathVariable long id) {
-			boolean exist = clienteService.findCliente(id) != null;
-			if (exist) {
-				Cliente clientes = clienteService.findCliente(id);
-				return ResponseEntity.ok(clientes);
-			} else
-				return ResponseEntity.noContent().build();
-		}
+	@GetMapping("/get/cliente/{id}")
+	public ResponseEntity<?> getCliente(@PathVariable long id) {
+		boolean exist = clienteService.findCliente(id) != null;
+		if (exist) {
+			Cliente clientes = clienteService.findCliente(id);
+			return ResponseEntity.ok(clientes);
+		} else
+			return ResponseEntity.noContent().build();
+	}
 
 	// Eliminar cliente
 	@DeleteMapping("/delete/cliente/{id}")
 	public ResponseEntity<?> deleteUserCliente(@PathVariable long id) throws Exception {
-		Cliente c=clienteService.findCliente(id);
+		Cliente c = clienteService.findCliente(id);
 		boolean deleted = clienteService.removeCliente(id);
 		if (deleted)
 			return ResponseEntity.ok(c);
@@ -172,21 +175,22 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 
 	}
-	
-	//Servicios
-	
+
+	// Servicios
+
 	// Obtener todos los servicios
-	@GetMapping("/all/servicios")
+	@GetMapping("/all/servicios/")
 	public ResponseEntity<?> getAllServicios() {
 		boolean exist = servicioService.listAllServicios() != null;
+
 		if (exist) {
 			List<ServicioModel> servicio = servicioService.listAllServicios();
 			return ResponseEntity.ok(servicio);
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	
-	//Obtener un servicio
+
+	// Obtener un servicio
 	@GetMapping("/get/servicios/{id}")
 	public ResponseEntity<?> getServicio(@PathVariable long id) {
 		boolean exist = servicioService.findServicioById(id) != null;
@@ -196,7 +200,7 @@ public class UserController {
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	
+
 	// Insertar Servicio
 	@PostMapping("/register/servicio")
 	public ResponseEntity<?> insertServicio(@RequestBody ServicioModel servicio) {
@@ -206,7 +210,7 @@ public class UserController {
 		} else
 			return ResponseEntity.status(HttpStatus.CREATED).body(servicioService.addServicio(servicio));
 	}
-	
+
 	// Eliminar Servicio
 	@DeleteMapping("/delete/servicio/{id}")
 	public ResponseEntity<?> deleteServicio(@PathVariable long id) throws Exception {
@@ -218,8 +222,32 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 
 	}
+
+	// Citas
+	//Registrar
+	@PostMapping("/register/citas")
+	public ResponseEntity<?> insertCitas(@RequestBody CitasModel citas) {
+		boolean exist = citasService.findCitasByDate(citas.getFecha()) != null;
+		if (exist) {
+			return ResponseEntity.internalServerError().body("La fecha ya existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(citasService.addCitas(citas));
+		}
 	
-	//Historial
+	}
+	//Ver todos
+	@GetMapping("/all/citas")
+	public ResponseEntity<?> Citas() {
+		List<CitasModel> exist = citasService.listAllCitass();
+
+		if (exist!=null) {
+			return ResponseEntity.ok(exist);
+		} else
+			return ResponseEntity.noContent().build();
+			
+
 	
+	}
+	// Historial
 	
 }
