@@ -9,7 +9,6 @@ public class TratamientoModel {
 	private String nombre;
 	private float precio;
 	private String cadaCuanto;
-	private String hastaCuando;
 	private Servicio servicio;
 	
 	public TratamientoModel() {
@@ -17,14 +16,13 @@ public class TratamientoModel {
 	}
 
 	
-	public TratamientoModel(long id, String nombre, float precio, String cadaCuanto, String hastaCuando,
+	public TratamientoModel(long id, String nombre, float precio, String cadaCuanto,
 			Servicio servicio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.cadaCuanto = cadaCuanto;
-		this.hastaCuando = hastaCuando;
 		this.servicio = servicio;
 	}
 
@@ -61,14 +59,6 @@ public class TratamientoModel {
 		this.cadaCuanto = cadaCuanto;
 	}
 
-	public String getHastaCuando() {
-		return hastaCuando;
-	}
-
-	public void setHastaCuando(String hastaCuando) {
-		this.hastaCuando = hastaCuando;
-	}
-
 	public Servicio getServicio() {
 		return servicio;
 	}
@@ -82,7 +72,7 @@ public class TratamientoModel {
 	@Override
 	public String toString() {
 		return "Tratamiento [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", cadaCuanto=" + cadaCuanto
-				+ ", hastaCuando=" + hastaCuando + "]";
+				+ "]";
 	}
 	
 	

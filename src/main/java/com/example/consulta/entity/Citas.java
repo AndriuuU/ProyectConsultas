@@ -19,10 +19,13 @@ public class Citas {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	private String fecha;
+	@Column(name = "fechaCita", unique = true)
+	private String fechaCita;
+	
+	private boolean activa;
 	
 	@ManyToOne
-	@JoinColumn(name="ClienteId")
+	@JoinColumn(name="Cliente")
 	private Cliente cliente;
 	
 	@ManyToOne
@@ -33,23 +36,21 @@ public class Citas {
 	@ManyToOne
 	@JoinColumn(name="servicio")
 	private Servicio servicio;
-	
-	
-	private boolean activa;
 
 
-	public Citas() {
-		super();
-	}
 
-	public Citas(long id, String fecha, Cliente cliente, Historial historial, Servicio servicio, boolean activa) {
+	public Citas(long id, String fechaCita, Cliente cliente, Historial historial, Servicio servicio, boolean activa) {
 		super();
 		this.id = id;
-		this.fecha = fecha;
+		this.fechaCita = fechaCita;
 		this.cliente = cliente;
 		this.historial = historial;
 		this.servicio = servicio;
 		this.activa = activa;
+	}
+
+	public Citas() {
+		super();
 	}
 
 	public Cliente getCliente() {
@@ -77,14 +78,6 @@ public class Citas {
 		this.id = id;
 	}
 
-	public String getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
 	public Servicio getServicio() {
 		return servicio;
 	}
@@ -104,13 +97,19 @@ public class Citas {
 		this.activa = activa;
 	}
 
+	public String getFechaCita() {
+		return fechaCita;
+	}
+
+	public void setFechaCita(String fechaCita) {
+		this.fechaCita = fechaCita;
+	}
 
 	@Override
 	public String toString() {
-		return "Citas [id=" + id + ", fecha=" + fecha + ", servicio=" + servicio + ", activa="
-				+ activa + "]";
+		return "Citas [id=" + id + ", fechaCita=" + fechaCita + ", cliente=" + cliente + ", historial=" + historial
+				+ ", servicio=" + servicio + ", activa=" + activa + "]";
 	}
-	
-	
+
 	
 }

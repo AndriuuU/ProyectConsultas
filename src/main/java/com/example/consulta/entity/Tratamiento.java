@@ -21,8 +21,7 @@ public class Tratamiento {
 	private float precio;
 	
 	private String cadaCuanto;
-	private String hastaCuando;
-	
+
 	@ManyToOne
 	@JoinColumn(name="servicio")
 	private Servicio servicio;
@@ -32,14 +31,13 @@ public class Tratamiento {
 	}
 
 	
-	public Tratamiento(long id, String nombre, float precio, String cadaCuanto, String hastaCuando,
+	public Tratamiento(long id, String nombre, float precio, String cadaCuanto, 
 			Servicio servicio) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.cadaCuanto = cadaCuanto;
-		this.hastaCuando = hastaCuando;
 		this.servicio = servicio;
 	}
 
@@ -76,14 +74,6 @@ public class Tratamiento {
 		this.cadaCuanto = cadaCuanto;
 	}
 
-	public String getHastaCuando() {
-		return hastaCuando;
-	}
-
-	public void setHastaCuando(String hastaCuando) {
-		this.hastaCuando = hastaCuando;
-	}
-
 	public Servicio getServicio() {
 		return servicio;
 	}
@@ -97,7 +87,7 @@ public class Tratamiento {
 	@Override
 	public String toString() {
 		return "Tratamiento [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", cadaCuanto=" + cadaCuanto
-				+ ", hastaCuando=" + hastaCuando + "]";
+				+ "]";
 	}
 	
 	

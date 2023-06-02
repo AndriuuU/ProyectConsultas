@@ -9,7 +9,7 @@ public interface CitasService {
 
 	public abstract Citas addCitas(CitasModel CitasModel);
 	public abstract Citas findCitasById(long id);
-	public abstract CitasModel findCitasByDate(String string);
+	public abstract CitasModel findCitasByFecha(String string);
 	public abstract CitasModel updateCitas(CitasModel CitasModel);
 	public abstract boolean removeCitas(long id);
 	public abstract Citas transform(CitasModel CitasModel);

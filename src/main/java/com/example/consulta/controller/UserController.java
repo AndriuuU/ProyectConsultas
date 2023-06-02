@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.consulta.entity.Citas;
 import com.example.consulta.entity.Cliente;
+import com.example.consulta.entity.Historial;
 import com.example.consulta.entity.Servicio;
 import com.example.consulta.entity.Tratamiento;
 import com.example.consulta.model.CitasModel;
 import com.example.consulta.model.ClienteModel;
+import com.example.consulta.model.HistorialModel;
 import com.example.consulta.model.ServicioModel;
 import com.example.consulta.model.TratamientoModel;
 import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
+import com.example.consulta.service.HistorialService;
 import com.example.consulta.service.ServicioService;
 import com.example.consulta.service.TratamientoService;
 import com.example.consulta.serviceImpl.UserService;
@@ -57,10 +63,13 @@ public class UserController {
 	@Qualifier("tratamientoService")
 	private TratamientoService tratamientoService;
 
-
 	@Autowired
 	@Qualifier("citasService")
 	private CitasService citasService;
+	
+	@Autowired
+	@Qualifier("historialService")
+	private HistorialService historialService;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -68,7 +77,9 @@ public class UserController {
 	@PostMapping("/login")
 	public com.example.consulta.entity.User login(@RequestParam("username") String username,
 			@RequestParam("password") String password) {
-
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 		com.example.consulta.entity.User usuario = userService.findUsuario(username);
 		String token = getJWTToken(username);
 		usuario.setUsername(username);
@@ -233,10 +244,13 @@ public class UserController {
 	//Registrar
 	@PostMapping("/register/citas")
 	public ResponseEntity<?> insertCitas(@RequestBody CitasModel citas) {
-		boolean exist = citasService.findCitasByDate(citas.getFecha()) != null;
-		if (exist) {
-			return ResponseEntity.internalServerError().body("La fecha ya existe");
+		boolean exist = citasService.findCitasByFecha(citas.getfechaCita()) != null;
+//		Cliente clientes = clienteService.findCliente(id);
+		if (exist ) {
+			return ResponseEntity.internalServerError().body("ERROR");
 		} else {
+//			Cliente cliente = clienteService.findCliente(1);
+//			citas.setCliente(cliente);
 			return ResponseEntity.status(HttpStatus.CREATED).body(citasService.addCitas(citas));
 		}
 	
@@ -279,6 +293,50 @@ public class UserController {
 	
 	// Historial
 	
+	//Obtener todos tratamientos
+		@GetMapping("/all/historiales")
+		public ResponseEntity<?> allHistorial() {
+			List<HistorialModel> exist = historialService.listAllHistorials();
+			if (exist!=null) {
+				return ResponseEntity.ok(exist);
+			} else
+				return ResponseEntity.noContent().build();
+		}
+		
+		@GetMapping("/get/historial/{id}")
+		public ResponseEntity<?> getHistorial(@PathVariable long id) {
+			HistorialModel exist = historialService.findHistorialByIdModel(id);
+			if (exist!=null) {
+				return ResponseEntity.ok(exist);
+			} else
+				return ResponseEntity.noContent().build();
+		}
+		
+		
+		//Registrar
+		@PostMapping("/register/historial")
+		public ResponseEntity<?> insertHistorial(@RequestBody HistorialModel historial) {
+			boolean exist = historialService.findHistorialByIdModel(historial.getId()) != null;
+			if (exist) {
+				return ResponseEntity.internalServerError().body("El Tratamiento ya existe");
+			} else {
+				return ResponseEntity.status(HttpStatus.CREATED).body(historialService.addHistorial(historial));
+			}
+		
+		}
+		
+		// Eliminar tratamiento
+		@DeleteMapping("/delete/historial/{id}")
+		public ResponseEntity<?> deleteHistorial(@PathVariable long id) throws Exception {
+			Historial t = historialService.findHistorialById(id);
+			boolean deleted =historialService.removeHistorial(id);
+			if (deleted)
+				return ResponseEntity.ok(t);
+			else
+				return ResponseEntity.noContent().build();
+
+		}
+		
 	
 	// Tratamiento
 	//Obtener todos tratamientos

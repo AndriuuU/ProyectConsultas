@@ -7,7 +7,7 @@ import com.example.consulta.entity.Servicio;
 public class CitasModel {
 
 	private long id;
-	private String fecha;
+	private String fechaCita;
 	private Cliente cliente;
 	private Historial historial;
 	private Servicio servicio;
@@ -19,11 +19,11 @@ public class CitasModel {
 	}
 
 
-	public CitasModel(long id, String fecha, Cliente cliente, Historial historial, Servicio servicio,
+	public CitasModel(long id, String fechaCita, Cliente cliente, Historial historial, Servicio servicio,
 			boolean activa) {
 		super();
 		this.id = id;
-		this.fecha = fecha;
+		this.fechaCita = fechaCita;
 		this.cliente = cliente;
 		this.historial = historial;
 		this.servicio = servicio;
@@ -41,13 +41,13 @@ public class CitasModel {
 	}
 
 
-	public String getFecha() {
-		return fecha;
+	public String getfechaCita() {
+		return fechaCita;
 	}
 
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setfechaCita(String fechaCita) {
+		this.fechaCita = fechaCita;
 	}
 
 
@@ -93,7 +93,7 @@ public class CitasModel {
 
 	@Override
 	public String toString() {
-		return "CitasModel [id=" + id + ", fecha=" + fecha + ", cliente=" + cliente + ", historial=" + historial
+		return "CitasModel [id=" + id + ", fechaCita=" + fechaCita + ", cliente=" + cliente + ", historial=" + historial
 				+ ", servicio=" + servicio + ", activa=" + activa + "]";
 	}
 

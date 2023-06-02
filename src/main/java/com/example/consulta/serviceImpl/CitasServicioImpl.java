@@ -27,7 +27,7 @@ public class CitasServicioImpl implements CitasService {
 	
 	@Override
 	public Citas addCitas(CitasModel citas) {
-		citas.setFecha(citas.getFecha());
+		citas.setfechaCita(citas.getfechaCita());
 		citas.setActiva(true);
 		return citasRepository.save(transform(citas));
 	}
@@ -39,8 +39,8 @@ public class CitasServicioImpl implements CitasService {
 	}
 
 	@Override
-	public CitasModel findCitasByDate(String fecha) {
-		return transform(citasRepository.findByfecha(fecha));
+	public CitasModel findCitasByFecha(String fecha) {
+		return transform(citasRepository.findByfechaCita(fecha));
 
 	}
 
