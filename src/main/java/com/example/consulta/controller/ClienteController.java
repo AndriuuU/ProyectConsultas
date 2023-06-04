@@ -15,9 +15,11 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.consulta.constantes.Constantes;
 import com.example.consulta.model.ClienteModel;
+import com.example.consulta.model.UserModel;
 import com.example.consulta.repository.UserRepository;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.serviceImpl.UserService;
+
 
 import jakarta.validation.Valid;
 
@@ -43,7 +45,7 @@ public class ClienteController {
 		return new RedirectView("/cliente/listclientes");
 	}
 	
-	@GetMapping("/listClientes")
+	@GetMapping("/admin/listClientes")
 	public ModelAndView listClientes() {
 		ModelAndView mav =new ModelAndView(Constantes.CRUD_CLIENTE_VIEW);
 		mav.addObject("clientes", clienteService.listAllClientes());
@@ -54,6 +56,19 @@ public class ClienteController {
 		ModelAndView mav =new ModelAndView(Constantes.CRUD_USER_VIEW);
 		mav.addObject("users", userService.listAllUsuarios());
 		return mav;
+	}
+	
+	@GetMapping("/admin/insert/user")
+	public ModelAndView InsertUser() {
+		ModelAndView mav =new ModelAndView(Constantes.INSERT_USER);
+		return mav;
+	}
+	
+	@PostMapping("/admin/insertUser")
+	public String addCliente(@Valid @ModelAttribute("User") UserModel user, BindingResult bindingResult,
+			RedirectAttributes flash, Model model) {
+			return Constantes.CRUD_CLIENTE_VIEW;
+		
 	}
 	
 	
