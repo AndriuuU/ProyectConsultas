@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,12 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.consulta.constantes.Constantes;
-import com.example.consulta.model.ClienteModel;
 import com.example.consulta.model.UserModel;
 import com.example.consulta.repository.UserRepository;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.serviceImpl.UserService;
-
 
 import jakarta.validation.Valid;
 
@@ -58,10 +57,12 @@ public class ClienteController {
 		return mav;
 	}
 	
-	@GetMapping("/admin/insert/user")
-	public ModelAndView InsertUser() {
+	@GetMapping("/admin/insert/user/{id}")
+	public ModelAndView InsertUser(@PathVariable(name = "id", required = false)int id, Model model) {
 		ModelAndView mav =new ModelAndView(Constantes.INSERT_USER);
+		model.addAttribute("user", userService.findUsuario(id));
 		return mav;
+		
 	}
 	
 	@PostMapping("/admin/insertUser")

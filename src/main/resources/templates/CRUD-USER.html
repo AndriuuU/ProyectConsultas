@@ -12,11 +12,16 @@
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link rel="stylesheet" href="css/font-awesome.min.css">
+<link th:href="@{/css/home.css}" rel="stylesheet" />
 
 <title>Lista de users</title>
 </head>
 <body>
-	
+	<section layout:fragment="custom-content">
+		<div th:replace="fragments/header :: header"></div>
+	</section>
+	<br>
+	<br>
 	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
   role="alert">
   [[${message}]]
