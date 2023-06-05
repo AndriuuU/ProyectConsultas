@@ -15,11 +15,12 @@ public class Constantes {
 	public static final String CRUD_HISTORIAL_VIEW="CRUD-Historial";
 	
 	public static final String CRUD_TRATAMIENTO_VIEW="CRUD-Tratamiento";
-
-	public static final String OBTENER_CITA = null;
 	
 	public static final String INSERT_USER="INSERT-USER";
 	
-	public static final String INSERT_CLIENTE="INSERT-CLIENTE";
+	public static final String INSERT_CLIENTE="INSERT-CLIENTES";
 
+	public static final String OBTENER_CITA = "OBTENER-cita";
+	
+	public static final String OBTENER_MI_CITA = "OBTENER-MisCitas";
 }

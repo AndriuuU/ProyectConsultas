@@ -82,9 +82,17 @@ public class UserService implements UserDetailsService {
 		return a;
 	}
 
-	public void deleteUser(String username) throws Exception {
+	public boolean deleteUser(String username) throws Exception {
 		com.example.consulta.entity.User u = userRepository.findByUsername(username);
-		userRepository.delete(u);
+		if (u != null) {
+		
+			if (u.getUsername() != null) {
+				userRepository.delete(u);
+			}
+		return true;
+	}
+
+		return false;
 	}
 
 	public List<com.example.consulta.entity.User> listAllUsuarios() {

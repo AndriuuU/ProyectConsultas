@@ -22,14 +22,17 @@
 	</section>
 	<br>
 	<br>
-	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
-  role="alert">
-  [[${message}]]
-  <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">×</span>
-  </button>
-</div>
-
+		<h1>Usuarios:</h1>
+	<br>
+	<br>
+	 <div class="alert alert-success" th:if="${success != null}"
+		th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning != null}"
+		th:text="${warning}"></div>
+	<div class="alert alert-info" th:if="${info != null}"
+		th:text="${info}"></div>
 <div th:if="${users.size() > 0}">
   <table class="table table-hover table-responsive-xl">
     <thead class="thead-light">
@@ -47,17 +50,16 @@
         <td scope="row">[[${user.username}]]</td>
         <td scope="row">[[${user.role}]]</td>
         <td>
-          <a th:if="${user.enable == 1}" class="bi bi-check-square"
-            th:href="@{'/admin/user/' + ${user.id} + '/enable/false'}" title="a"></a>
-          <a th:if="${user.enable == 0}" class="bi bi-check-square icon-dark"
-            th:href="@{'/admin/user/' + ${user.id} + '/enable/true'}" title="b"></a>
+        
+          <a th:if="${user.enable == true}">ACTIVADO</a>
+          <a th:if="${user.enable == false}">DESACTIVADO</a>
         </td>
         <td>
-          <a th:href="@{'/moduser/' + ${user.id}}" title="Edit this tutorial"
-            class="fa-regular fa-pen-to-square icon-dark"></a>
-           
-          <a th:href="@{'/user/delete/' + ${user.id}}" th:userUsername="${user.username}" id="btnDelete"
-            title="Delete this user" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+			<a th:href="@{/cliente/admin/activar/user/} + ${user.id}">
+				<button type="button" class="btn btn-primary">Activar/Descactivar</button>
+
+			<a th:href="@{/cliente/admin/delete/user/} + ${user.id}">
+         	   <button type="button" class="btn btn-danger">Borrar</button></a>
         </td>
       </tr>
     </tbody>

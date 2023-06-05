@@ -15,4 +15,5 @@ public interface CitasService {
 	public abstract Citas transform(CitasModel CitasModel);
 	public abstract CitasModel transform(Citas Citas);
 	public abstract List<CitasModel> listAllCitass();
+	public abstract List<CitasModel> listCitasCliente(long idCliente);
 }

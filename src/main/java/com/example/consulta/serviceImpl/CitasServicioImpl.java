@@ -1,5 +1,6 @@
 package com.example.consulta.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,6 +75,20 @@ public class CitasServicioImpl implements CitasService {
 	public List<CitasModel> listAllCitass() {
 		return citasRepository.findAll().stream().map(c -> transform(c)).collect(Collectors.toList());
 
+	}
+
+
+	@Override
+	public List<CitasModel> listCitasCliente(long idCliente) {
+		List<CitasModel> listaClitassCliente=listAllCitass();
+		List<CitasModel> clienteCita = new ArrayList<>();
+		for(CitasModel cita: listaClitassCliente) {
+			if(cita.getCliente().getId()!=0) {
+				clienteCita.add(cita);
+			}
+		}
+		
+		return clienteCita;
 	}
 
 }

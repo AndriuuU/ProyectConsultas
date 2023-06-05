@@ -31,7 +31,8 @@ public class SecurityConfig {
 		http.authorizeRequests((requests)->requests
 //			.requestMatchers("/cliente/admin/**","/emple/admin/**","/cita/admin/**where").hasRole("ADMIN")
 			.requestMatchers("/css/**").permitAll()
-			.requestMatchers("/**").permitAll().anyRequest().authenticated())
+			.requestMatchers("/**").permitAll())
+//			.anyRequest().authenticated())
 			.formLogin((form)->form
 			       .loginPage("/auth/login")
 			       .defaultSuccessUrl("/home",true)

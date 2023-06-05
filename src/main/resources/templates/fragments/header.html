@@ -10,9 +10,9 @@
 		     	</li>
 		     	
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/cliente/admin/listUsers/}">Crud Usuarios</a></li>
+					class="nav-item" th:href="@{/cliente/admin/listUsers}">Crud Usuarios</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/admin/usuario/listCliente/}">Crud Cliente</a></li>
+					class="nav-item" th:href="@{/cliente/admin/listClientes}">Crud Cliente</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
 					class="nav-item" th:href="@{/admin/usuario/listEmple/}">Crud Empleados</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
@@ -22,21 +22,28 @@
 
 				
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/usuario/listcitas/}">Mis citas</a></li>
+					class="nav-item" th:href="@{/cita/usuario/miscitas}">Mis citas</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/usuario/historial/}">Historial</a></li>
-				<li style="float: right"><a></a></li>
+					class="nav-item" th:href="@{/cita/usuario/obtener/cita}">Obtener cita</a></li>
+				<li sec:authorize="hasAuthority('ROLE_USER')"><a
+					class="nav-item" th:href="@{/usuario/historial}">Historial</a></li>
+
+				
 				
 				<li style="float: right" sec:authorize="!isAuthenticated()" class="nav-item">
 		      		<a class="nav-link active" th:href="@{/auth/login}"><i class="fas fa-user"></i>Log In</a>
 		        </li>
-		        
+
 				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item">
-					<form  class="f22orm-inline" th:action="@{/auth/logout}" method="post">
+					<form class="nav-item" th:action="@{/auth/logout}" method="post">
 						<button style="float: right" class="nav-link active" th:href="@{/auth/login}">
 						Log Out</button>
 					</form>
 				</li>
+				
+				<li style="float: right" sec:authorize="isAuthenticated()" class="nav-item" >
+					<a class="nav-link" th:text="${#authentication.name}"></a>
+				
 			</ul>
 		</div>
 	</nav>
