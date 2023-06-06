@@ -16,6 +16,8 @@ public class Constantes {
 	
 	public static final String CRUD_TRATAMIENTO_VIEW="CRUD-Tratamiento";
 	
+	public static final String CRUD_SERVICIO_VIEW="CRUD-Servicio";
+	
 	public static final String INSERT_USER="INSERT-USER";
 	
 	public static final String INSERT_CLIENTE="INSERT-CLIENTES";

@@ -52,7 +52,6 @@ public class ClienteServiceImpl implements ClienteService {
 	public Cliente addCliente(ClienteModel cliente) {
 		User a = userService.registrar(
 				new User(cliente.getId(), cliente.getEmail(), cliente.getPassword(), true, "ROLE_USER", null));
-		cliente.setId(a.getId());
 		cliente.setNombre(cliente.getNombre());
 		cliente.setEmail(cliente.getEmail());
 		cliente.setSeguro(cliente.isSeguro());

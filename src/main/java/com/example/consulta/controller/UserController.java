@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.Historial;
 import com.example.consulta.entity.Servicio;
 import com.example.consulta.entity.Tratamiento;
+import com.example.consulta.entity.User;
 import com.example.consulta.model.CitasModel;
 import com.example.consulta.model.ClienteModel;
 import com.example.consulta.model.HistorialModel;
@@ -40,6 +42,9 @@ import com.example.consulta.service.ServicioService;
 import com.example.consulta.service.TratamientoService;
 import com.example.consulta.serviceImpl.UserService;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -58,7 +63,7 @@ public class UserController {
 	@Autowired
 	@Qualifier("servicioService")
 	private ServicioService servicioService;
-	
+
 	@Autowired
 	@Qualifier("tratamientoService")
 	private TratamientoService tratamientoService;
@@ -66,7 +71,7 @@ public class UserController {
 	@Autowired
 	@Qualifier("citasService")
 	private CitasService citasService;
-	
+
 	@Autowired
 	@Qualifier("historialService")
 	private HistorialService historialService;
@@ -81,7 +86,7 @@ public class UserController {
 				.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		com.example.consulta.entity.User usuario = userService.findUsuario(username);
-		String token = getJWTToken(username);
+		String token = getJWTTokenCiente(username);
 		usuario.setUsername(username);
 		usuario.setPassword(password);
 		usuario.setToken(token);
@@ -98,18 +103,48 @@ public class UserController {
 		}
 	}
 
-	private String getJWTToken(String username) {
+//	private String getJWTToken(String username) {
+//		String secretKey = "mySecretKey";
+//		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+//				.commaSeparatedStringToAuthorityList(userService.findUsuario(username).getRole());
+//		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
+//				.claim("authorities",
+//						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+//				.setIssuedAt(new Date(System.currentTimeMillis()))
+//				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+//				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+//		return "Bearer " + token;
+//	}
+	
+	private String getJWTTokenCiente(String username) {
 		String secretKey = "mySecretKey";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-				.commaSeparatedStringToAuthorityList(userService.findUsuario(username).getRole());
-		System.out.println(userService.findUsuario(username).getRole());
+				.commaSeparatedStringToAuthorityList(username);
 		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
 				.claim("authorities",
 						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 600000))
 				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+		System.out.println("Login: "+token);
 		return "Bearer " + token;
+	}
+//
+	public String validateToken(String token) {
+		String secretKey = "mySecretKey";
+		System.out.println("validate "+token);
+		try {
+	        Claims claims = Jwts.parser()
+	                .setSigningKey(secretKey) // Clave secreta utilizada para firmar el token
+	                .parseClaimsJws(token)
+	                .getBody();
+
+	        // Extraer el nombre de usuario del token
+	        System.out.println("validate "+claims.getSubject());
+	        return claims.getSubject();
+	    } catch (JwtException | IllegalArgumentException e) {
+	        throw new IllegalArgumentException("Token JWT invalido");
+	    }
 	}
 
 	// Usuario
@@ -145,6 +180,18 @@ public class UserController {
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED).body(userService.updateUser(user));
 		}
+	}
+
+	// Eliminar user
+	@DeleteMapping("/delete/user/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable long id) throws Exception {
+		User c = userService.findUsuario(id);
+		boolean deleted = userService.deleteUser(userService.findUsuario(id).getUsername());
+		if (deleted)
+			return ResponseEntity.ok(c);
+		else
+			return ResponseEntity.noContent().build();
+
 	}
 
 	// Cientes
@@ -223,7 +270,7 @@ public class UserController {
 	public ResponseEntity<?> insertServicio(@RequestBody ServicioModel servicio) {
 		boolean exist = servicioService.findServicioByNombre(servicio.getNombre()) != null;
 		if (exist) {
-			return ResponseEntity.internalServerError().body("El usuario ya exliste");
+			return ResponseEntity.internalServerError().body("El servicio ya exliste");
 		} else
 			return ResponseEntity.status(HttpStatus.CREATED).body(servicioService.addServicio(servicio));
 	}
@@ -241,43 +288,86 @@ public class UserController {
 	}
 
 	// Citas
-	//Registrar
+	// Registrar
+//	@PostMapping("/register/citas")
+//	public ResponseEntity<?> insertCitas(@RequestBody CitasModel citas, @RequestHeader("Authorization") String token) {
+//		boolean exist = citasService.findByFechaCitas(citas.getFechaCita())!=null;
+//		System.out.println(token);
+//		if (!exist && validateToken(token)) {
+//			
+//			String secretKey = "mySecretKey";
+//			
+//		    try {
+//		        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+//		        System.out.println(claims);
+//		        String username = claims.getSubject();
+//		        System.out.println("USERNAME: "+username);
+//		        Cliente cliente = clienteService.findByEmail(username);
+//		        citas.setCliente(cliente);
+//		        List<Citas> listCitas= cliente.getCitas();
+//		        listCitas.add(citasService.transform(citas));
+//		        cliente.setCitas(listCitas);
+//		        clienteService.updateCliente(clienteService.transform(cliente));
+//		        return ResponseEntity.status(HttpStatus.CREATED).body(citasService.addCitas(citas));
+//		    }catch (Exception e) {
+//				System.out.println(e.toString());
+//			}
+//		}
+//		return ResponseEntity.internalServerError().body("ERROR");
+//		
+//	
+//	}
+
 	@PostMapping("/register/citas")
-	public ResponseEntity<?> insertCitas(@RequestBody CitasModel citas) {
-		boolean exist = citasService.findCitasByFecha(citas.getfechaCita()) != null;
-//		Cliente clientes = clienteService.findCliente(id);
-		if (exist ) {
-			return ResponseEntity.internalServerError().body("ERROR");
-		} else {
-//			Cliente cliente = clienteService.findCliente(1);
-//			citas.setCliente(cliente);
-			return ResponseEntity.status(HttpStatus.CREATED).body(citasService.addCitas(citas));
+	public ResponseEntity<?> insertCitas(@RequestBody CitasModel citas, @RequestHeader("Authorization") String token) {
+		boolean exist = citasService.findByFechaCitas(citas.getFechaCita())!=null;
+		
+		System.out.println(token);
+		String username=validateToken(token);
+		if (!exist && token!=null) {
+		    try {
+		    	
+//		        String username=validateToken(token);
+		        Cliente cliente = clienteService.findByEmail(username);
+		        citas.setCliente(cliente);
+		        
+		        List<Citas> listCitas= cliente.getCitas();
+		        listCitas.add(citasService.transform(citas));
+		        
+		        cliente.setCitas(listCitas);
+		        clienteService.updateCliente(clienteService.transform(cliente));
+		        
+		        return ResponseEntity.status(HttpStatus.CREATED).body(citasService.addCitas(citas));
+		    }catch (Exception e) {
+				System.out.println(e.toString());
+			}
 		}
+		return ResponseEntity.internalServerError().body("ERROR");
+		
 	
 	}
 	
-	
-	//Ver todos
+	// Ver todos
 	@GetMapping("/all/citas")
 	public ResponseEntity<?> Citas() {
 		List<CitasModel> exist = citasService.listAllCitass();
-
-		if (exist!=null) {
+		if (exist != null) {
 			return ResponseEntity.ok(exist);
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	//Ver una cita
+
+	// Ver una cita
 	@GetMapping("/get/citas/{id}")
 	public ResponseEntity<?> Citas(@PathVariable long id) {
 		Citas c = citasService.findCitasById(id);
 
-		if (c!=null) {
+		if (c != null) {
 			return ResponseEntity.ok(c);
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	
+
 	// Eliminar citas
 	@DeleteMapping("/delete/citas/{id}")
 	public ResponseEntity<?> deleteCitas(@PathVariable long id) throws Exception {
@@ -289,77 +379,73 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 
 	}
-	
-	
-	// Historial
-	
-	//Obtener todos tratamientos
-		@GetMapping("/all/historiales")
-		public ResponseEntity<?> allHistorial() {
-			List<HistorialModel> exist = historialService.listAllHistorials();
-			if (exist!=null) {
-				return ResponseEntity.ok(exist);
-			} else
-				return ResponseEntity.noContent().build();
-		}
-		
-		@GetMapping("/get/historial/{id}")
-		public ResponseEntity<?> getHistorial(@PathVariable long id) {
-			HistorialModel exist = historialService.findHistorialByIdModel(id);
-			if (exist!=null) {
-				return ResponseEntity.ok(exist);
-			} else
-				return ResponseEntity.noContent().build();
-		}
-		
-		
-		//Registrar
-		@PostMapping("/register/historial")
-		public ResponseEntity<?> insertHistorial(@RequestBody HistorialModel historial) {
-			boolean exist = historialService.findHistorialByIdModel(historial.getId()) != null;
-			if (exist) {
-				return ResponseEntity.internalServerError().body("El Tratamiento ya existe");
-			} else {
-				return ResponseEntity.status(HttpStatus.CREATED).body(historialService.addHistorial(historial));
-			}
-		
-		}
-		
-		// Eliminar tratamiento
-		@DeleteMapping("/delete/historial/{id}")
-		public ResponseEntity<?> deleteHistorial(@PathVariable long id) throws Exception {
-			Historial t = historialService.findHistorialById(id);
-			boolean deleted =historialService.removeHistorial(id);
-			if (deleted)
-				return ResponseEntity.ok(t);
-			else
-				return ResponseEntity.noContent().build();
 
+	// Historial
+
+	// Obtener todos tratamientos
+	@GetMapping("/all/historiales")
+	public ResponseEntity<?> allHistorial() {
+		List<HistorialModel> exist = historialService.listAllHistorials();
+		if (exist != null) {
+			return ResponseEntity.ok(exist);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/get/historial/{id}")
+	public ResponseEntity<?> getHistorial(@PathVariable long id) {
+		HistorialModel exist = historialService.findHistorialByIdModel(id);
+		if (exist != null) {
+			return ResponseEntity.ok(exist);
+		} else
+			return ResponseEntity.noContent().build();
+	}
+
+	// Registrar
+	@PostMapping("/register/historial")
+	public ResponseEntity<?> insertHistorial(@RequestBody HistorialModel historial) {
+		boolean exist = historialService.findHistorialByIdModel(historial.getId()) != null;
+		if (exist) {
+			return ResponseEntity.internalServerError().body("El Tratamiento ya existe");
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(historialService.addHistorial(historial));
 		}
-		
-	
+
+	}
+
+	// Eliminar tratamiento
+	@DeleteMapping("/delete/historial/{id}")
+	public ResponseEntity<?> deleteHistorial(@PathVariable long id) throws Exception {
+		Historial t = historialService.findHistorialById(id);
+		boolean deleted = historialService.removeHistorial(id);
+		if (deleted)
+			return ResponseEntity.ok(t);
+		else
+			return ResponseEntity.noContent().build();
+
+	}
+
 	// Tratamiento
-	//Obtener todos tratamientos
+	// Obtener todos tratamientos
 	@GetMapping("/all/tratamiento")
 	public ResponseEntity<?> allTratamiento() {
 		List<TratamientoModel> exist = tratamientoService.listAllTratamientos();
-		if (exist!=null) {
+		if (exist != null) {
 			return ResponseEntity.ok(exist);
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/get/tratamiento/{id}")
 	public ResponseEntity<?> getTratamiento(@PathVariable long id) {
 		TratamientoModel exist = tratamientoService.findTratamientoByIdModel(id);
-		if (exist!=null) {
+		if (exist != null) {
 			return ResponseEntity.ok(exist);
 		} else
 			return ResponseEntity.noContent().build();
 	}
-	
-	
-	//Registrar
+
+	// Registrar
 	@PostMapping("/register/tratamiento")
 	public ResponseEntity<?> insertTratamiento(@RequestBody TratamientoModel tratamiento) {
 		boolean exist = tratamientoService.findTratamientoById(tratamiento.getId()) != null;
@@ -368,21 +454,19 @@ public class UserController {
 		} else {
 			return ResponseEntity.status(HttpStatus.CREATED).body(tratamientoService.addTratamiento(tratamiento));
 		}
-	
+
 	}
-	
+
 	// Eliminar tratamiento
 	@DeleteMapping("/delete/tratamiento/{id}")
 	public ResponseEntity<?> deleteTratamiento(@PathVariable long id) throws Exception {
 		Tratamiento t = tratamientoService.findTratamientoById(id);
-		boolean deleted =tratamientoService.removeTratamiento(id);
+		boolean deleted = tratamientoService.removeTratamiento(id);
 		if (deleted)
 			return ResponseEntity.ok(t);
 		else
 			return ResponseEntity.noContent().build();
 
 	}
-	
-	
-	
+
 }

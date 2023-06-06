@@ -41,12 +41,12 @@ public class CitasModel {
 	}
 
 
-	public String getfechaCita() {
+	public String getFechaCita() {
 		return fechaCita;
 	}
 
 
-	public void setfechaCita(String fechaCita) {
+	public void setFechaCita(String fechaCita) {
 		this.fechaCita = fechaCita;
 	}
 

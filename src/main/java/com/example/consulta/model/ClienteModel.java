@@ -23,8 +23,6 @@ public class ClienteModel {
 		super();
 	}
 
-
-	
 	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
 			String password, List<Historial> historial, User usuario) {
 		super();
@@ -40,32 +38,6 @@ public class ClienteModel {
 	}
 
 
-
-	public ClienteModel(String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password) {
-		super();
-		this.nombre = nombre;
-		this.email = email;
-		this.seguro = seguro;
-		this.direccion = direccion;
-		this.telefono = telefono;
-		this.password = password;
-	}
-
-
-	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.email = email;
-		this.seguro = seguro;
-		this.direccion = direccion;
-		this.telefono = telefono;
-		this.password = password;
-	}
-	
-
 	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
 			String password, List<Citas> citas, List<Historial> historial, User usuario) {
 		super();
@@ -80,22 +52,6 @@ public class ClienteModel {
 		this.historial = historial;
 		this.usuario = usuario;
 	}
-
-
-
-	public ClienteModel(long id, String nombre, String email, boolean seguro, String direccion, String telefono,
-			String password, List<Historial> historial) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.email = email;
-		this.seguro = seguro;
-		this.direccion = direccion;
-		this.telefono = telefono;
-		this.password = password;
-		this.historial = historial;
-	}
-
 
 	public long getId() {
 		return id;

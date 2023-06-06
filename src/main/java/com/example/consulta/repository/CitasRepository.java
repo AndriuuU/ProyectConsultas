@@ -13,6 +13,6 @@ public interface CitasRepository extends JpaRepository<Citas,Serializable> {
 	
 	public abstract Citas findById(long id);
 
-	public abstract Citas findByfechaCita(String fechaCita);
+	public abstract Citas findByFechaCita(String fechaCita);
 	
 }

@@ -15,7 +15,7 @@ import com.example.consulta.repository.CitasRepository;
 import com.example.consulta.service.CitasService;
 
 @Service("citasService")
-public class CitasServicioImpl implements CitasService {
+public class CitasServiceImpl implements CitasService {
 
 	@Autowired
 	@Qualifier("citasRepository")
@@ -28,7 +28,7 @@ public class CitasServicioImpl implements CitasService {
 	
 	@Override
 	public Citas addCitas(CitasModel citas) {
-		citas.setfechaCita(citas.getfechaCita());
+		citas.setFechaCita(citas.getFechaCita());
 		citas.setActiva(true);
 		return citasRepository.save(transform(citas));
 	}
@@ -40,8 +40,8 @@ public class CitasServicioImpl implements CitasService {
 	}
 
 	@Override
-	public CitasModel findCitasByFecha(String fecha) {
-		return transform(citasRepository.findByfechaCita(fecha));
+	public Citas findByFechaCitas(String fecha) {
+		return citasRepository.findByFechaCita(fecha);
 
 	}
 
@@ -60,16 +60,19 @@ public class CitasServicioImpl implements CitasService {
 	}
 
 	@Override
-	public Citas transform(CitasModel CitasModel) {
+	public Citas transform(CitasModel citasModel) {
 		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(CitasModel, Citas.class);
+		return modelMapper.map(citasModel, Citas.class);
 	}
 
 	@Override
-	public CitasModel transform(Citas Citas) {
+	public CitasModel transform(Citas citas) {
 		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(Citas, CitasModel.class);
+		CitasModel citalModel=modelMapper.map(citas, CitasModel.class);
+		citalModel.setFechaCita(citas.getFechaCita());
+		return citalModel;
 	}
+	
 
 	@Override
 	public List<CitasModel> listAllCitass() {

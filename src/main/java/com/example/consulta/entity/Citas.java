@@ -1,15 +1,12 @@
 package com.example.consulta.entity;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -19,7 +16,7 @@ public class Citas {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	@Column(name = "fechaCita", unique = true)
+	@Column(name = "CitaFecha", unique = true)
 	private String fechaCita;
 	
 	private boolean activa;
@@ -32,23 +29,20 @@ public class Citas {
 	@JoinColumn(name="citas")
 	private Historial historial;
 	
-	
 	@ManyToOne
 	@JoinColumn(name="servicio")
 	private Servicio servicio;
 
 
-
-	public Citas(long id, String fechaCita, Cliente cliente, Historial historial, Servicio servicio, boolean activa) {
-		super();
-		this.id = id;
-		this.fechaCita = fechaCita;
-		this.cliente = cliente;
-		this.historial = historial;
-		this.servicio = servicio;
-		this.activa = activa;
+	public Citas(@Nullable long id, @Nullable String fechaCita, @Nullable Cliente cliente, @Nullable Historial historial, @Nullable Servicio servicio, boolean activa) {
+	    super();
+	    this.id = id;
+	    this.fechaCita = fechaCita;
+	    this.cliente = cliente;
+	    this.historial = historial;
+	    this.servicio = servicio;
+	    this.activa = activa;
 	}
-
 	public Citas() {
 		super();
 	}
