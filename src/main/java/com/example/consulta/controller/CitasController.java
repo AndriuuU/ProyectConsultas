@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,12 +59,15 @@ public class CitasController {
 		return mav;
 	}
 
-	@PostMapping("/usuario/get/cita")
-	public String registrarCita(@ModelAttribute CitasModel cita, RedirectAttributes flash) {
+	@PostMapping("/usuario/get/cita{date}")
+	public String registrarCita(@PathVariable("date") String fecha, RedirectAttributes flash) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		long idCliente = clienteService.findByEmail(userEmail).getId();
-		if (citasService.findCitasById(cita.getId()) == null) {
+		
+		if (citasService.findByFechaCitas(fecha) == null) {
+			CitasModel cita = new CitasModel();
+			cita.setFechaCita(fecha);
 			cita.setCliente(clienteService.findCliente(idCliente));
 			citasService.addCitas(cita);
 			flash.addFlashAttribute("success", "Cita obtenida");
