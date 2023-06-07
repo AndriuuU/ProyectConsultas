@@ -59,7 +59,7 @@ public class CitasController {
 		return mav;
 	}
 
-	@PostMapping("/usuario/get/cita{date}")
+	@GetMapping("/usuario/get/cita/{date}")
 	public String registrarCita(@PathVariable("date") String fecha, RedirectAttributes flash) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();

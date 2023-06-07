@@ -13,25 +13,63 @@
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
+<link th:href="@{/scripts/utils/fullcalendar/main.css}" rel="stylesheet" />
+<script th:src="@{/scripts/utils/fullcalendar/main.js}"></script>
+<script th:src="@{/scripts/utils/fullcalendar/locales/es.js}"></script>
+<link rel="stylesheet" th:href="@{/css/calendar.css}">
+<link rel="stylesheet" th:href="@{/css/schedule.css}">
 
 <title>Obtener cita</title>
 
 </head>
-<body>
+	<body>
+		<section layout:fragment="custom-content">
+			<div th:replace="fragments/header :: header"></div>
+		</section>
+		<br><br>
 
-	<section layout:fragment="custom-content">
-		<div th:replace="fragments/header :: header"></div>
-	</section>
-	<br><br>
+		<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
 
-   <div class="alert alert-success" th:if="${success != null}"
-		th:text="${success}"></div>
-	<div class="alert alert-danger" th:if="${error != null}"
-		th:text="${error}"></div>
-	<div class="alert alert-warning" th:if="${warning != null}"
-		th:text="${warning}"></div>
-	<div class="alert alert-info" th:if="${info != null}"
-		th:text="${info}"></div>
-	
-</body>
+		<div class="container">
+			<section class="description-section schedule-form">
+						<hgroup>
+							<h4 id="scheduler">NOMBRE EMPRESA</h4> 
+							<h2 id="event">CONCEPTO CITA</h2>
+							<div class="icon-text-div">
+								<img src="icons/clock.svg" alt="clock-icon">
+								<h4 id="duration">30 min</h4>
+							</div>
+						</hgroup>
+						<p id=description>INFORMACIÓN / DESCRIPCIÓN</p>
+			</section>
+			<section class="description-section disabled-form">
+				<button class="back-btn"><img class="arrow-icon" src="icons/arrow (1).svg" alt="back-arrow"></button>
+				<hgroup>
+					<h4 id="scheduler">NOMBRE EMPRESA</h4> 
+					<h2 id="event">CONCEPTO CITA</h2>
+					<div class="icon-text-div">
+						<img src="icons/clock.svg" alt="clock-icon">
+						<h4 id="duration">30 min</h4>
+					</div><br>
+					<div class="icon-text-div">
+						<img src="icons/calendar (1).svg" alt="calendar-icon">
+						<h4 id="event-time-stamp">HORA, NOMBRE_DIA, FECHA_SIMPLE</h4>
+					</div>
+				</hgroup>
+			</section>
+			<div class="divider"></div>
+			<section id="calendar-section" class="body-section schedule-form">
+				<h3>Elija fecha y hora</h3>
+				<div id="schedule-div">
+					<div id="available-times-div"><!-- Available times --></div>
+					<div id="calendar"></div>
+				</div>
+			</section>
+		</div>
+
+		<script th:src="@{/scripts/calendar.js}"></script>
+	</body>
 </html>

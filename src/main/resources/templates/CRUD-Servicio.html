@@ -41,6 +41,7 @@
         <th scope="col">Id</th>
 		<th scope="col">NOMBRE</th>
 		<th scope="col">PRECIO</th>
+		<th scope="col">TRATAMUENTO</th>
         <th scope="col">ACCIONES</th>
       </tr>
     </thead>
@@ -48,6 +49,7 @@
       <tbody th:each="servicio: ${servicios}">
         <th scope="row">[[${servicio.id}]]</th>
         <td scope="row">[[${servicio.nombre}]]</td>
+        <td scope="row">[[${servicio.tratamiento}]]</td>
         <td scope="row">[[${servicio.precio}]]</td>
         <td>
 
@@ -57,6 +59,8 @@
       </tr>
     </tbody>
   </table>
+  <a th:href="@{/cliente/admin/insertUser}">
+         	   <button type="button" class="btn btn-primary">INSERTAR USUARIO</button></a>
 </div>
 </body>
 </html>

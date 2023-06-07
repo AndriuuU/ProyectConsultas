@@ -1,0 +1,127 @@
+.time-div-active {
+	 max-width: 900px;
+}
+ #calendar-section #calendar {
+	 font-family: Lato;
+	 font-weight: 300;
+	 flex: 2;
+}
+#calendar-section td {
+	overflow: hidden;
+	border-radius: 1em;
+	border: none;
+}
+ #calendar-section table {
+	 border: none;
+}
+ #calendar-section .fc-theme-standard, #calendar-section .fc-theme-standard th {
+	 border: none;
+}
+#calendar-section .fc-daygrid-day {
+	border-radius: 1em;
+}
+ #calendar-section .fc-toolbar-title {
+	 font-size: 1rem;
+	 font-weight: 300;
+}
+ #calendar-section .fc-today-button {
+	 display: none;
+}
+ #calendar-section .fc-prev-button, #calendar-section .fc-next-button {
+	 color: dodgerblue;
+	 background-color: white;
+	 border-color: white;
+	 outline: none;
+}
+ #calendar-section .fc .fc-button-primary:focus {
+	 box-shadow: 0;
+}
+ #calendar-section .fc-col-header-cell {
+	 font-weight: 300;
+	 font-size: 0.8rem;
+}
+ #calendar-section .fc-daygrid-day {
+	 font-weight: 400;
+	 color: rgb(129, 134, 150);
+}
+#calendar-section .fc-daygrid-day:has(.fc-highlight) {
+	color: white;
+}
+ #calendar-section .fc-daygrid-day-events {
+	 margin: 0;
+}
+ #calendar-section .fc-daygrid-day-number {
+	 margin: auto;
+}
+ #calendar-section .fc-day-today {
+	 background-color: ghostwhite;
+}
+ #calendar-section .fc-day-disabled {
+	 background-color: white;
+}
+ #schedule-div {
+	 display: flex;
+}
+ #available-times-div {
+	 display: none;
+	 flex: 1;
+	 order: 2;
+	 margin-left: 10px;
+}
+ .time-slot {
+	 display: flex;
+}
+ .time-btn {
+	 flex: 1;
+	 border: 1px solid lightblue;
+	 color: dodgerblue;
+	 background-color: white;
+	 width: 100%;
+	 font-weight: 600;
+	 margin-bottom: 10px;
+}
+ .time-btn:hover {
+	 border-width: 2px;
+	 border-color: dodgerblue;
+}
+ .time-btn:focus {
+	 background-color: gray;
+	 font-weight: 500;
+	 color: white;
+	 outline: none;
+	 border: none;
+}
+ .time-btn:focus:hover {
+	 border: none;
+}
+ .confirm-btn {
+	 flex: 1;
+	 width: 100%;
+	 margin-left: 5px;
+}
+ .confirm-btn:hover {
+	 opacity: 0.5;
+}
+ .confirm-btn:focus {
+	 outline: 0;
+	 opacity: 0.5;
+}
+.disabled-form {
+	display: none;
+}
+ @media (max-width: 1250px) {
+	 #calendar {
+		 max-width: 375px;
+		 margin: auto;
+	}
+}
+ @media (max-width: 645px) {
+	 #schedule-div {
+		 display: block;
+	}
+	 #calendar {
+		 width: auto;
+		 margin-top: 20px;
+	}
+}
+ 
