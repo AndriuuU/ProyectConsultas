@@ -21,7 +21,7 @@
 		<div th:replace="~{fragments/header :: header}"></div>
 	</section>
 	<br>
-	<form th:action="@{/cliente/admin/insert/cliente}" th:object="${cliente}" method="post" enctype="multipart/form-data" style="text-align:center;width: 500px;margin: auto;">
+	<form th:action="@{/cliente/insert/cliente}" th:object="${cliente}" method="post" enctype="multipart/form-data" style="text-align:center;width: 500px;margin: auto;">
 		
 		<h1>Nuevo cliente</h1>
 		

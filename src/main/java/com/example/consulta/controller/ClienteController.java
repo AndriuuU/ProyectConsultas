@@ -61,7 +61,7 @@ public class ClienteController {
 		return Constantes.INSERT_CLIENTE;
 	}
 
-	@PostMapping("/admin/insert/cliente")
+	@PostMapping("/insert/cliente")
 	public String register(@ModelAttribute Cliente cliente, RedirectAttributes flash) {
 		if (userRepository.findByUsername(cliente.getEmail()) == null) {
 			clienteService.addCliente(clienteService.transform(cliente));
