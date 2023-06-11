@@ -25,4 +25,6 @@ public class Constantes {
 	public static final String OBTENER_CITA = "OBTENER-cita";
 	
 	public static final String OBTENER_MI_CITA = "OBTENER-MisCitas";
+	
+	public static final String OBTNER_HISTORIAL  = "OBTENER-historial";
 }

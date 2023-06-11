@@ -23,8 +23,7 @@
 		<div th:replace="fragments/header :: header"></div>
 	</section>
 	<br><br>
-  
-  
+	  
    <div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
@@ -34,5 +33,9 @@
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
 	
+  <tbody th:each="cita: ${citas}">
+ 	 <h2>[[${cita.fechaCita}]]</h2>
+  </tbody>
+
 </body>
 </html>

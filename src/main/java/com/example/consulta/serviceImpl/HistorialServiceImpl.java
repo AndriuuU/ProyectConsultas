@@ -35,11 +35,6 @@ public class HistorialServiceImpl implements HistorialService {
 
 
 	@Override
-	public Historial findHistorialById(long id) {
-		return historialRepository.findById(id);
-	}
-
-	@Override
 	public HistorialModel findHistorialByIdModel(long id) {
 		return transform(historialRepository.findById(id));
 
