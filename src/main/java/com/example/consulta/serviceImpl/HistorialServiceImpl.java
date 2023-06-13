@@ -1,5 +1,6 @@
 package com.example.consulta.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.example.consulta.entity.Historial;
 import com.example.consulta.model.HistorialModel;
 import com.example.consulta.repository.HistorialRepository;
-import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.HistorialService;
 
 @Service("historialService")
@@ -70,6 +70,25 @@ public class HistorialServiceImpl implements HistorialService {
 	public List<HistorialModel> listAllHistorials() {
 		return historialRepository.findAll().stream().map(c -> transform(c)).collect(Collectors.toList());
 
+	}
+
+
+	@Override
+	public Historial findHistorialById(long id) {
+		return historialRepository.findById(id);
+	}
+
+
+	@Override
+	public List<HistorialModel> listHistorialCliente(long idCliente) {
+		List<HistorialModel> allHisto=listAllHistorials();
+		List<HistorialModel> newHisto=new ArrayList<>();
+		for(HistorialModel histo:allHisto) {
+			if(histo.getCliente().getId()==idCliente) {
+				newHisto.add(histo);
+			}
+		}
+		return newHisto;
 	}
 
 }

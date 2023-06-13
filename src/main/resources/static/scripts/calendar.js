@@ -1,6 +1,6 @@
-var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var timesAvailable = ["9:00am", "10:00am", "11:00am", "2:00pm", "3:00pm"];
+var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+var days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+var timesAvailable = ["9:00am", "9:45am", "10:30am", "11:15am", "12:00pm", "12:45pm", "1:30pm"];
 
 // Calendar
 document.addEventListener('DOMContentLoaded', function() {
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         select: function(info) {
             var currentDay = new Date();
             var daySelected = info.start;
+            var servicioSelected;
 
             console.log(currentDay.toJSON());
 
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 timeDiv.style.display = "initial";
 
-            } else {alert("Sorry that date has already past. Please select another date.");}
+            } else {alert("Lo siento la fecha es erronea. Por favor seleccione otra fecha.");}
         },
     });
     calendar.render();

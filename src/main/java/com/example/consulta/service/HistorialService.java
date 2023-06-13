@@ -17,5 +17,6 @@ public interface HistorialService {
 	public abstract Historial transform(HistorialModel HistorialModel);
 	public abstract HistorialModel transform(Historial Historial);
 	public abstract List<HistorialModel> listAllHistorials();
+	public abstract List<HistorialModel> listHistorialCliente(long idCliente);
  
 }

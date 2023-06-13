@@ -17,6 +17,8 @@
 					class="nav-item" th:href="@{/admin/usuario/listTrata/}">Crud Tratamiento</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
 					class="nav-item" th:href="@{/servicio/admin/listServicios}">Crud Servicios</a></li>
+				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
+					class="nav-item" th:href="@{/cita/admin/listCitas}">Crud Citas</a></li>
 
 				
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
@@ -24,7 +26,7 @@
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
 					class="nav-item" th:href="@{/cita/usuario/obtener/cita}">Obtener cita</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/usuario/historial}">Historial</a></li>
+					class="nav-item" th:href="@{/historial/usuario}">Historial</a></li>
 
 				
 				

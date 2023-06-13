@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.consulta.constantes.Constantes;
-import com.example.consulta.entity.Citas;
+import com.example.consulta.model.HistorialModel;
 import com.example.consulta.repository.HistorialRepository;
+import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.HistorialService;
 
 @Controller
@@ -29,16 +30,21 @@ public class HistorialController {
 	@Qualifier("historialService")
 	private HistorialService historialService;
 
+	@Autowired
+	@Qualifier("clienteService")
+	private ClienteService clienteService;
+
 	
-	@GetMapping("/usuario/miscitas")
+	@GetMapping("/usuario")
 	public ModelAndView registerForm(Model model) {
-		ModelAndView mav = new ModelAndView(Constantes.OBTENER_MI_CITA);
+		ModelAndView mav = new ModelAndView(Constantes.OBTENER_HISTORIAL);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
+		long idCliente =clienteService.findByEmail(userEmail).getId();
 		if(!userEmail.equalsIgnoreCase("anonymousUser")) {
-			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
+			List<HistorialModel> lisHistorial = historialService.listHistorialCliente(idCliente);
 		
-			mav.addObject("citas", listci);
+			mav.addObject("historiales", lisHistorial);
 		}
 
 		return mav;

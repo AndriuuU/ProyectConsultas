@@ -14,17 +14,18 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
-<title>Ver mis citas</title>
-
+<title>Lista de Citas</title>
 </head>
 <body>
-
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
-	<br><br>
-	  
-   <div class="alert alert-success" th:if="${success != null}"
+	<br>
+	<br>
+		<h1>Citas:</h1>
+	<br>
+	<br>
+	 <div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
@@ -32,35 +33,34 @@
 		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
-	
-  <tbody th:each="cita: ${citas}">
-  <h1 id="fecha">[[${cita.fechaCita}]]</h1>
-
-  <script>
-	    // Obtén la fecha y hora en formato ISO 8601
-	    var fechaISO8601 = "2023-06-20T22:00:00.000Z";
-	
-	    // Crea un objeto de fecha utilizando la cadena ISO 8601
-	    var fecha = new Date(fechaISO8601);
-	
-	    // Convierte la fecha a un formato legible
-	    var dia = fecha.getDate();
-	    var mes = fecha.getMonth() + 1; // Los meses comienzan en 0, por lo que se suma 1
-	    var año = fecha.getFullYear();
-	    var hora = fecha.getHours();
-	    var minutos = fecha.getMinutes();
-	
-	    // Crea una cadena con el formato deseado
-	    var fechaLegible = dia + "/" + mes + "/" + año + " " + hora + ":" + minutos;
-	
-	    // Inserta la fecha en el elemento HTML con el id "fecha"
-	    document.getElementById("fecha").innerHTML = fechaLegible;
-	  </script>
-<!--  	 <h2>[[${cita.fechaCita}]]</h2> -->
- 	 <a th:href="@{/cita/usuario/delete/} + ${cita.id}">
+<div th:if="${citas.size() > 0}">
+  <table class="table table-hover table-responsive-xl">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+		<th scope="col">ACTIVA</th>
+		<th scope="col">FECHA</th>
+		<th scope="col">CLIENTE</th>
+        <th scope="col">ACCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tbody th:each="cita: ${citas}">
+        <th scope="row">[[${cita.id}]]</th>
+        <td scope="row">[[${cita.activa}]]</td>
+        <td scope="row">[[${cita.fechaCita}]]</td>
+    	<td scope="row">[[${cita.cliente}]]</td>
+        <td>
+			
+			<a th:href="@{/cita/usuario/delete/} + ${cita.id}">
 				<button type="button" class="btn btn-danger">Eliminar cita</button>
 				</a>
-  </tbody>
-	
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  	<a th:href="@{/cliente/admin/insertcita}">
+         	   <button type="button" class="btn btn-primary">INSERTAR USUARIO</button></a>
+</div>
 </body>
 </html>

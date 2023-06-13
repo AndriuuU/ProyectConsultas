@@ -9,9 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,10 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.consulta.constantes.Constantes;
 import com.example.consulta.entity.Citas;
 import com.example.consulta.model.CitasModel;
+import com.example.consulta.model.ServicioModel;
 import com.example.consulta.repository.CitasRepository;
 import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
+import com.example.consulta.service.ServicioService;
 
 @Controller
 @RequestMapping("/cita")
@@ -42,6 +42,10 @@ public class CitasController {
 	private ClienteService clienteService;
 
 	@Autowired
+	@Qualifier("servicioService")
+	private ServicioService servicioService;
+	
+	@Autowired
 	@Qualifier("citasService")
 	private CitasService citasService;
 
@@ -50,9 +54,9 @@ public class CitasController {
 		ModelAndView mav = new ModelAndView(Constantes.OBTENER_MI_CITA);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		if(!userEmail.equalsIgnoreCase("anonymousUser")) {
+		if (!userEmail.equalsIgnoreCase("anonymousUser")) {
 			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
-		
+
 			mav.addObject("citas", listci);
 		}
 
@@ -64,8 +68,8 @@ public class CitasController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		long idCliente = clienteService.findByEmail(userEmail).getId();
-		
-		if (citasService.findByFechaCitas(fecha) == null) {
+		boolean userLoing=!userEmail.equalsIgnoreCase("anonymousUser");
+		if (userLoing&&citasService.findByFechaCitas(fecha) == null) {
 			CitasModel cita = new CitasModel();
 			cita.setFechaCita(fecha);
 			cita.setCliente(clienteService.findCliente(idCliente));
@@ -83,11 +87,44 @@ public class CitasController {
 		ModelAndView mav = new ModelAndView(Constantes.OBTENER_CITA);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		long idCliente = clienteService.findByEmail(userEmail).getId();
+		boolean userLoing=!userEmail.equalsIgnoreCase("anonymousUser");
 		List<CitasModel> listci = citasService.listAllCitass();
-		if (listci != null) {
+		List<ServicioModel> listServi = servicioService.listAllServicios();
+		
+		if (userLoing && listci != null) {
 			mav.addObject("citas", listci);
+			mav.addObject("servicios", listServi);
 		}
+		return mav;
+	}
+
+	// Metodo de borrar
+	@GetMapping("/usuario/delete/{id}")
+	public String deleteUser(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+		boolean exist = false;
+		if (!userEmail.equalsIgnoreCase("anonymousUser")) {
+			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
+			for (Citas cita : listci) {
+				if (cita.getId() == id) {
+					exist = true;
+				}
+			}
+			if (citasService.removeCitas(id) && exist)
+				flash.addFlashAttribute("success", "Cita eliminada con éxito");
+			else
+				flash.addFlashAttribute("error", "No se pudo eliminar la cita");
+		} else
+			flash.addFlashAttribute("error", "No se pudo eliminar la cita");
+		return "redirect:/cita/usuario/miscitas?error";
+	}
+
+	@GetMapping("/admin/listCitas")
+	public ModelAndView listClientes(@RequestParam(name = "error", required = false) String error) {
+		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
+		mav.addObject("citas", citasService.listAllCitass());
+		mav.addObject("error", error);
 		return mav;
 	}
 }

@@ -18,6 +18,8 @@ public class Constantes {
 	
 	public static final String CRUD_SERVICIO_VIEW="CRUD-Servicio";
 	
+	public static final String CRUD_CITAS_VIEW="CRUD-Cita";
+	
 	public static final String INSERT_USER="INSERT-USER";
 	
 	public static final String INSERT_CLIENTE="INSERT-CLIENTES";
@@ -26,5 +28,5 @@ public class Constantes {
 	
 	public static final String OBTENER_MI_CITA = "OBTENER-MisCitas";
 	
-	public static final String OBTNER_HISTORIAL  = "OBTENER-historial";
+	public static final String OBTENER_HISTORIAL  = "OBTENER-historial";
 }
