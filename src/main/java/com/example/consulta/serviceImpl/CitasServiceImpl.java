@@ -1,5 +1,9 @@
 package com.example.consulta.serviceImpl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +29,15 @@ public class CitasServiceImpl implements CitasService {
 //	@Qualifier("citasServicioImpl")
 //	private CitasService citasService;
 
+	public String sumarDia(String fecha) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        LocalDateTime localDateTime = LocalDateTime.parse(fecha, formatter);
+        
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneOffset.UTC);
+        ZonedDateTime fechaSumada = zonedDateTime.plusDays(1);
+        
+        return fechaSumada.format(formatter);
+    }
 	
 	@Override
 	public Citas addCitas(CitasModel citas) {
