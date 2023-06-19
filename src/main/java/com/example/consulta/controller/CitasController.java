@@ -44,7 +44,7 @@ public class CitasController {
 	@Autowired
 	@Qualifier("servicioService")
 	private ServicioService servicioService;
-	
+
 	@Autowired
 	@Qualifier("citasService")
 	private CitasService citasService;
@@ -63,13 +63,14 @@ public class CitasController {
 		return mav;
 	}
 
-	@GetMapping("/usuario/get/cita/{date}")
-	public String registrarCita(@PathVariable("date") String fecha, RedirectAttributes flash) {
+	@GetMapping("/usuario/get/cita/{date}/{fecha}")
+	public String registrarCita(@PathVariable("date") String fecha, @PathVariable("fecha") String fecha2,
+			RedirectAttributes flash) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
 		long idCliente = clienteService.findByEmail(userEmail).getId();
-		boolean userLoing=!userEmail.equalsIgnoreCase("anonymousUser");
-		if (userLoing&&citasService.findByFechaCitas(fecha) == null) {
+		boolean userLoing = !userEmail.equalsIgnoreCase("anonymousUser");
+		if (userLoing && citasService.findByFechaCitas(fecha) == null) {
 			CitasModel cita = new CitasModel();
 			cita.setFechaCita(fecha);
 			cita.setCliente(clienteService.findCliente(idCliente));
@@ -87,10 +88,10 @@ public class CitasController {
 		ModelAndView mav = new ModelAndView(Constantes.OBTENER_CITA);
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		boolean userLoing=!userEmail.equalsIgnoreCase("anonymousUser");
+		boolean userLoing = !userEmail.equalsIgnoreCase("anonymousUser");
 		List<CitasModel> listci = citasService.listAllCitass();
 		List<ServicioModel> listServi = servicioService.listAllServicios();
-		
+
 		if (userLoing && listci != null) {
 			mav.addObject("citas", listci);
 			mav.addObject("servicios", listServi);
@@ -103,18 +104,22 @@ public class CitasController {
 	public String deleteUser(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String userEmail = authentication.getName();
-		boolean exist = false;
+		
 		if (!userEmail.equalsIgnoreCase("anonymousUser")) {
-			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
-			for (Citas cita : listci) {
-				if (cita.getId() == id) {
-					exist = true;
-				}
-			}
-			if (citasService.removeCitas(id) && exist)
-				flash.addFlashAttribute("success", "Cita eliminada con éxito");
-			else
-				flash.addFlashAttribute("error", "No se pudo eliminar la cita");
+//			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
+//			for (Citas cita : listci) {
+//				if (cita.getId() == id) {
+//					
+					if (citasService.removeCitas(id)) {
+						citasService.removeCitas(id);
+						flash.addFlashAttribute("success", "Cita eliminada con éxito");
+						return "redirect:/cita/usuario/miscitas";
+					}
+//				}
+//			}
+//			System.out.println(id);
+//			
+//			
 		} else
 			flash.addFlashAttribute("error", "No se pudo eliminar la cita");
 		return "redirect:/cita/usuario/miscitas?error";

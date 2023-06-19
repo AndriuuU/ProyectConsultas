@@ -6,6 +6,32 @@ ul {
     background-color: #333;
 }
 
+.page-container {
+    width: 800px;
+    background-color: whitesmoke;
+    border-radius: 1em;
+    margin: 1em auto;
+}
+
+.cita-btn {
+    text-align: center;
+    border-radius: 0.3em;
+    background-color: rgb(226, 92, 215);
+    width: 80px;
+    margin: 0 auto;
+    margin-top: 0.8em;
+    text-decoration: none;
+    color: white;
+    padding: 0.6em;
+    transition: all 0.3s;
+}
+
+.cita-btn:hover {
+    transform: scale(1.1);
+    background-color: rgba(226, 92, 215, 0.8);
+    color: white
+}
+
 li {
     float: left;
 }
@@ -19,7 +45,10 @@ li a {
 }
 
 li a:hover {
-    background-color: #111;
+    background-color: white;
+    border-color: rgb(226, 92, 215);
+    border-width: 2px;
+    color: #111
 }
 
 li form button {
@@ -30,7 +59,9 @@ li form button {
     background-color: #333;
 }
 li form button:hover {
-    background-color: #111;
+    background-color: white;
+    border-color: rgb(226, 92, 215);
+    color: #111
 }
 li form button {
 	 color: #666;
@@ -60,5 +91,9 @@ li a {
 
 
 .active {
-    background-color: #BD76FF;
+    color: white;
+    background-color: rgb(226, 92, 215);
+    border-color: rgb(226, 92, 215);
+    border-width: 2px;
+    border-radius: 0.2em;
 }

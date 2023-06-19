@@ -15,24 +15,31 @@
 <title>Inicio</title>
 
 </head>
-<body>
+<body style="background-color: white;">
 
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
+
 	<br><br>
-	
-	
-	<div class="page-hero bg-image overlay-dark" style="background-image: url(https://www.unitecoprofesional.es/blog/wp-content/uploads/2021/10/documentacion-clinica-2.jpg);">
-    <div class="hero-section">
-      <div class="container text-center wow zoomIn" style="visibility: visible; animation-name: zoomIn;">
-        <span class="subhead">Let's make your life happier</span>
-        <h1 class="display-4"><b>Clinica dermatologica</b></h1>
-        <a sec:authorize="hasAuthority('ROLE_USER')" href="/cita/usuario/obtener/cita" class="btn btn-primary">Coger cita</a>
-      </div>
-    </div>
-  </div>
-  
+
+  	<div class="page-container" style="margin-top: 3em; padding: 1em;">
+		<h1 style="margin: 0px; text-align: center;">Clinica dermatológica</h1>
+		
+		<div style="display: flex; flex-direction: row;">
+			<img th:src="@{/images/enfermera.png}" style="width: 300px;">
+			<div style="display: flex; flex-direction: column;">
+				<p style="font-size: 20px;">
+					En nuestra clínica dermatológica, ofrecemos servicios personalizados para el cuidado y tratamiento de la piel,
+					incluyendo diagnóstico y tratamiento de enfermedades de la piel, procedimientos cosméticos avanzados y asesoramiento
+					sobre cuidado de la piel. Nuestro objetivo es brindarte una piel sana y radiante.
+					<br>
+					¡No olvides reservar tu cita!
+				</p>
+				<a sec:authorize="hasAuthority('ROLE_USER')" href="/cita/usuario/obtener/cita" class="btn btn-primary cita-btn">Coger cita</a>
+			</div>
+		</div>
+	</div>
   
    <div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>

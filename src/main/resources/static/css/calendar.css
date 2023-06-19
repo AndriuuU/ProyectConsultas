@@ -1,6 +1,7 @@
 body {
 	 background-color: ghostwhite;
-	 font-family: Lato;
+	 font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	 margin: 0;
 }
  h3 {
 	 color: darkslategray;
@@ -16,7 +17,7 @@ body {
 }
  button {
 	 height: 50px;
-	 background-color: dodgerblue;
+	 background-color: rgb(226, 92, 215);
 	 color: white;
 	 font-size: 1rem;
 	 font-weight: 500;
@@ -32,7 +33,7 @@ body {
 	 width: 40px;
 }
  .back-btn:hover {
-	 background-color: lightblue;
+	 background-color: rgb(226, 92, 215);
 }
  .back-btn:focus {
 	 outline: 0;
@@ -43,7 +44,7 @@ body {
 }
  label {
 	 font-size: 0.85rem;
-	 font-family: Lato;
+	 font-family: sans-serif;
 	 font-weight: 600;
 	 color: darkslategray;
 }
@@ -54,13 +55,13 @@ body {
 	 border-radius: 0;
 	 margin: 10px 0 20px 0;
 	 padding: 0 15px;
-	 font-family: Lato;
+	 font-family: sans-serif;
 	 color: darkslategray;
 	 font-size: 1rem;
 }
  input:focus {
 	 outline: 0;
-	 border: 1.5px solid dodgerblue;
+	 border: 1.5px solid rgb(226, 92, 215);
 	 border-radius: 0;
 }
  .divider {

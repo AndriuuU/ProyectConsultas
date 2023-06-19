@@ -1,48 +1,48 @@
 <html lang="es" xmlns:th=http://www.thymeleaf.org
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header">
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark custom-nav">
 		
-		<div class="collapse navbar-collapse" id="topNavbar">
+		<div class="collapse navbar-collapse custom-nav" id="topNavbar">
 			<ul>
-				<li  th:classappend="${module == 'home' ? 'active' : ''}" class="nav-item">
-	        		<a class="nav-link active" href="/" th:href="@{/home}">Home</a>
+				<li  th:classappend="${module == 'home' ? 'active' : ''}" class="nav-item custom-nav">
+	        		<a class="nav-link active custom-nav" href="/" th:href="@{/home}">Home</a>
 		     	</li>
 		     	
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/cliente/admin/listUsers}">Crud Usuarios</a></li>
+					class="nav-item custom-nav" th:href="@{/cliente/admin/listUsers}">Crud Usuarios</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/cliente/admin/listClientes}">Crud Cliente</a></li>
+					class="nav-item custom-nav" th:href="@{/cliente/admin/listClientes}">Crud Cliente</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/admin/usuario/listTrata/}">Crud Tratamiento</a></li>
+					class="nav-item custom-nav" th:href="@{/admin/usuario/listTrata/}">Crud Tratamiento</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/servicio/admin/listServicios}">Crud Servicios</a></li>
+					class="nav-item custom-nav" th:href="@{/servicio/admin/listServicios}">Crud Servicios</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item" th:href="@{/cita/admin/listCitas}">Crud Citas</a></li>
+					class="nav-item custom-nav" th:href="@{/cita/admin/listCitas}">Crud Citas</a></li>
 
 				
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/cita/usuario/miscitas}">Mis citas</a></li>
+					class="nav-item custom-nav" th:href="@{/cita/usuario/miscitas}">Mis citas</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/cita/usuario/obtener/cita}">Obtener cita</a></li>
+					class="nav-item custom-nav" th:href="@{/cita/usuario/obtener/cita}">Obtener cita</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
-					class="nav-item" th:href="@{/historial/usuario}">Historial</a></li>
+					class="nav-item custom-nav" th:href="@{/historial/usuario}">Historial</a></li>
 
 				
 				
-				<li style="float: right" sec:authorize="!isAuthenticated()" class="nav-item">
-		      		<a class="nav-link active" th:href="@{/auth/login}"><i class="fas fa-user"></i>Log In</a>
+				<li style="float: right" sec:authorize="!isAuthenticated()" class="nav-item custom-nav">
+		      		<a class="nav-link active custom-nav" th:href="@{/auth/login}"><i class="fas fa-user custom-nav"></i>Log In</a>
 		        </li>
 
-				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item">
-					<form class="nav-item" th:action="@{/auth/logout}" method="post">
-						<button style="float: right" class="nav-link active" th:href="@{/auth/login}">
+				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item custom-nav">
+					<form class="nav-item custom-nav" th:action="@{/auth/logout}" method="post">
+						<button style="float: right" class="nav-link active custom-nav" th:href="@{/auth/login}">
 						Log Out</button>
 					</form>
 				</li>
 				
-				<li style="float: right" sec:authorize="isAuthenticated()" class="nav-item" >
-					<a class="nav-link" th:text="${#authentication.name}"></a>
+				<li style="float: right" sec:authorize="isAuthenticated()" class="nav-item custom-nav" >
+					<a class="nav-link custom-nav" th:text="${#authentication.name}"></a>
 				
 			</ul>
 		</div>

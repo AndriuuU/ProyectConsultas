@@ -35,7 +35,7 @@
 							<h4 id="scheduler">CLÍNICA DERMATOLOGICA</h4> 
 							<h2 id="event">COGER CITA</h2>
 							<div class="icon-text-div">
-								<img src="icons/clock.svg" alt="clock-icon">
+								<img th:src="@{/images/clock.svg}">
 								<h4 id="duration">30 min</h4>
 							</div>
 						</hgroup>
@@ -47,21 +47,6 @@
 								    <option value="${servicio.nombre}">[[${servicio.nombre}]]</option>
 								 </tbody>
 							</select>
-			</section>
-			<section class="description-section disabled-form">
-				<button class="back-btn"><img class="arrow-icon" src="icons/arrow (1).svg" alt="back-arrow"></button>
-				<hgroup>
-					<h4 id="scheduler">CLÍNICA DERMATOLOGICA</h4> 
-					<h2 id="event">COGER CITA</h2>
-					<div class="icon-text-div">
-						<img src="icons/clock.svg" alt="clock-icon">
-						<h4 id="duration">45 min</h4>
-					</div><br>
-					<div class="icon-text-div">
-						<img src="icons/calendar (1).svg" alt="calendar-icon">
-						<h4 id="event-time-stamp">HORA, NOMBRE_DIA, FECHA_SIMPLE</h4>
-					</div>
-				</hgroup>
 			</section>
 			<div class="divider"></div>
 			<section id="calendar-section" class="body-section schedule-form">
