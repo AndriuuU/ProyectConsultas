@@ -1,6 +1,6 @@
 let months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 let days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-let timesAvailable = ["9:00am", "9:45am", "10:30am", "11:15am", "12:00pm", "12:45pm", "1:30pm"];
+let timesAvailable = ["09:00am", "09:45am", "10:30am", "11:15am", "12:00pm", "12:45pm", "13:30pm"];
 
 // Calendar
 document.addEventListener('DOMContentLoaded', function() {

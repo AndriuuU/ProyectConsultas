@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.repository.UserRepository;
 
 @Service("userService")
@@ -25,6 +26,10 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
+	
+	@Autowired
+	@Qualifier("clienteRepository")
+	private ClienteRepository clienteRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -88,7 +93,13 @@ public class UserService implements UserDetailsService {
 		if (u != null) {
 		
 			if (u.getUsername() != null) {
+				
 				userRepository.delete(u);
+				
+				if(clienteRepository.findByEmail(username) != null) {
+					clienteRepository.delete(clienteRepository.findByEmail(username) );
+				}
+				
 			}
 		return true;
 	}

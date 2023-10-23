@@ -162,8 +162,16 @@ public class ClienteModel {
 
 	@Override
 	public String toString() {
-		return "ClienteModel [id=" + id + ", nombre=" + nombre + ", email=" + email + ", seguro=" + seguro
-				+ ", direccion=" + direccion + ", telefono=" + telefono + ", password=" + password + ", historial=" + historial + "]";
+	    return "ClienteModel{" +
+	           "id=" + id +
+	           ", nombre='" + nombre + '\'' +
+	           ", email='" + email + '\'' +
+	           ", seguro='" + seguro + '\'' +
+	           ", direccion='" + direccion + '\'' +
+	           ", telefono='" + telefono + '\'' +
+	           ", password='" + password + '\'' +
+	           ", historial='" + historial + '\'' +
+	           '}';
 	}
 
 

@@ -3,14 +3,19 @@ package com.example.consulta.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.consulta.constantes.Constantes;
+import com.example.consulta.entity.Cliente;
+import com.example.consulta.entity.Servicio;
 import com.example.consulta.repository.CitasRepository;
 import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.repository.ServicioRepository;
@@ -56,12 +61,36 @@ public class ServicioController {
 	
 	@GetMapping("/admin/delete/{id}")
 	public String deleteServicio(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
-		if (clienteService.removeCliente(id)) {
+		
+		
+		if (servicioService.removeServicio(id)) {
 			flash.addFlashAttribute("success", "Servicio eliminado con éxito");
 			return "redirect:/servicio/admin/listServicios?success";
 		} else {
 			flash.addFlashAttribute("error", "No se pudo eliminar el servicio");
 			return "redirect:/servicio/admin/listServicios?error";
 		}
+	}
+	
+//	/cliente/admin/insertService
+	
+	@GetMapping("/admin/insertService")
+	public String registerForm(Model model, @RequestParam(name = "error", required = false) String error) {
+		model.addAttribute("servicio", new Servicio());
+		model.addAttribute("message", error);
+		return Constantes.INSERT_SERVICIO;
+	}
+
+	@PostMapping("/admin/insert/servicio")
+	public String register(@ModelAttribute Servicio servicio, RedirectAttributes flash) {
+		if (servicioRepository.findByNombre(servicio.getNombre()) == null) {
+			servicioService.addServicio(servicioService.transform(servicio));
+			flash.addFlashAttribute("success", "Servicio registrado correctamente");
+			return "redirect:/servicio/admin/listServicios";
+		} else {
+			flash.addFlashAttribute("error", "No se pudo registrar el servicio");
+			return "redirect:/servicio/admin/listServicios?error";
+		}
+
 	}
 }

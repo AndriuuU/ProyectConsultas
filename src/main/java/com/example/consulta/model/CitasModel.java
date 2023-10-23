@@ -1,4 +1,4 @@
-package com.example.consulta.model;
+ package com.example.consulta.model;
 
 import com.example.consulta.entity.Cliente;
 import com.example.consulta.entity.Historial;

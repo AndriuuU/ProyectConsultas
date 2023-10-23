@@ -23,6 +23,8 @@ public class Constantes {
 	public static final String INSERT_USER="INSERT-USER";
 	
 	public static final String INSERT_CLIENTE="INSERT-CLIENTES";
+	
+	public static final String INSERT_SERVICIO="INSERT-Servicio";
 
 	public static final String OBTENER_CITA = "OBTENER-cita";
 	
