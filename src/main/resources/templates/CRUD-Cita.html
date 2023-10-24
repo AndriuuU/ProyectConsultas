@@ -14,6 +14,11 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 <title>Lista de Citas</title>
 </head>
 <body>
@@ -61,5 +66,9 @@
   </table>
   
 </div>
+<!-- Auto width -->
+	<a th:href="@{/admin/generar-pdf}">
+		<button class="btn"><i class="fa fa-download"></i> Download Citas hoy</button>
+	</a>
 </body>
 </html>

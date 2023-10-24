@@ -1,5 +1,7 @@
 package com.example.consulta.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,13 @@ import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.ServicioService;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 @RequestMapping("/cita")
@@ -50,6 +59,7 @@ public class CitasController {
 	@Qualifier("citasService")
 	private CitasService citasService;
 
+	
 	@GetMapping("/usuario/miscitas")
 	public ModelAndView registerForm(Model model) {
 		ModelAndView mav = new ModelAndView(Constantes.OBTENER_MI_CITA);
@@ -143,6 +153,30 @@ public class CitasController {
 		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
 		mav.addObject("citas", citasService.listAllCitass());
 		mav.addObject("error", error);
+		Document document = new Document();
+		try {
+
+			PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+
+			document.open();
+			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+			Chunk chunk = new Chunk("Hello World", font);
+
+			document.add(chunk);
+			document.close();
+			
+		} catch (FileNotFoundException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	@GetMapping("/admin/listCitas/download")
+	public ModelAndView descargarCitas(@RequestParam(name = "error", required = false) String error) {
+		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
+		mav.addObject("citas", citasService.listAllCitass());
+		mav.addObject("error", error);
+		
 		return mav;
 	}
 }

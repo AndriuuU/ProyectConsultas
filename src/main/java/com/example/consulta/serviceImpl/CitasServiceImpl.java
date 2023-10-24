@@ -1,5 +1,6 @@
 package com.example.consulta.serviceImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -93,6 +94,7 @@ public class CitasServiceImpl implements CitasService {
 
 	}
 
+	
 
 	@Override
 	public List<CitasModel> listCitasCliente(long idCliente) {
@@ -105,6 +107,24 @@ public class CitasServiceImpl implements CitasService {
 		}
 		
 		return clienteCita;
+	}
+
+	@Override
+	public List<CitasModel> listaCitaHoy() {
+		
+		List<CitasModel> todasCitas=listAllCitass();
+		int diaActual = LocalDate.now().getDayOfMonth();
+		List<CitasModel> citasDelDia = todasCitas.stream()
+	               .filter(cita -> {
+	                   String fechaCita = cita.getFechaCita();
+	                   int diaCita = Integer.parseInt(fechaCita.split("&")[2]); // Extraer el día de la cadena de fecha
+	                   return diaCita == diaActual;
+	               })
+	               .collect(Collectors.toList());
+	
+		return citasDelDia;
+        
+		
 	}
 
 }
