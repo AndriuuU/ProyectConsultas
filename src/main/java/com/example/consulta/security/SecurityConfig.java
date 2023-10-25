@@ -24,7 +24,7 @@ public class SecurityConfig {
 			//WEB
 		
 		http.authorizeRequests((requests)->requests
-			.requestMatchers("/cliente/admin/**","/cita/admin/**where").hasRole("ADMIN")
+			.requestMatchers("/cliente/admin/**","/cita/admin/**","*/admin/**").hasRole("ADMIN")
 			.requestMatchers("/cita/cliente/**").hasRole("USER")
 			.requestMatchers("/css/**").permitAll()
 			.requestMatchers("/**").permitAll().anyRequest().authenticated())

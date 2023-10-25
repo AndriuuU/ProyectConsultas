@@ -127,4 +127,15 @@ public class CitasServiceImpl implements CitasService {
 		
 	}
 
+	@Override
+	public CitasModel findFechaCompleta(String fechaCompleta) {
+		List<CitasModel> allCitas=listAllCitass();
+		for(CitasModel a: allCitas) {
+			if(a.getFechaCompleta().equalsIgnoreCase(fechaCompleta)) {
+				return a;
+			}
+		}
+		return null;
+	}
+
 }

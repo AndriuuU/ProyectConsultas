@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -85,17 +86,20 @@ public class CitasController {
 		String[] elementos = fecha.split("&");
 		String hora=elementos[0].replace("am", "");
 		hora=hora.replace("pm", "");
-		String dia=elementos[2];
-		String fechacomple=fecha2.replace("T22:00", "T"+hora);
+//		String dia=elementos[2];
+		String fechacomple=fecha2.replace("T23:00", "T"+hora);
 		String sumado=citasService.sumarDia(fechacomple);
+		System.out.println(hora);
 		System.out.println("Esta es la fecha buena: "+sumado);
-		if (userLoing && citasService.findByFechaCitas(fecha) == null) {
+		
+		
+		if (userLoing && citasService.findFechaCompleta(sumado) == null && citasService.findByFechaCitas(fecha)==null) {
 			CitasModel cita = new CitasModel();
 			cita.setFechaCita(fecha);
 			cita.setCliente(clienteService.findCliente(idCliente));
 			Servicio servi=servicioService.findServicioByNombre(elementos[5]);
 			cita.setServicio(servi);
-			cita.setFechaCompleta(fechacomple);
+			cita.setFechaCompleta(sumado);
 			citasService.addCitas(cita);
 			flash.addFlashAttribute("success", "Cita obtenida");
 			return "redirect:/cita/usuario/miscitas";
@@ -171,12 +175,12 @@ public class CitasController {
 		}
 		return mav;
 	}
-	@GetMapping("/admin/listCitas/download")
-	public ModelAndView descargarCitas(@RequestParam(name = "error", required = false) String error) {
-		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
-		mav.addObject("citas", citasService.listAllCitass());
-		mav.addObject("error", error);
-		
-		return mav;
-	}
+//	@GetMapping("/admin/listCitas/download")
+//	public ModelAndView descargarCitas(@RequestParam(name = "error", required = false) String error) {
+//		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
+//		mav.addObject("citas", citasService.listAllCitass());
+//		mav.addObject("error", error);
+//		
+//		return mav;
+//	}
 }

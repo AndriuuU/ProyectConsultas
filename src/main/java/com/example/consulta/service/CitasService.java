@@ -10,6 +10,7 @@ public interface CitasService {
 	public abstract Citas addCitas(CitasModel CitasModel);
 	public abstract Citas findCitasById(long id);
 	public abstract Citas findByFechaCitas(String string);
+	public abstract CitasModel findFechaCompleta(String fechaCompleta);
 	public abstract CitasModel updateCitas(CitasModel CitasModel);
 	public abstract boolean removeCitas(long id);
 	public abstract Citas transform(CitasModel CitasModel);
