@@ -87,7 +87,9 @@ public class CitasController {
 		String hora=elementos[0].replace("am", "");
 		hora=hora.replace("pm", "");
 //		String dia=elementos[2];
+		System.out.println(fecha2);
 		String fechacomple=fecha2.replace("T23:00", "T"+hora);
+		fechacomple=fecha2.replace("T22:00", "T"+hora);
 		String sumado=citasService.sumarDia(fechacomple);
 		System.out.println(hora);
 		System.out.println("Esta es la fecha buena: "+sumado);
@@ -157,30 +159,7 @@ public class CitasController {
 		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
 		mav.addObject("citas", citasService.listAllCitass());
 		mav.addObject("error", error);
-		Document document = new Document();
-		try {
-
-			PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
-
-			document.open();
-			Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-			Chunk chunk = new Chunk("Hello World", font);
-
-			document.add(chunk);
-			document.close();
-			
-		} catch (FileNotFoundException | DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return mav;
 	}
-//	@GetMapping("/admin/listCitas/download")
-//	public ModelAndView descargarCitas(@RequestParam(name = "error", required = false) String error) {
-//		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
-//		mav.addObject("citas", citasService.listAllCitass());
-//		mav.addObject("error", error);
-//		
-//		return mav;
-//	}
+
 }
