@@ -14,18 +14,20 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <title>Lista de Clientes</title>
 </head>
-<body>
+<body class="m-0 vh-10 row-10 justify-content-center align-items-center">
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
 	<br>
 	<br>
-	<h1>Clientes:</h1>
 	<br>
-		<br>
-	 <div class="alert alert-success" th:if="${success != null}"
+	
+	<div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
@@ -33,11 +35,11 @@
 		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
-	<table class="table table-hover table-responsive-xl">
 
-		<thead class="thead-light">
+<div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center">
+	<table class="table table-hover table-responsive-xl">
+    	<thead class="thead-light">
 			<tr>
-				<th scope="col">ID</th>
 				 <th scope="col">NOMBRE</th>
 				 <th scope="col">EMAIL</th>
 				 <th scope="col">DIRECCIÓN</th>
@@ -45,26 +47,26 @@
 				 <th scope="col">ACCION</th>
 			</tr>
 		</thead>
+		
 		<tbody th:each="cliente: ${clientes}">
 			<tr>
-				 <th scope="row">[[${cliente.id}]]</th>
-				 <th scope="row">[[${cliente.nombre}]]</th>
-				 <th scope="row">[[${cliente.email}]]</th>
-				 <th scope="row">[[${cliente.direccion}]]</th>
-				 <th scope="row">[[${cliente.telefono}]]</th>
-				<th>
+				 <td scope="row">[[${cliente.nombre}]]</td>
+				 <td scope="row">[[${cliente.email}]]</td>
+				 <td scope="row">[[${cliente.direccion}]]</td>
+				 <td scope="row">[[${cliente.telefono}]]</td>
+				<td>
 					<div style="text-align: center; margin: auto;">
-<!-- 						<a th:href="@{/cliente/admin/insert/cliente} + ${cliente.email}"> -->
-<!-- 							<button type="button" class="btn btn-primary">Activar/Descactivar</button> -->
 						</a> <a th:href="@{/cliente/admin/delete/cliente/} + ${cliente.id}"
 							th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');">
-							<button type="button" class="btn btn-danger">Borrar</button>
+							<button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i></button>
 						</a>
 					</div>
-				</th>
+				</td>
 			</tr>
 	</table>
-	<a th:href="@{/cliente/admin/insertCliente}">
-	         	   <button type="button" class="btn btn-primary">INSERTAR USUARIO</button></a>
+		<a th:href="@{/cliente/admin/insertCliente}"  >
+	         	   <button type="button" class="btn active custom-nav">INSERTAR CLIENTE</button></a>
+	</div>
+
 </body>
 </html>

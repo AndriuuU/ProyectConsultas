@@ -10,15 +10,15 @@
 		     	</li>
 		     	
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item custom-nav" th:href="@{/cliente/admin/listUsers}">Crud Usuarios</a></li>
+					class="nav-item custom-nav" th:href="@{/cliente/admin/listUsers}">USUARIOS</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item custom-nav" th:href="@{/cliente/admin/listClientes}">Crud Cliente</a></li>
+					class="nav-item custom-nav" th:href="@{/cliente/admin/listClientes}">CLIENTES</a></li>
 <!-- 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a -->
 <!-- 					class="nav-item custom-nav" th:href="@{/admin/usuario/listTrata/}">Crud Tratamiento</a></li> -->
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item custom-nav" th:href="@{/servicio/admin/listServicios}">Crud Servicios</a></li>
+					class="nav-item custom-nav" th:href="@{/servicio/admin/listServicios}">SERVICIOS</a></li>
 				<li sec:authorize="hasAuthority('ROLE_ADMIN')"><a
-					class="nav-item custom-nav" th:href="@{/cita/admin/listCitas}">Crud Citas</a></li>
+					class="nav-item custom-nav" th:href="@{/cita/admin/listCitas}">CITAS</a></li>
 
 				
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a

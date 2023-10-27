@@ -1,10 +1,9 @@
 package com.example.consulta.controller;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -28,13 +27,6 @@ import com.example.consulta.repository.ClienteRepository;
 import com.example.consulta.service.CitasService;
 import com.example.consulta.service.ClienteService;
 import com.example.consulta.service.ServicioService;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 @RequestMapping("/cita")
@@ -60,7 +52,6 @@ public class CitasController {
 	@Qualifier("citasService")
 	private CitasService citasService;
 
-	
 	@GetMapping("/usuario/miscitas")
 	public ModelAndView registerForm(Model model) {
 		ModelAndView mav = new ModelAndView(Constantes.OBTENER_MI_CITA);
@@ -68,8 +59,10 @@ public class CitasController {
 		String userEmail = authentication.getName();
 		if (!userEmail.equalsIgnoreCase("anonymousUser")) {
 			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
+			List<Citas> listaOrdenada = listci.stream().sorted(Comparator.comparing(Citas::getFechaCompleta))
+					.collect(Collectors.toList());
 
-			mav.addObject("citas", listci);
+			mav.addObject("citas", listaOrdenada);
 		}
 
 		return mav;
@@ -84,22 +77,22 @@ public class CitasController {
 		boolean userLoing = !userEmail.equalsIgnoreCase("anonymousUser");
 		System.out.println(fecha);
 		String[] elementos = fecha.split("&");
-		String hora=elementos[0].replace("am", "");
-		hora=hora.replace("pm", "");
+		String hora = elementos[0].replace("am", "");
+		hora = hora.replace("pm", "");
 //		String dia=elementos[2];
 		System.out.println(fecha2);
-		String fechacomple=fecha2.replace("T23:00", "T"+hora);
-		fechacomple=fecha2.replace("T22:00", "T"+hora);
-		String sumado=citasService.sumarDia(fechacomple);
+		String fechacomple = fecha2.replace("T23:00", "T" + hora);
+		fechacomple = fecha2.replace("T22:00", "T" + hora);
+		String sumado = citasService.sumarDia(fechacomple);
 		System.out.println(hora);
-		System.out.println("Esta es la fecha buena: "+sumado);
-		
-		
-		if (userLoing && citasService.findFechaCompleta(sumado) == null && citasService.findByFechaCitas(fecha)==null) {
+		System.out.println("Esta es la fecha buena: " + sumado);
+
+		if (userLoing && citasService.findFechaCompleta(sumado) == null
+				&& citasService.findByFechaCitas(fecha) == null) {
 			CitasModel cita = new CitasModel();
 			cita.setFechaCita(fecha);
 			cita.setCliente(clienteService.findCliente(idCliente));
-			Servicio servi=servicioService.findServicioByNombre(elementos[5]);
+			Servicio servi = servicioService.findServicioByNombre(elementos[5]);
 			cita.setServicio(servi);
 			cita.setFechaCompleta(sumado);
 			citasService.addCitas(cita);
@@ -110,7 +103,6 @@ public class CitasController {
 			return "redirect:/cita/usuario/miscitas?error";
 		}
 	}
-	
 
 	@GetMapping("/usuario/obtener/cita")
 	public ModelAndView registerCita(Model model) {
@@ -131,33 +123,45 @@ public class CitasController {
 	// Metodo de borrar
 	@GetMapping("/usuario/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		String userEmail = authentication.getName();
-		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userEmail = authentication.getName();
+
 //		if (!userEmail.equalsIgnoreCase("anonymousUser")) {
 //			List<Citas> listci = clienteService.findByEmail(userEmail).getCitas();
 //			for (Citas cita : listci) {
 //				if (cita.getId() == id) {
 //					
-					if (citasService.removeCitas(id)) {
-						citasService.removeCitas(id);
-						flash.addFlashAttribute("success", "Cita eliminada con éxito");
-						return "redirect:/home";
-					}
+		if (citasService.removeCitas(id)) {
+			citasService.removeCitas(id);
+			flash.addFlashAttribute("success", "Cita eliminada con éxito");
+
+			if (userEmail.equalsIgnoreCase("ADMIN")) {
+				return "redirect:/cita/admin/listCitas";
+			} else
+				return "redirect:/home";
+		}
 //				}
 //			}
 //			System.out.println(id);
 //			
 //			
 //		} else
-			flash.addFlashAttribute("error", "No se pudo eliminar la cita");
-		return "redirect:/home?error";
+		flash.addFlashAttribute("error", "No se pudo eliminar la cita");
+		if (userEmail.equalsIgnoreCase("ADMIN")) {
+			return "redirect:/cita/admin/listCitas";
+		} else
+			return "redirect:/home?error";
+		
 	}
 
 	@GetMapping("/admin/listCitas")
 	public ModelAndView listClientes(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView mav = new ModelAndView(Constantes.CRUD_CITAS_VIEW);
-		mav.addObject("citas", citasService.listAllCitass());
+		List<CitasModel> listCitas = citasService.listAllCitass();
+		List<CitasModel> listaOrdenada = listCitas.stream().sorted(Comparator.comparing(CitasModel::getFechaCompleta))
+				.collect(Collectors.toList());
+
+		mav.addObject("citas", listaOrdenada);
 		mav.addObject("error", error);
 		return mav;
 	}

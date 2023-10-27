@@ -53,19 +53,26 @@ public class PDFController {
 	        document.add(new Paragraph(" "));
 
 	        // Crear una tabla para mostrar las citas
-	        PdfPTable table = new PdfPTable(3); // 2 columnas: Hora y Cliente
+	        PdfPTable table = new PdfPTable(4);
 	        table.setWidthPercentage(100);
-
+	        
+            table.addCell(new PdfPCell(new Phrase("HORA")));
+            table.addCell(new PdfPCell(new Phrase("SERVICIO")));
+            table.addCell(new PdfPCell(new Phrase("NOMBRE CLIENTE")));
+            table.addCell(new PdfPCell(new Phrase("TELEFONO")));
 	        for (CitasModel cita : citas) {
 	            String[] partes = cita.getFechaCita().split("&");
 	            String hora = partes[0];
 	            String clienteNombre = cita.getCliente().getNombre();
 	            String servicio=cita.getServicio().getNombre();
+	            String telefono=cita.getCliente().getTelefono();
 //	            System.out.println(cita.getFechaCita());
 	            // Agregar fila a la tabla
 	            table.addCell(new PdfPCell(new Phrase(hora)));
-	            table.addCell(new PdfPCell(new Phrase(clienteNombre)));
 	            table.addCell(new PdfPCell(new Phrase(servicio)));
+	            table.addCell(new PdfPCell(new Phrase(clienteNombre)));
+	            table.addCell(new PdfPCell(new Phrase(telefono)));
+	            
 	        }
 
 	        // Agregar la tabla al documento

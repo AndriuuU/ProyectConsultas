@@ -14,17 +14,20 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <title>Lista de users</title>
 </head>
-<body>
+<body class="m-0 vh-10 row-10 justify-content-center align-items-center">
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
 	<br>
 	<br>
-		<h1>Usuarios:</h1>
 	<br>
-	<br>
+	
 	 <div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
@@ -33,11 +36,11 @@
 		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
-<div th:if="${users.size() > 0}">
+		
+<div th:if="${users.size() > 0}" class="col-auto p-5 text-center">
   <table class="table table-hover table-responsive-xl">
     <thead class="thead-light">
       <tr>
-        <th scope="col">ID</th>
 		<th scope="col">USERNAME</th>
 		<th scope="col">ROLL</th>
 		<th scope="col">ENABLE</th>
@@ -46,26 +49,25 @@
     </thead>
     <tbody>
       <tbody th:each="user: ${users}">
-        <th scope="row">[[${user.id}]]</th>
         <td scope="row">[[${user.username}]]</td>
         <td scope="row">[[${user.role}]]</td>
         <td>
         
-          <a th:if="${user.enable == true}">ACTIVADO</a>
-          <a th:if="${user.enable == false}">DESACTIVADO</a>
+          <a class="text text-success" th:if="${user.enable == true}"><i class="fa fa-check-square"></i></a>
+          <a class="text text-danger" th:if="${user.enable == false}"><i class="fa fa-window-close"></i></a>
         </td>
         <td>
-			<a th:href="@{/cliente/admin/activar/user/} + ${user.id}">
-				<button type="button" class="btn btn-primary">Activar/Descactivar</button>
+			<a th:href="@{/cliente/admin/activar/user/} + ${user.id}" th:if="${user.role != 'ROLE_ADMIN'}">
+				<button type="button" class="btn active custom-nav">Activar/Descactivar</button></a>
 
-			<a th:href="@{/cliente/admin/delete/user/} + ${user.id}">
-         	   <button type="button" class="btn btn-danger">Borrar</button></a>
+			<a th:href="@{/cliente/admin/delete/user/} + ${user.id}" th:if="${user.role != 'ROLE_ADMIN'}" th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');">
+         	   <button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i> </button></a>
         </td>
       </tr>
     </tbody>
   </table>
   	<a th:href="@{/cliente/admin/insertUser}">
-         	   <button type="button" class="btn btn-primary">INSERTAR USUARIO</button></a>
+         	   <button type="button"class="btn active custom-nav">INSERTAR USUARIO</button></a>
 </div>
 </body>
 </html>

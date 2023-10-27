@@ -21,15 +21,13 @@
 
 <title>Lista de Citas</title>
 </head>
-<body>
+<body class="m-0 vh-10 row-10 justify-content-center align-items-center">
+<br>
+<br>
+<br>
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
-	<br>
-	<br>
-		<h1>Citas:</h1>
-	<br>
-	<br>
 	 <div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
@@ -38,27 +36,30 @@
 		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
-<div th:if="${citas.size() > 0}">
+		
+<div th:if="${citas.size() > 0}" class="col-auto p-5 text-center">
   <table class="table table-hover table-responsive-xl">
     <thead class="thead-light">
       <tr>
-        <th scope="col">ID</th>
 		<th scope="col">ACTIVA</th>
 		<th scope="col">FECHA</th>
 		<th scope="col">CLIENTE</th>
+		<th scope="col">SERVICIO</th>
         <th scope="col">ACCIONES</th>
       </tr>
     </thead>
     <tbody>
       <tbody th:each="cita: ${citas}">
-        <th scope="row">[[${cita.id}]]</th>
-        <td scope="row">[[${cita.activa}]]</td>
-        <td scope="row">[[${cita.fechaCita}]]</td>
+        <td><a class="text text-success" th:if="${cita.activa == true}"><i class="fa fa-check-square"></i></a>
+          <a class="text text-danger" th:if="${cita.activa == false}"><i class="fa fa-window-close"></a>
+        </td>
+        <td scope="row">[[${cita.fechaCompleta}]]</td>
     	<td scope="row">[[${cita.cliente}]]</td>
+    	<td scope="row">[[${cita.servicio.nombre}]]</td>
         <td>
 			
-			<a th:href="@{/cita/usuario/delete/} + ${cita.id}">
-				<button type="button" class="btn btn-danger">Eliminar cita</button>
+			<a th:href="@{/cita/usuario/delete/} + ${cita.id}" th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');">
+				<button type="button" class="btn btn-danger">Cancelar cita  <i class="fa fa-trash"></i>  </button>
 				</a>
         </td>
       </tr>

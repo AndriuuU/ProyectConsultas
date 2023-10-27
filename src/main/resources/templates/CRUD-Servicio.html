@@ -15,15 +15,16 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <title>Lista de servicios</title>
 </head>
-<body>
+<body class="m-0 vh-10 justify-content-center align-items-center">
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
 	</section>
 	<br>
-	<br>
-		<h1>Servicios:</h1>
 	<br>
 	<br>
 	 <div class="alert alert-success" th:if="${success != null}"
@@ -35,11 +36,10 @@
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
 		
-<div th:if="${servicios.size() > 0}">
+<div th:if="${servicios.size() > 0}" class="col-auto p-5 text-center">
   <table class="table table-hover table-responsive-xl">
     <thead class="thead-light">
       <tr>
-        <th scope="col">Id</th>
 		<th scope="col">NOMBRE</th>
 		<th scope="col">PRECIO</th>
         <th scope="col">ACCIONES</th>
@@ -47,19 +47,19 @@
     </thead>
     <tbody>
       <tbody th:each="servicio: ${servicios}">
-        <th scope="row">[[${servicio.id}]]</th>
         <td scope="row">[[${servicio.nombre}]]</td>
         <td scope="row">[[${servicio.precio}]]</td>
         <td>
 
-			<a th:href="@{/servicio/admin/delete/} + ${servicio.id}">
-         	   <button type="button" class="btn btn-danger">Borrar</button></a>
+			<a th:href="@{/servicio/admin/delete/} + ${servicio.id}"
+			th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');">
+         	   <button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i> </button></a>
         </td>
       </tr>
     </tbody>
   </table>
   <a th:href="@{/servicio/admin/insertService}">
-         	   <button type="button" class="btn btn-primary">INSERTAR SERVICIO</button></a>
+         	   <button type="button" class="btn active custom-nav">INSERTAR SERVICIO</button></a>
 </div>
 </body>
 </html>

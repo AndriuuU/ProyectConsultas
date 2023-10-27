@@ -198,8 +198,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-	    return "Cliente" +
-	           " Nombre: " + nombre + '\'' +
+	    return " Nombre: " + nombre + '\'' +
 	           " Email: " + email + '\'' +
 	           " Seguro: " + seguro + '\'' +
 	           " Direccion: " + direccion + '\'' +
