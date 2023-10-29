@@ -2,6 +2,10 @@ package com.example.consulta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +26,9 @@ import com.example.consulta.serviceImpl.UserService;
 @Controller
 @RequestMapping("/")
 public class LoginController {
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	@Qualifier("userService")
@@ -77,4 +84,21 @@ public class LoginController {
 		}
 		
 	}
+	@PostMapping("/tryloginn")
+	public String login(@RequestParam("username") String username,
+	        @RequestParam("password") String password) {
+	    System.out.println("/login");
+	    try {
+	        Authentication authentication = authenticationManager
+	                .authenticate(new UsernamePasswordAuthenticationToken(username, password));
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	        System.out.println("usuario" + authentication);
+	        return Constantes.LOGIN_VIEW;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        
+	        return "error"; 
+	    }
+	}
+
 }
