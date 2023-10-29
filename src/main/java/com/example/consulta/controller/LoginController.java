@@ -56,9 +56,7 @@ public class LoginController {
 	
 	@GetMapping("/auth/registerForm")
 	public String registerForm(Model model,@RequestParam(name="error",required=false)String error) {
-		if(model!=null) {
-			model.addAttribute("cliente", new Cliente());
-		}
+		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("error",error);
 		return Constantes.REGISTER_VIEW;
 	}
