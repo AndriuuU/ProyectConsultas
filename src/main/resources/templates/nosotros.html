@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link th:href="@{/css/home.css}" rel="stylesheet" />
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
+    <title>NOSOTROS</title>
+</head>
+
+<body class="m-0 vh-10 row-10 justify-content-center align-items-center">
+
+    <section layout:fragment="custom-content">
+        <div th:replace="fragments/header :: header"></div>
+    </section>
+    <br>
+    <br>
+    <br>
+
+    <div class="texto-encabezado text-center">
+        <div class="container">
+            <h1 class="display-4 wow bounceIn">Nosotros</h1>
+            <p class="wow bounceIn" data-wow-delay=".3s">¿Quiénes somos? y ¿Qué hacemos?.</p>
+        </div>
+    </div>
+
+
+    <main class="py-1">
+        <div class="container">
+            <div class="row">
+                <article class="col-md-8">
+                    <!-- Texto fijo -->
+                    <h2>Trabajamos para tu éxito</h2>
+                    <p>En nuestra clínica dermatológica, nos dedicamos a proporcionar servicios de dermatología de alta calidad para
+                        nuestros pacientes. Creemos en la importancia de la salud y el cuidado de la piel y nos esforzamos por
+                        ofrecer tratamientos innovadores y personalizados para todas las necesidades dermatológicas.</p>
+                    <p>Nuestro equipo de dermatólogos altamente calificados está comprometido a brindar atención compasiva y
+                        profesional. Estamos aquí para ayudarte a lograr una piel sana y radiante, y a abordar cualquier
+                        preocupación dermatológica que puedas tener.</p>
+
+				
+                </article>
+                <h2>¿Donde nos encontramos?</h2>
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d401.0816299147629!2d-6.197380102509785!3d36.46594035008828!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0dcd20fb1229f3%3A0xf6cb52c76d76561d!2sAntonio%20Gonz%C3%A1lez%20Cabrerizo!5e0!3m2!1ses!2ses!4v1699359798526!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+             <div class="fixed-bottom p-3 text-right">
+					<h6>Contactanos</h6>
+			        <a href="tel:+956594784">
+			            <i class="fa fa-phone"></i> 956 594 784
+			        </a>
+			    </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

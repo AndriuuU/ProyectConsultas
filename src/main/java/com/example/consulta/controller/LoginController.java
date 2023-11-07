@@ -52,6 +52,11 @@ public class LoginController {
 		return Constantes.HOME_VIEW;
 	}
 	
+	@GetMapping("/nosotros")
+	public String nosotros(Model model) {
+		return Constantes.NOSOTROS_VIEW;
+	}
+	
 	@GetMapping("/auth/login")
 	public String login (Model model,@RequestParam(name="error", required=false) String error,
 			@RequestParam(name="logout", required=false)String logout) {

@@ -18,23 +18,21 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class).
-		authorizeHttpRequests((requests) -> requests
-		.requestMatchers("/cliente/admin/**","/cita/admin/**","*/admin/**").hasRole("ADMIN")
-		.requestMatchers("/cita/cliente/**").hasRole("USER")
-		.requestMatchers("/css/**").permitAll()
-        .requestMatchers("/**").permitAll().anyRequest().authenticated())
-		.formLogin((form)->form
-		       .loginPage("/auth/login")
-		       .defaultSuccessUrl("/home",true)
-		       .permitAll())
-//		        
-		.logout((logout)->logout.permitAll()
-				.logoutUrl("/auth/logout")
-				.logoutSuccessUrl("/auth/login?logout"));
+		http.authorizeRequests((requests)->requests
+				.requestMatchers("/cliente/admin/**","/cita/admin/**","*/admin/**").hasRole("ADMIN")
+				.requestMatchers("/cita/cliente/**").hasRole("USER")
+				.requestMatchers("*/css/**").permitAll()
+				.requestMatchers("/**").permitAll().anyRequest().authenticated())
+				.formLogin((form)->form
+				       .loginPage("/auth/login")
+				       .defaultSuccessUrl("/home",true)
+				       .permitAll())
+//				        
+				.logout((logout)->logout.permitAll()
+						.logoutUrl("/auth/logout")
+						.logoutSuccessUrl("/auth/login?logout"));
 
-	return http.build();
-
+			return http.build();
 	}
 	protected void configure(HttpSecurity http) throws Exception {
 	      http

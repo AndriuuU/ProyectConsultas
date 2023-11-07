@@ -4,6 +4,8 @@ public class Constantes {
 
 	public static final String HOME_VIEW = "home";
 	
+	public static final String NOSOTROS_VIEW  = "nosotros";
+	
 	public static final String LOGIN_VIEW = "login";
 	
 	public static final String REGISTER_VIEW= "register";

@@ -16,6 +16,7 @@
 
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
 
 
 <title>Lista de users</title>
@@ -36,9 +37,21 @@
 		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
-		
+				
+	<div class="container mt-4">
+	   <div class="row">
+	    <div class="col-lg-6 offset-lg-3">
+	        <form class="form-inline mb-4 d-flex align-items-center">
+	            <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search" id="search-input">
+	            <button class="btn active custom-nav" type="button" id="search-button">
+	                <i class="fa fa-search"></i>
+	            </button>
+	        </form>
+	    </div>
+	</div>
+	
 <div th:if="${users.size() > 0}" class="col-auto p-5 text-center">
-  <table class="table table-hover table-responsive-xl">
+  <table id="users-table" class="table table-hover table-responsive-xl">
     <thead class="thead-light">
       <tr>
 		<th scope="col">USERNAME</th>
@@ -69,5 +82,39 @@
   	<a th:href="@{/cliente/admin/insertUser}">
          	   <button type="button"class="btn active custom-nav">INSERTAR USUARIO</button></a>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha384-KtLE+8Z9mVkfZ+Kq3f33Ka1SZC7z5ckM/KFA8Ew4f8BxByGZl/hb2B8pDkz4kz1"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+		integrity="sha384-tAL0s5NNKbNpau+cLlO/q1z5OoRZM2Z6q0J9qelxfD0KgZl/v8TlP8kfN1z8N2R"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-4YZk6z2UQI2e6Ls1Y6ZvQx4C8HhrBDjxkQQ8mlr5Ck8fMI6zZfjB1q5z9v2F9KkN"
+		crossorigin="anonymous"></script>
+	<script>
+		document.getElementById("search-input").addEventListener("input", function() {
+		    var searchTerm = this.value.toLowerCase();
+		    var rows = document.querySelectorAll("#users-table tbody tr");
+		
+		    rows.forEach(function(row) {
+		        var cells = row.getElementsByTagName("td");
+		        var showRow = false;
+		
+		        for (var i = 0; i < cells.length; i++) {
+		            var cellValue = cells[i].textContent.toLowerCase();
+		            if (cellValue.includes(searchTerm)) {
+		                showRow = true;
+		                break;
+		            }
+		        }
+		
+		        if (showRow) {
+		            row.style.display = "";
+		        } else {
+		            row.style.display = "none";
+		        }
+		    });
+		});
+	</script>
 </body>
 </html>

@@ -25,6 +25,8 @@
 					class="nav-item custom-nav" th:href="@{/cita/usuario/miscitas}">Mis citas</a></li>
 				<li sec:authorize="hasAuthority('ROLE_USER')"><a
 					class="nav-item custom-nav" th:href="@{/cita/usuario/obtener/cita}">Obtener cita</a></li>
+				<li sec:authorize="hasAuthority('ROLE_USER')"><a
+					class="nav-item custom-nav" th:href="@{/nosotros}">Sobre nosotros </a></li>
 <!-- 				<li sec:authorize="hasAuthority('ROLE_USER')"><a -->
 <!-- 					class="nav-item custom-nav" th:href="@{/historial/usuario}">Historial</a></li> -->
 

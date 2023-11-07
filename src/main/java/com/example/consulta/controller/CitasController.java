@@ -80,10 +80,15 @@ public class CitasController {
 		String hora = elementos[0].replace("am", "");
 		hora = hora.replace("pm", "");
 //		String dia=elementos[2];
+		//2023-11-10T23:00:00.000Z
 		System.out.println(fecha2);
-		String fechacomple = fecha2.replace("T23:00", "T" + hora);
-		fechacomple = fecha2.replace("T22:00", "T" + hora);
-		String sumado = citasService.sumarDia(fechacomple);
+		String[] fechacomple=fecha2.split("T");
+		
+		System.out.println("fechacomple:  "+fechacomple[1]);
+		String fechaEntera=fechacomple[0]+"T"+hora+":00.000Z";
+				//fecha2.replace("T23:00", "T" + hora);
+//		fechacomple = fecha2.replace("T22:00", "T" + hora);
+		String sumado = citasService.sumarDia(fechaEntera);
 		System.out.println(hora);
 		System.out.println("Esta es la fecha buena: " + sumado);
 
