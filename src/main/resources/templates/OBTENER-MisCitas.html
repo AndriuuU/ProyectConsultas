@@ -7,14 +7,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Bootstrap CSS -->
-<link th:href="@{/css/styles.css}" rel="stylesheet" />
-<link th:href="@{/css/header.css}" rel="stylesheet" />
-<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
-<script th:src="@{/scripts/cita.js}"></script>
+<link th:href="@{/scripts/utils/fullcalendar/main.css}" rel="stylesheet" />
+<script th:src="@{/scripts/utils/fullcalendar/main.js}"></script>
+<script th:src="@{/scripts/utils/fullcalendar/locales/es.js}"></script>
+<link rel="stylesheet" th:href="@{/css/calendar.css}">
+<link rel="stylesheet" th:href="@{/css/schedule.css}">
 <link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
+<script th:src="@{/scripts/cita.js}"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <title>Ver mis citas</title>
 
@@ -40,7 +43,8 @@
 		<h1 style="text-align: center;">Mis citas</h1>
 		<hr style="width: 600px; margin: 0 auto;">
 		<tbody th:each="cita: ${citas}">
-			<mi-cita th:data="${cita.fechaCita}" th:citaId="${cita.id}" th:deleteCita="@{/cita/usuario/delete/} + ${cita.id}"></mi-cita>
+		
+			<mi-cita th:data="${cita.fechaCita}" th:citaId="${cita.id}" th:deleteCita="@{/cita/usuario/delete/} + ${cita.id}" th:onclick="return confirm('Estas seguro que deseas eliminar la cita');">></mi-cita>
 			<hr style="width: 600px; margin: 0 auto;">
 		</tbody>
 	</div>

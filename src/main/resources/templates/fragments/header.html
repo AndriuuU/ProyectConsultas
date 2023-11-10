@@ -1,6 +1,7 @@
 <html lang="es" xmlns:th=http://www.thymeleaf.org
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<header th:fragment="header">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <header th:fragment="header">
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark custom-nav">
 		
 		<div class="collapse navbar-collapse custom-nav" id="topNavbar">
@@ -39,7 +40,8 @@
 				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item custom-nav">
 					<form class="nav-item custom-nav" th:action="@{/auth/logout}" method="post">
 						<button style="float: right" class="nav-link active custom-nav" th:href="@{/auth/login}">
-						Log Out</button>
+						Log Out <i class="fa fa-sign-out"></i></button>
+						
 					</form>
 				</li>
 				

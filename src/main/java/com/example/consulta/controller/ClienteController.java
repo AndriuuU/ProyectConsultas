@@ -56,7 +56,7 @@ public class ClienteController {
 
 	@GetMapping("/admin/insertCliente")
 	public String registerForm(Model model, @RequestParam(name = "error", required = false) String error) {
-		model.addAttribute("alumno", new Cliente());
+		model.addAttribute("cliente", new Cliente());
 		model.addAttribute("message", error);
 		return Constantes.INSERT_CLIENTE;
 	}

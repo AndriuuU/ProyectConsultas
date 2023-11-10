@@ -60,6 +60,7 @@ public class LoginController {
 	@GetMapping("/auth/login")
 	public String login (Model model,@RequestParam(name="error", required=false) String error,
 			@RequestParam(name="logout", required=false)String logout) {
+		
 		model.addAttribute("user",new User());
 		model.addAttribute("error", error);
 		model.addAttribute("logout", logout);
@@ -74,21 +75,33 @@ public class LoginController {
 	}
 	
 	@PostMapping("/auth/register")
-	public String register(@ModelAttribute Cliente cliente,RedirectAttributes flash) {	
+	public String register(@ModelAttribute Cliente cliente,RedirectAttributes flash) {
+		  if (!isValidEmail(cliente.getEmail())) {
+	            flash.addAttribute("error","Correo electrónico no válido");
+	            return "redirect:/auth/registerForm?error";
+	        }else
+		  
 		if(userRepository.findByUsername(cliente.getEmail())==null) {
 			clienteService.addCliente(clienteService.transform(cliente));
-			User user = new User();
-			user.setUsername(cliente.getEmail());
-			user.setPassword(cliente.getPassword());
-			user.setRole("ROLE_USER");
-			userService.registrar(user);
-			flash.addFlashAttribute("success","User registered successfully");
+			
+//			User user = new User();
+//			user.setUsername(cliente.getEmail());
+//			user.setPassword(cliente.getPassword());
+//			user.setRole("ROLE_USER");
+//			userService.registrar(user);
+			
+			flash.addAttribute("success","Registrado correctamente");
 			return Constantes.LOGIN_VIEW;
 		}else {
+			flash.addAttribute("error","Correo ya existe");
 			return "redirect:/auth/registerForm?error";
 		}
 		
 	}
+	private boolean isValidEmail(String email) {
+
+        return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
+    }
 	@PostMapping("/tryloginn")
 	public String login(@RequestParam("username") String username,
 	        @RequestParam("password") String password) {

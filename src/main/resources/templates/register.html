@@ -1,80 +1,86 @@
 <!DOCTYPE html>
-<html lang="en"
-	xmlns:th=http://www.thymeleaf.org
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Register</title>
   <link th:href="@{/css/login-style.css}" rel="stylesheet" />
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'><link rel="stylesheet" href="./css/login-style.css">
-<title>Login</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+  <link rel="stylesheet" href="./css/login-style.css">
+      <!-- Bootstrap CSS -->
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<div class="login-form">
- <div class="container">
-	<div class="screen">
-		<div class="screen__content">
-		
-			<form class="register" action="form-signin" th:action="@{/cliente/insert/cliente}" th:object="${cliente}" method="POST">
-				<div class="login__field">
-			
-		<input type="text" class="login__input" placeholder="Nombre" autocomplete="nope" id="Nombre" name="Nombre" required>
-		</div>
-		
+<div th:if="${success != null}" class="alert alert-success" th:text="${success}"></div>
+<div th:if="${error != null}" class="alert alert-danger" th:text="${error}"></div>
+  <div class="login-form">
+    <div class="container">
+      <div class="screen">
+        <div class="screen__content">
 
-		<div class="login__field">
-			
-		<input type="text" class="login__input" placeholder="Email" autocomplete="nope" id="email" name="email" required>
-		</div>
+          <form class="register" name="registerForm" th:action="@{/auth/register}" th:object="${cliente}" method="POST">
 
-		<div class="login__field">
-			
-			<input type="password" class="login__input" name="password" id="password" placeholder="Password" autocomplete="nope" required>
-		</div>
-		
-		<div class="login__field">
-			
-		<input type="text" class="login__input" placeholder="Direccion" autocomplete="nope" id="Direccion" name="Direccion">
-		</div>
-		
-		<div class="login__field">
+            <div class="login__field">
+            <i class="login__icon fa fa-user"></i>
+              <input type="text" class="login__input" placeholder="Nombre" autocomplete="nope" id="Nombre" name="Nombre" required>
+            </div>
 
-		<input type="text" class="login__input" placeholder="Telefono" autocomplete="nope" id="Telefono" name="Telefono">
-		</div>
-				<div th:if="${error!=null}" class="alert alert-danger" role="alert">Usuario o password incorrectas</div>
-				<div th:if="${logout!=null}" class="alert alert-success" role="alert">Sesion cerrada correctamente</div>
-				<button class="button login__submit">
-					<span class="button__text">Registrar</span>
-					<i class="button__icon fas fa-chevron-right"></i>
-				</button>
-								
-			</form>
-<!-- 			<button class="button login__submit" > -->
-<!-- 					<span class="button__text" >Register</span> -->
-<!-- 					<i class="button__icon fas fa-chevron-right"></i> -->
-<!-- 				</button> -->
-			<div class="social-login">
-				<br> 
-				<br> 
-				<a th:href="@{/auth/login}">
-				<button class="button login__submit" >
-					<span class="button__text" >Login
-					</span>
-					<i class="button__icon fas fa-chevron-right"></i>
-				</button>
-				</a>
-		</div>
-		</div>
-		<div class="screen__background">
-			<span class="screen__background__shape screen__background__shape4"></span>
-			<span class="screen__background__shape screen__background__shape3"></span>		
-			<span class="screen__background__shape screen__background__shape2"></span>
-			<span class="screen__background__shape screen__background__shape1"></span>
-		</div>		
-	</div>
-</div>
-</div>
+            <div class="login__field">
+            <i class="login__icon fa fa-at"></i>
+              <input type="text" class="login__input" placeholder="Email" autocomplete="nope" id="email" name="email" required>
+            </div>
+
+            <div class="login__field">
+            <i class="login__icon fa fa-lock"></i>
+              <input type="password" class="login__input" name="password" id="password" placeholder="Password" autocomplete="nope" required>
+            </div>
+
+            <div class="login__field">
+            <i class="login__icon fa fa-map-marker"></i>
+              <input type="text" class="login__input" placeholder="Direccion" autocomplete="nope" id="Direccion" name="Direccion">
+            </div>
+
+            <div class="login__field">
+            <i class="login__icon fa fa-phone"></i>
+              <input type="text" class="login__input" placeholder="Telefono" autocomplete="nope" id="Telefono" name="Telefono">
+            </div>
+
+
+            <button class="button login__submit">
+              <span class="button__text">Registrar</span>
+              <i class="button__icon fa fa-chevron-right"></i>
+            </button>
+
+          </form>
+
+          <div class="social-login">
+            <br>
+            <br>
+            <a th:href="@{/auth/login}">
+              <button class="button login__submit">
+                <span class="button__text">Login</span>
+                <i class="button__icon fa fa-chevron-right"></i>
+              </button>
+            </a>
+          </div>
+        </div>
+        <div class="screen__background">
+          <span class="screen__background__shape screen__background__shape4"></span>
+          <span class="screen__background__shape screen__background__shape3"></span>
+          <span class="screen__background__shape screen__background__shape2"></span>
+          <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
+
 </html>

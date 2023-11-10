@@ -143,7 +143,7 @@ public class CitasController {
 			if (userEmail.equalsIgnoreCase("ADMIN")) {
 				return "redirect:/cita/admin/listCitas";
 			} else
-				return "redirect:/home";
+				return "redirect:/cita/usuario/miscitas";
 		}
 //				}
 //			}
@@ -155,7 +155,7 @@ public class CitasController {
 		if (userEmail.equalsIgnoreCase("ADMIN")) {
 			return "redirect:/cita/admin/listCitas";
 		} else
-			return "redirect:/home?error";
+			return "redirect:/cita/usuario/miscitas?error";
 		
 	}
 

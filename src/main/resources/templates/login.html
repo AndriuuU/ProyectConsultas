@@ -2,16 +2,28 @@
 <html lang="en"
 	xmlns:th=http://www.thymeleaf.org
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
   <link th:href="@{/css/login-style.css}" rel="stylesheet" />
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'><link rel="stylesheet" href="./css/login-style.css">
   <link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link th:href="@{/css/home.css}" rel="stylesheet" />
 <title>Login</title>
 </head>
 <body>
+<div th:if="${success != null}" class="alert alert-success" th:text="${success}"></div>
+<div th:if="${error != null}" class="alert alert-danger" th:text="${error}"></div>
+<div th:if="${logout!=null}" class="alert alert-info" role="alert">Sesion cerrada correctamente</div>
 <!-- partial:index.partial.html -->
 <div class="login-form">
  <div class="container">
@@ -20,19 +32,18 @@
 		
 			<form class="login" action="form-signin" th:action="@{/auth/login}" th:object="${user}" method="POST">
 				<div class="login__field">
-					<i class="login__icon fas fa-user"></i>
+					<i class="login__icon fa fa-user"></i>
 					
 					<input type="text" class="login__input" placeholder="User name / Email" autocomplete="nope" id="username" name="username" required>
 				</div>
 				<div class="login__field">
-					<i class="login__icon fas fa-lock"></i>
+					<i class="login__icon fa fa-lock"></i>
 					<input type="password" class="login__input" name="password" id="password" placeholder="Password" autocomplete="nope">
 				</div>
-				<div th:if="${error!=null}" class="alert alert-danger" role="alert">Usuario o password incorrectas</div>
-				<div th:if="${logout!=null}" class="alert alert-success" role="alert">Sesion cerrada correctamente</div>
 				<button class="button login__submit">
-					<span class="button__text">Sing in</span>
-					<i class="button__icon fas fa-chevron-right"></i>
+					<span class="button__text">Sign in</span>
+					<i class="button__icon fa fa-sign-in"></i>
+						
 				</button>
 								
 			</form>
@@ -48,7 +59,7 @@
 				<button class="button login__submit" >
 					<span class="button__text" >Register
 					</span>
-					<i class="button__icon fas fa-chevron-right"></i>
+					<i class="button__icon fa fa-chevron-right"></i>
 				</button>
 				</a>
 		</div>
