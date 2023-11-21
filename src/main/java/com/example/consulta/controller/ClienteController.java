@@ -91,7 +91,8 @@ public class ClienteController {
 	@GetMapping("/admin/listUsers")
 	public ModelAndView listUsers() {
 		ModelAndView mav = new ModelAndView(Constantes.CRUD_USER_VIEW);
-		mav.addObject("users", userService.listAllUsuarios());
+		mav.addObject("clientes", clienteService.listAllClientes());
+//		mav.addObject("users", userService.listAllUsuarios());
 		return mav;
 	}
 

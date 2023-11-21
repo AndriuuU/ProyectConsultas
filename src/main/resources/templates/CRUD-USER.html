@@ -48,40 +48,52 @@
 	            </button>
 	        </form>
 	    </div>
-	</div>
-	
-<div th:if="${users.size() > 0}" class="col-auto p-5 text-center">
-  <table id="users-table" class="table table-hover table-responsive-xl">
-    <thead class="thead-light">
-      <tr>
-		<th scope="col">USERNAME</th>
-		<th scope="col">ROLL</th>
-		<th scope="col">ENABLE</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tbody th:each="user: ${users}">
-        <td scope="row">[[${user.username}]]</td>
-        <td scope="row">[[${user.role}]]</td>
-        <td>
-        
-          <a class="text text-success" th:if="${user.enable == true}"><i class="fa fa-check-square"></i></a>
-          <a class="text text-danger" th:if="${user.enable == false}"><i class="fa fa-window-close"></i></a>
-        </td>
-        <td>
-			<a th:href="@{/cliente/admin/activar/user/} + ${user.id}" th:if="${user.role != 'ROLE_ADMIN'}">
-				<button type="button" class="btn active custom-nav">Activar/Descactivar</button></a>
-
-			<a th:href="@{/cliente/admin/delete/user/} + ${user.id}" th:if="${user.role != 'ROLE_ADMIN'}" th:onclick="return confirm('Estas seguro que deseas eliminar el registro?');">
-         	   <button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i> </button></a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  	<a th:href="@{/cliente/admin/insertUser}">
+	 <div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center">
+            <table id="combined-table" class="table table-hover table-responsive-xl">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">DIRECCIÓN</th>
+                        <th scope="col">TELÉFONO</th>
+                        <th scope="col">ROLL</th>
+                        <th scope="col">ENABLE</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas para Clientes -->
+                    <tr th:each="cliente: ${clientes}">
+                        <td scope="row">[[${cliente.nombre}]]</td>
+                        <td scope="row">[[${cliente.email}]]</td>
+                        <td scope="row">[[${cliente.direccion}]]</td>
+                        <td scope="row">[[${cliente.telefono}]]</td>
+                        <!-- Accediendo a valores del usuario asociado al cliente -->
+                        <td scope="row">[[${cliente.usuario.role}]]</td>
+                        <td>
+                            <!-- Accediendo a valores específicos del usuario, como enable -->
+                            <a class="text text-success" th:if="${cliente.usuario.enable == true}"><i class="fa fa-check-square"></i></a>
+                            <a class="text text-danger" th:if="${cliente.usuario.enable == false}"><i class="fa fa-window-close"></i></a>
+                        </td>
+                        <td>
+                            <a th:href="@{/cliente/admin/delete/cliente/} + ${cliente.id}" th:onclick="return confirm('Estás seguro que deseas eliminar el registro?');">
+                                <button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i></button>
+                                
+                            </a>
+                            
+                            <a th:href="@{/cliente/admin/activar/user/} + ${cliente.usuario.id}" th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
+								<button type="button" class="btn active custom-nav">Activar/Descactivar</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+<a th:href="@{/cliente/admin/insertUser}">
          	   <button type="button"class="btn active custom-nav">INSERTAR USUARIO</button></a>
-</div>
+            <!-- Botones de inserción -->
+            <a th:href="@{/cliente/admin/insertCliente}">
+                <button type="button" class="btn active custom-nav">INSERTAR CLIENTE</button>
+            </a>
+        </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha384-KtLE+8Z9mVkfZ+Kq3f33Ka1SZC7z5ckM/KFA8Ew4f8BxByGZl/hb2B8pDkz4kz1"
 		crossorigin="anonymous"></script>

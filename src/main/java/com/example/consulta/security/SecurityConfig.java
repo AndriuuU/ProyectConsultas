@@ -21,7 +21,7 @@ public class SecurityConfig {
 		http.authorizeRequests((requests)->requests
 				.requestMatchers("/cliente/admin/**","/cita/admin/**","*/admin/**").hasRole("ADMIN")
 				.requestMatchers("/cita/cliente/**").hasRole("USER")
-				.requestMatchers("*/css/**").permitAll()
+				.requestMatchers("*/css/**,*/images/**").permitAll()
 				.requestMatchers("/**").permitAll().anyRequest().authenticated())
 				.formLogin((form)->form
 				       .loginPage("/auth/login")

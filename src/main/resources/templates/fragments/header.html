@@ -34,13 +34,12 @@
 				
 				
 				<li style="float: right" sec:authorize="!isAuthenticated()" class="nav-item custom-nav">
-		      		<a class="nav-link active custom-nav" th:href="@{/auth/login}"><i class="fas fa-user custom-nav"></i>Log In</a>
+		      		<a class="nav-link active custom-nav" th:href="@{/auth/login}">Log In <i class="fa fa-sign-in"></i></a>
 		        </li>
 
 				<li sec:authorize="isAuthenticated()" style="float: right" class="nav-item custom-nav">
 					<form class="nav-item custom-nav" th:action="@{/auth/logout}" method="post">
-						<button style="float: right" class="nav-link active custom-nav" th:href="@{/auth/login}">
-						Log Out <i class="fa fa-sign-out"></i></button>
+						<button style="float: right" class="nav-link active custom-nav" th:href="@{/auth/login}">Log Out <i class="fa fa-sign-out"></i></button>
 						
 					</form>
 				</li>
