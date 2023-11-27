@@ -30,11 +30,11 @@ public class ServicioController {
 	@Autowired
 	@Qualifier("servicioRepository")
 	private ServicioRepository servicioRepository;
-	
+
 	@Autowired
 	@Qualifier("servicioService")
 	private ServicioService servicioService;
-	
+
 	@Autowired
 	@Qualifier("clienteRepository")
 	private ClienteRepository clienteRepository;
@@ -50,7 +50,7 @@ public class ServicioController {
 	@Autowired
 	@Qualifier("citasService")
 	private CitasService citasService;
-	
+
 	@GetMapping("/admin/listServicios")
 	public ModelAndView listServicios(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView mav = new ModelAndView(Constantes.CRUD_SERVICIO_VIEW);
@@ -58,11 +58,10 @@ public class ServicioController {
 		mav.addObject("error", error);
 		return mav;
 	}
-	
+
 	@GetMapping("/admin/delete/{id}")
 	public String deleteServicio(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
-		
-		
+
 		if (servicioService.removeServicio(id)) {
 			flash.addFlashAttribute("success", "Servicio eliminado con éxito");
 			return "redirect:/servicio/admin/listServicios?success";
@@ -71,25 +70,34 @@ public class ServicioController {
 			return "redirect:/servicio/admin/listServicios?error";
 		}
 	}
+
+	@GetMapping(value = { "/admin/insertService", "/admin/insertService/{id}" })
+	public String registerForm(Model model, @RequestParam(name = "error", required = false) String error,
+			@PathVariable(name = "id", required = false) Integer id) {
+		if (id == null) {
+			model.addAttribute("servicio", new Servicio());
 	
-//	/cliente/admin/insertService
-	
-	@GetMapping("/admin/insertService")
-	public String registerForm(Model model, @RequestParam(name = "error", required = false) String error) {
-		model.addAttribute("servicio", new Servicio());
-		model.addAttribute("message", error);
+		} else {
+			model.addAttribute("servicio", servicioService.findServicioById(id));
+		}
 		return Constantes.INSERT_SERVICIO;
 	}
 
 	@PostMapping("/admin/insert/servicio")
 	public String register(@ModelAttribute Servicio servicio, RedirectAttributes flash) {
-		if (servicioRepository.findByNombre(servicio.getNombre()) == null) {
-			servicioService.addServicio(servicioService.transform(servicio));
-			flash.addFlashAttribute("success", "Servicio registrado correctamente");
+		if (servicio.getId() != 0) {
+			servicioService.updateServicio(servicioService.transform(servicio));
+			flash.addFlashAttribute("success", "Servicio actualizado correctamente");
 			return "redirect:/servicio/admin/listServicios";
 		} else {
-			flash.addFlashAttribute("error", "No se pudo registrar el servicio");
-			return "redirect:/servicio/admin/listServicios?error";
+			if (servicioRepository.findByNombre(servicio.getNombre()) == null) {
+				servicioService.addServicio(servicioService.transform(servicio));
+				flash.addFlashAttribute("success", "Servicio registrado correctamente");
+				return "redirect:/servicio/admin/listServicios";
+			} else {
+				flash.addFlashAttribute("error", "No se pudo registrar/actualizar el servicio");
+				return "redirect:/servicio/admin/listServicios?error";
+			}
 		}
 
 	}

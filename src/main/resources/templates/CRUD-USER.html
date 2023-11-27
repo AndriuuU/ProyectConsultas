@@ -38,7 +38,7 @@
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
 				
-	<div class="container mt-4">
+	<div class="container mt-4" >
 	   <div class="row">
 	    <div class="col-lg-6 offset-lg-3">
 	        <form class="form-inline mb-4 d-flex align-items-center">
@@ -48,7 +48,7 @@
 	            </button>
 	        </form>
 	    </div>
-	 <div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center">
+	 <div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center" >
             <table id="combined-table" class="table table-hover table-responsive-xl">
                 <thead class="thead-light">
                     <tr>
@@ -83,13 +83,16 @@
                             
                             <a th:href="@{/cliente/admin/activar/user/} + ${cliente.usuario.id}" th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
 								<button type="button" class="btn active custom-nav">Activar/Descactivar</button></a>
+								
+							<a th:href="@{/cliente/admin/pass/user/} + ${cliente.usuario.id}" th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
+								<button type="button" class="btn btn-info">New PASS <i class="fa fa-unlock" aria-hidden="true"></i></button></a>
                         </td>
                     </tr>
                 </tbody>
             </table>
 <a th:href="@{/cliente/admin/insertUser}">
          	   <button type="button"class="btn active custom-nav">INSERTAR USUARIO</button></a>
-            <!-- Botones de inserción -->
+
             <a th:href="@{/cliente/admin/insertCliente}">
                 <button type="button" class="btn active custom-nav">INSERTAR CLIENTE</button>
             </a>

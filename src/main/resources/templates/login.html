@@ -21,8 +21,9 @@
 <title>Login</title>
 </head>
 <body>
+<div class="alert alert-warning" th:if="${warning != null}" role="alert">El usuario no esta activo, habla con el administrador</div>
 <div th:if="${success != null}" class="alert alert-success" th:text="${success}"></div>
-<div th:if="${error != null}" class="alert alert-danger" th:text="${error}"></div>
+<div th:if="${error != null}" class="alert alert-danger" role="alert">Credenciales invalidas</div>
 <div th:if="${logout!=null}" class="alert alert-info" role="alert">Sesion cerrada correctamente</div>
 <!-- partial:index.partial.html -->
 <div class="login-form">
@@ -77,8 +78,7 @@
 		th:text="${success}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
-	<div class="alert alert-warning" th:if="${warning != null}"
-		th:text="${warning}"></div>
+	
 	<div class="alert alert-info" th:if="${info != null}"
 		th:text="${info}"></div>
 </body>

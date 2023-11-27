@@ -1,6 +1,6 @@
 package com.example.consulta.serviceImpl;
 
-import java.util.ArrayList;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,6 +62,33 @@ public class UserService implements UserDetailsService {
 //		}
 		return userRepository.save(user);
 	}
+	
+	public String updatePass(com.example.consulta.entity.User user) {
+		String newPass=generarContraseña();
+		user.setPassword(passwordEncoder().encode(newPass));
+		userRepository.save(user);
+//		if(user.getRole()) {
+//			
+//		}
+		
+		return newPass;
+	}
+	
+	private static final String CARACTERES_PERMITIDOS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+";
+
+	private static final String PREFIJO = "ç*-";
+	 
+    public static String generarContraseña() {
+        StringBuilder passGenerada = new StringBuilder(PREFIJO);
+
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < 6; i++) {
+            int indice = random.nextInt(CARACTERES_PERMITIDOS.length());
+            passGenerada.append(CARACTERES_PERMITIDOS.charAt(indice));
+        }
+
+        return passGenerada.toString();
+    }
 	
 	public com.example.consulta.entity.User updateUser(com.example.consulta.entity.User user) {
 		return userRepository.save(user);

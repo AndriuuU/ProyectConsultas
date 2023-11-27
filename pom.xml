@@ -7,6 +7,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
+		
 	</parent>
 	<groupId>com.example.consulta</groupId>
 	<artifactId>ProyectConsultas</artifactId>
@@ -15,6 +16,7 @@
 	<description>Proyecto de una consulta clinica</description>
 	<properties>
 		<java.version>17</java.version>
+		
 	</properties>
 <dependencies>
 		<dependency>
@@ -136,12 +138,21 @@
 	
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version><!--$NO-MVN-MAN-VER$-->
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

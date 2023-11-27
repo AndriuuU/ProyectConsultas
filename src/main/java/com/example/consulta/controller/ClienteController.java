@@ -43,7 +43,7 @@ public class ClienteController {
 
 	@GetMapping("/home")
 	public RedirectView redirect() {
-		return new RedirectView("/cliente/admin/listClientes");
+		return new RedirectView("/cliente/admin/listUsers");
 	}
 
 	@GetMapping("/admin/listClientes")
@@ -66,10 +66,10 @@ public class ClienteController {
 		if (userRepository.findByUsername(cliente.getEmail()) == null) {
 			clienteService.addCliente(clienteService.transform(cliente));
 			flash.addFlashAttribute("success", "Cliente registrado correctamente");
-			return "redirect:/cliente/admin/listClientes";
+			return "redirect:/cliente/admin/listUsers";
 		} else {
 			flash.addFlashAttribute("error", "No se pudo registrar el cliente");
-			return "redirect:/cliente/admin/listClientes?error";
+			return "redirect:/cliente/admin/listUsers?error";
 		}
 
 	}
@@ -79,10 +79,10 @@ public class ClienteController {
 	public String deleteAlumno(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
 		if (clienteService.removeCliente(id)) {
 			flash.addFlashAttribute("success", "Cliente eliminado con éxito");
-			return "redirect:/cliente/admin/listClientes?success";
+			return "redirect:/cliente/admin/listUsers?success";
 		} else {
 			flash.addFlashAttribute("error", "No se pudo eliminar el cliente");
-			return "redirect:/cliente/admin/listClientes?error";
+			return "redirect:/cliente/admin/listUsers?error";
 		}
 	}
 
@@ -136,5 +136,20 @@ public class ClienteController {
 			return "redirect:/cliente/admin/listUsers?error";
 		}
 	}
+	
+	// new password user
+		@GetMapping("/admin/pass/user/{id}")
+		public String cambiarPassUser(@PathVariable("id") int id, RedirectAttributes flash) throws Exception {
+			User u=userService.findUsuario(id);
+
+			if (u!=null) {
+				String pass=userService.updatePass(userService.findUsuario(id));
+				flash.addFlashAttribute("success", "La nueva pass es: "+pass);
+				return "redirect:/cliente/admin/listUsers?success";
+			}else {
+				flash.addFlashAttribute("error", "El usuario no existe");
+				return "redirect:/cliente/admin/listUsers?error";
+			}
+		}
 
 }
