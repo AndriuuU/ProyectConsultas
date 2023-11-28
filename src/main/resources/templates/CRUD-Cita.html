@@ -51,7 +51,8 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">ACTIVA</th>
-                        <th scope="col">FECHA</th>
+                        <th scope="col">DIA</th>
+                        <th scope="col">HORA</th>
                         <th scope="col">CLIENTE</th>
                         <th scope="col">SERVICIO</th>
                         <th scope="col">ACCIONES</th>
@@ -62,7 +63,31 @@
                         <td><a class="text text-success" th:if="${cita.activa == true}"><i class="fa fa-check-square"></i></a>
                             <a class="text text-danger" th:if="${cita.activa == false}"><i class="fa fa-window-close"></i></a>
                         </td>
-                        <td scope="row">[[${cita.fechaCompleta}]]</td>
+                        <td scope="row">
+            <script>
+                var fechaCompleta = '[[${cita.fechaCompleta}]]';
+                var fecha = new Date(fechaCompleta);
+                var options = {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                };
+                var fechaFormateada = fecha.toLocaleDateString('es-ES', options);
+                document.write(fechaFormateada);
+            </script>
+        </td>
+        <td scope="row">
+            <script>
+                var fechaCompleta = '[[${cita.fechaCompleta}]]';
+                var fecha = new Date(fechaCompleta);
+                var options = {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                var horaFormateada = fecha.toLocaleTimeString('es-ES', options);
+                document.write(horaFormateada);
+            </script>
+        </td>
                         <td scope="row">[[${cita.cliente}]]</td>
                         <td scope="row">[[${cita.servicio.nombre}]]</td>
                         <td>

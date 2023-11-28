@@ -117,7 +117,7 @@ public class CitasServiceImpl implements CitasService {
 		List<CitasModel> citasDelDia = todasCitas.stream()
 	               .filter(cita -> {
 	                   String fechaCita = cita.getFechaCita();
-	                   int diaCita = Integer.parseInt(fechaCita.split("&")[2]); // Extraer el día de la cadena de fecha
+	                   int diaCita = Integer.parseInt(fechaCita.split("&")[2]);
 	                   return diaCita == diaActual;
 	               })
 	               .collect(Collectors.toList());
