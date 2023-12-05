@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link th:href="@{/css/home.css}" rel="stylesheet" />
 
+<link th:href="@{/css/popup.css}" rel="stylesheet" />
+<script src="/scripts/popup-script.js"></script>
+
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
@@ -91,9 +94,12 @@
                         <td scope="row">[[${cita.cliente}]]</td>
                         <td scope="row">[[${cita.servicio.nombre}]]</td>
                         <td>
-                            <a th:href="@{/cita/usuario/delete/} + ${cita.id}" th:onclick="return confirm('Estás seguro que deseas eliminar el registro?');">
-                                <button type="button" class="btn btn-danger">Cancelar cita <i class="fa fa-trash"></i></button>
-                            </a>
+                        <a href="#" onclick="mostrarPopup('${cita.id}')">
+  <button type="button" class="btn btn-danger">Cancelar cita <i class="fa fa-trash"></i></button>
+</a>
+                            <a th:href="@{/cita/usuario/delete/} + ${cita.id}" onclick="eliminar('${cita.id}', event)">
+							  <button type="button" class="btn btn-danger">Cancelar cita <i class="fa fa-trash"></i></button>
+							</a>
                         </td>
                     </tr>
                 </tbody>
@@ -141,5 +147,33 @@
 		    });
 		});
 	</script>
+	<div class="overlay" id="overlay">
+  <div class="popup" id="popup">
+    <p>¿Estás seguro de que deseas eliminar?</p>
+    <button onclick="eliminar()">Sí</button>
+    <button onclick="ocultarPopup()">No</button>
+  </div>
+</div>
+
+<script>
+  var citaIdToDelete; // Variable para almacenar el ID de la cita que se va a eliminar
+
+  function mostrarPopup(citaId) {
+    citaIdToDelete = citaId; // Almacenar el ID de la cita
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('popup').style.display = 'block';
+  }
+
+  function ocultarPopup() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('popup').style.display = 'none';
+  }
+  
+  function eliminar() {
+	    // Redirigir directamente a la URL de eliminación
+	    window.location.href = '/cita/usuario/delete/' + citaIdToDelete;
+	  }
+  
+</script>
 </body>
 </html>
