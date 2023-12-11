@@ -74,8 +74,8 @@ System.out.println(citas);
             document.add(new Paragraph(" "));
 
             // Obtener la ruta completa de la imagen
-            String staticDir = ClassLoader.getSystemResource("static").getPath();
-            String imagePath = staticDir + "/images/logoapp3.png";
+//            String staticDir = ClassLoader.getSystemResource("static").getPath();
+//            String imagePath = staticDir + "/images/logoapp3.png";
 
             // Crear la imagen
             Image image = Image.getInstance(imagePath);
