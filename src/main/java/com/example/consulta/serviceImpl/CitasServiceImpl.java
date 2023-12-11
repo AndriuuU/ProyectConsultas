@@ -1,5 +1,6 @@
 package com.example.consulta.serviceImpl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -114,6 +115,7 @@ public class CitasServiceImpl implements CitasService {
 		
 		List<CitasModel> todasCitas=listAllCitass();
 		int diaActual = LocalDate.now().getDayOfMonth();
+		
 		List<CitasModel> citasDelDia = todasCitas.stream()
 	               .filter(cita -> {
 	                   String fechaCita = cita.getFechaCita();
@@ -124,7 +126,27 @@ public class CitasServiceImpl implements CitasService {
 	
 		return citasDelDia;
         
-		
+	}
+	  
+
+	public List<CitasModel> obtenerCitasDelDia(String fecha) {
+	    List<CitasModel> todasLasCitas = listAllCitass();
+	    List<CitasModel> LasCitasDeLaFecha = new ArrayList<>();  // Inicializa la lista
+
+	    for (CitasModel ci : todasLasCitas) {
+	        String[] fechaCitaC = ci.getFechaCompleta().split("T");
+
+	        if (fechaCitaC[0].equalsIgnoreCase(fecha)) {
+	            LasCitasDeLaFecha.add(ci);
+	        }
+	    }
+
+	    return LasCitasDeLaFecha;
+	}
+
+	private Date parsearFecha(String fecha) {
+	    LocalDate localDate = LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"));
+	    return Date.valueOf(localDate);
 	}
 
 	@Override
@@ -137,5 +159,6 @@ public class CitasServiceImpl implements CitasService {
 		}
 		return null;
 	}
+
 
 }

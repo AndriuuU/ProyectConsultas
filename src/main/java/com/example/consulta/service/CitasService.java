@@ -19,4 +19,5 @@ public interface CitasService {
 	public abstract List<CitasModel> listCitasCliente(long idCliente);
 	public abstract String sumarDia(String fecha2);
 	public abstract List<CitasModel> listaCitaHoy();
+	List<CitasModel> obtenerCitasDelDia(String fecha);
 }

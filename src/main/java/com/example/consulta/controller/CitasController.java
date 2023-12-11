@@ -105,7 +105,7 @@ public class CitasController {
 			return "redirect:/cita/usuario/miscitas";
 		} else {
 			flash.addFlashAttribute("error", "No se pudo coger la cita");
-			return "redirect:/cita/usuario/miscitas?error";
+			return "redirect:/cita/usuario/obtener/cita?error";
 		}
 	}
 

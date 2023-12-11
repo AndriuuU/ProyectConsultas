@@ -5,7 +5,15 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<style>
+	label{
+		margin-right: 5px;
+		margin-top: 6px;
+	}
+	input{
+		margin-left: 100px;
+	}
+</style>
 <!-- Bootstrap CSS -->
 <link th:href="@{/css/styles.css}" rel="stylesheet" />
 <link th:href="@{/css/header.css}" rel="stylesheet" />
@@ -29,9 +37,9 @@
 			<br>
     
     <form th:action="@{/servicio/admin/insert/servicio}" th:object="${servicio}" method="post" enctype="multipart/form-data" style="text-align:center;width: 500px;margin: auto;">
-            
-            <h1 th:text="${servicio.id != 0} ? 'Editar Servicio' : 'Nuevo Servicio'" >Nuevo Servicio</h1>
-		
+    <div style="text-align: center; display: block; padding-top: 30px;">
+	<div class="card" style="background-color: rgb(237, 218, 252);border-radius: 40px;">
+      <h1 th:text="${servicio.id != 0} ? 'Editar servicio' : 'Nuevo servicio'" class="display-4">Nuevo Servicio</h1>
 		<input type="hidden" th:field="*{id}" id="id">
 		
 	        	<div class="form-group">
@@ -41,17 +49,19 @@
 				
 				<div class="form-group">	
 			        <label for="servicePrice">Precio:</label>
-			        <input type="number" id="Precio" name="Precio" th:field="*{precio}" required><br>
+			        <input style="margin-left: 98px;" type="number" id="Precio" name="Precio" th:field="*{precio}" required><br>
 				</div>
 
-        <br><br>
-        
-		<input type="submit" class="btn active custom-nav">
+        <br>
+        <div style="text-align: center; margin-bottom: 10px;">
+		<input type="submit" class="btn active custom-nav" style="width: 80px;">
 		
 		<a th:href="@{/servicio/admin/listServicios}">
 		<button type="button" class="btn active custom-nav">Regresar</button>
 		</a>
-		
+		</div>
+		</div>
+		</div>
     </form>
     <br><br>
 	 <div class="alert alert-success" th:if="${success != null}"

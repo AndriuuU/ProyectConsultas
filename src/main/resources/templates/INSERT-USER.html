@@ -6,6 +6,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<style>
+	label{
+		margin-right: 5px;
+		margin-top: 6px;
+	}
+	input{
+		margin-left: 100px;
+	}
+</style>
+
 <!-- Bootstrap CSS -->
 <link th:href="@{/css/styles.css}" rel="stylesheet" />
 <link th:href="@{/css/header.css}" rel="stylesheet" />
@@ -25,8 +35,8 @@
 		<br>
 			<br>
 	<form th:action="@{/cliente/admin/insert/user}" th:object="${user}" method="post" enctype="multipart/form-data" style="text-align:center;width: 500px;margin: auto;">
-		
-		<h1>Nuevo User</h1>
+	<div class="card" style="background-color: rgb(237, 218, 252);border-radius: 40px;">
+		<h1 class="display-4">Nuevo user</h1>
 		
 		<div class="form-group">
 			<label for="username">Username</label> 
@@ -46,12 +56,14 @@
 				</select>
 		</div>
 
-		<br><br>
+		<br>
+		<div style="text-align: center; margin-bottom: 20px;">
 		<input type="submit" class="btn active custom-nav">
 		<a th:href="@{/cliente/admin/listUsers}">
 		<button type="button" class="btn active custom-nav">Regresar</button>
 		</a>
-
+		</div>
+</div>
 		<div class="alert alert-success" th:if="${success != null}"
 			th:text="${success}"></div>
 		<div class="alert alert-danger" th:if="${error != null}"

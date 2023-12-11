@@ -45,8 +45,18 @@
 	                <i class="fa fa-search"></i>
 	            </button>
 	        </form>
+	        <form action="/admin/generar-pdf" method="get">
+        <label for="fecha">Seleccionar Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        
+        <input class="btn active custom-nav" type="submit" value="Descargar">
+    </form>
+    <a th:href="@{/admin/generar-pdfhoy}">
+        <button class="btn"><i class="fa fa-download"></i> Download Citas hoy</button>
+    </a>
 	    </div>
 	</div>
+	
 
     <div th:if="${citas.size() > 0}" class="col-auto p-5 text-center">
         <div class="table-responsive">
@@ -94,10 +104,8 @@
                         <td scope="row">[[${cita.cliente}]]</td>
                         <td scope="row">[[${cita.servicio.nombre}]]</td>
                         <td>
-                        <a href="#" onclick="mostrarPopup('${cita.id}')">
-  <button type="button" class="btn btn-danger">Cancelar cita <i class="fa fa-trash"></i></button>
-</a>
-                            <a th:href="@{/cita/usuario/delete/} + ${cita.id}" onclick="eliminar('${cita.id}', event)">
+
+                            <a th:href="@{/cita/usuario/delete/} + ${cita.id}" th:onclick="return confirm('Estás seguro que deseas eliminar el registro?');">
 							  <button type="button" class="btn btn-danger">Cancelar cita <i class="fa fa-trash"></i></button>
 							</a>
                         </td>
@@ -106,13 +114,9 @@
             </table>
         </div>
     </div>
-    <a th:href="@{/admin/generar-pdf}">
-        <button class="btn"><i class="fa fa-download"></i> Download Citas hoy</button>
-    </a>
+   
+    
 </div>
-
-
-	<!-- Bootstrap JS and dependencies -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha384-KtLE+8Z9mVkfZ+Kq3f33Ka1SZC7z5ckM/KFA8Ew4f8BxByGZl/hb2B8pDkz4kz1"
 		crossorigin="anonymous"></script>
@@ -147,33 +151,5 @@
 		    });
 		});
 	</script>
-	<div class="overlay" id="overlay">
-  <div class="popup" id="popup">
-    <p>¿Estás seguro de que deseas eliminar?</p>
-    <button onclick="eliminar()">Sí</button>
-    <button onclick="ocultarPopup()">No</button>
-  </div>
-</div>
-
-<script>
-  var citaIdToDelete; // Variable para almacenar el ID de la cita que se va a eliminar
-
-  function mostrarPopup(citaId) {
-    citaIdToDelete = citaId; // Almacenar el ID de la cita
-    document.getElementById('overlay').style.display = 'flex';
-    document.getElementById('popup').style.display = 'block';
-  }
-
-  function ocultarPopup() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('popup').style.display = 'none';
-  }
-  
-  function eliminar() {
-	    // Redirigir directamente a la URL de eliminación
-	    window.location.href = '/cita/usuario/delete/' + citaIdToDelete;
-	  }
-  
-</script>
 </body>
 </html>
