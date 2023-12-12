@@ -78,10 +78,10 @@ System.out.println(citas);
 //            String imagePath = staticDir + "/images/logoapp3.png";
 
             // Crear la imagen
-            Image image = Image.getInstance(imagePath);
-            image.scaleToFit(30, 30);
-            image.setAlignment(Element.ALIGN_RIGHT);
-            document.add(image);
+//            Image image = Image.getInstance(imagePath);
+//            image.scaleToFit(30, 30);
+//            image.setAlignment(Element.ALIGN_RIGHT);
+//            document.add(image);
 
             // Agregar espacio entre la imagen y la tabla
             document.add(new Paragraph(" "));
