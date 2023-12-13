@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-	<html xmlns:th=http://www.thymeleaf.org
-		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th=http://www.thymeleaf.org xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link th:href="@{/css/styles.css}" rel="stylesheet" />
-<link th:href="@{/css/header.css}" rel="stylesheet" />
-<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link th:href="@{/css/home.css}" rel="stylesheet" />
+	<!-- Bootstrap CSS -->
+	<link th:href="@{/css/styles.css}" rel="stylesheet" />
+	<link th:href="@{/css/header.css}" rel="stylesheet" />
+	<link th:href="@{/css/bootstrap.css}" rel="stylesheet" />
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link th:href="@{/css/home.css}" rel="stylesheet" />
 
-<!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
+	<!-- Add icon library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="icon" type="image/x-icon" href="/images/logoapp.ico">
 
 
-<title>Lista de users</title>
+	<title>Lista de users</title>
 </head>
+
 <body class="m-0 vh-10 row-10 justify-content-center align-items-center">
 	<section layout:fragment="custom-content">
 		<div th:replace="fragments/header :: header"></div>
@@ -28,106 +29,117 @@
 	<br>
 	<br>
 	<br>
-	
-	 <div class="alert alert-success" th:if="${success != null}"
-		th:text="${success}"></div>
-	<div class="alert alert-danger" th:if="${error != null}"
-		th:text="${error}"></div>
-	<div class="alert alert-warning" th:if="${warning != null}"
-		th:text="${warning}"></div>
-	<div class="alert alert-info" th:if="${info != null}"
-		th:text="${info}"></div>
-				
-	<div class="container mt-4" >
-	   <div class="row">
-	    <div class="col-lg-6 offset-lg-3">
-	        <form class="form-inline mb-4 d-flex align-items-center">
-	            <input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar..." aria-label="Search" id="search-input">
-	            <button class="btn active custom-nav" type="button" id="search-button">
-	                <i class="fa fa-search"></i>
-	            </button>
-	        </form>
-	    </div>
-	 <div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center" >
-            <table id="combined-table" class="table table-hover table-responsive-xl">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">EMAIL</th>
-                        <th scope="col">DIRECCIÓN</th>
-                        <th scope="col">TELÉFONO</th>
-                        <th scope="col">ROLL</th>
-                        <th scope="col">ENABLE</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="cliente: ${clientes}">
-                        <td scope="row">[[${cliente.nombre}]]</td>
-                        <td scope="row">[[${cliente.email}]]</td>
-                        <td scope="row">[[${cliente.direccion}]]</td>
-                        <td scope="row">[[${cliente.telefono}]]</td>
-                        <td scope="row">[[${cliente.usuario.role}]]</td>
-                        <td>
-                            <a class="text text-success" th:if="${cliente.usuario.enable == true}"><i class="fa fa-check-square"></i></a>
-                            <a class="text text-danger" th:if="${cliente.usuario.enable == false}"><i class="fa fa-window-close"></i></a>
-                        </td>
-                        <td>
-                            <a th:href="@{/cliente/admin/delete/cliente/} + ${cliente.id}" th:onclick="return confirm('Estás seguro que deseas eliminar el registro?');">
-                                <button type="button" class="btn btn-danger">Borrar <i class="fa fa-trash"></i></button>
-                            </a>
-                            
-                            <a th:href="@{/cliente/admin/activar/user/} + ${cliente.usuario.id}" th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
-								<button th:if="${cliente.usuario.enable == true}" type="button" class="btn active custom-nav btn btn-secondary">Desactivar</button>
-								<button th:if="${cliente.usuario.enable == false}" type="button" class="btn active custom-nav btn btn-success">Activar</button>
-                            </a>
-                            
-							<a th:href="@{/cliente/admin/pass/user/} + ${cliente.usuario.id}" th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
-								<button type="button" class="btn btn-info">Nueva PASS <i class="fa fa-unlock" aria-hidden="true"></i></button></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-<a th:href="@{/cliente/admin/insertUser}">
-         	   <button type="button"class="btn active custom-nav">INSERTAR USUARIO</button></a>
 
-            <a th:href="@{/cliente/admin/insertCliente}">
-                <button type="button" class="btn active custom-nav">INSERTAR CLIENTE</button>
-            </a>
-        </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-		integrity="sha384-KtLE+8Z9mVkfZ+Kq3f33Ka1SZC7z5ckM/KFA8Ew4f8BxByGZl/hb2B8pDkz4kz1"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-		integrity="sha384-tAL0s5NNKbNpau+cLlO/q1z5OoRZM2Z6q0J9qelxfD0KgZl/v8TlP8kfN1z8N2R"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-		integrity="sha384-4YZk6z2UQI2e6Ls1Y6ZvQx4C8HhrBDjxkQQ8mlr5Ck8fMI6zZfjB1q5z9v2F9KkN"
-		crossorigin="anonymous"></script>
-	<script>
-		document.getElementById("search-input").addEventListener("input", function() {
-		    var searchTerm = this.value.toLowerCase();
-		    var rows = document.querySelectorAll("#users-table tbody tr");
-		
-		    rows.forEach(function(row) {
-		        var cells = row.getElementsByTagName("td");
-		        var showRow = false;
-		
-		        for (var i = 0; i < cells.length; i++) {
-		            var cellValue = cells[i].textContent.toLowerCase();
-		            if (cellValue.includes(searchTerm)) {
-		                showRow = true;
-		                break;
-		            }
-		        }
-		
-		        if (showRow) {
-		            row.style.display = "";
-		        } else {
-		            row.style.display = "none";
-		        }
-		    });
-		});
-	</script>
+	<div class="alert alert-success" th:if="${success != null}" th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning != null}" th:text="${warning}"></div>
+	<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3">
+				<form class="form-inline mb-4 d-flex align-items-center">
+					<input class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Buscar..."
+						aria-label="Search" id="search-input">
+					<button class="btn active custom-nav" type="button" id="search-button">
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</div>
+			<div th:if="${clientes.size() > 0}" class="col-auto p-5 text-center">
+				<table id="combined-table" class="table table-hover table-responsive-xl">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">NOMBRE</th>
+							<th scope="col">EMAIL</th>
+							<th scope="col">DIRECCIÓN</th>
+							<th scope="col">TELÉFONO</th>
+							<th scope="col">ROLL</th>
+							<th scope="col">ENABLE</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cliente: ${clientes}">
+							<td scope="row">[[${cliente.nombre}]]</td>
+							<td scope="row">[[${cliente.email}]]</td>
+							<td scope="row">[[${cliente.direccion}]]</td>
+							<td scope="row">[[${cliente.telefono}]]</td>
+							<td scope="row">[[${cliente.usuario.role}]]</td>
+							<td>
+								<a class="text text-success" th:if="${cliente.usuario.enable == true}"><i
+										class="fa fa-check-square"></i></a>
+								<a class="text text-danger" th:if="${cliente.usuario.enable == false}"><i
+										class="fa fa-window-close"></i></a>
+							</td>
+							<td>
+
+
+								<a th:href="@{/cliente/admin/activar/user/} + ${cliente.usuario.id}"
+									th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
+									<button th:if="${cliente.usuario.enable == true}" type="button"
+										class="btn active custom-nav btn btn-secondary">Desactivar</button>
+									<button th:if="${cliente.usuario.enable == false}" type="button"
+										class="btn active custom-nav btn btn-success">Activar</button>
+								</a>
+
+								<a th:href="@{/cliente/admin/pass/user/} + ${cliente.usuario.id}"
+								th:onclick="return confirm('Estás seguro que deseas cambiar la contraseña al usuario [[${cliente.email}]]');"
+									th:if="${cliente.usuario.role != 'ROLE_ADMIN'}">
+									<button type="button" class="btn btn-info">Nueva PASS <i class="fa fa-unlock"
+											aria-hidden="true"></i></button>
+								</a>
+
+								<a th:href="@{/cliente/admin/delete/cliente/} + ${cliente.id}"
+									th:onclick="return confirm('Estás seguro que deseas eliminar el registro?');">
+									<button type="button" class="btn btn-danger">Borrar <i
+											class="fa fa-trash"></i></button>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<a th:href="@{/cliente/admin/insertUser}">
+					<button type="button" class="btn active custom-nav">INSERTAR USUARIO</button></a>
+
+				<a th:href="@{/cliente/admin/insertCliente}">
+					<button type="button" class="btn active custom-nav">INSERTAR CLIENTE</button>
+				</a>
+			</div>
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+				integrity="sha384-KtLE+8Z9mVkfZ+Kq3f33Ka1SZC7z5ckM/KFA8Ew4f8BxByGZl/hb2B8pDkz4kz1"
+				crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+				integrity="sha384-tAL0s5NNKbNpau+cLlO/q1z5OoRZM2Z6q0J9qelxfD0KgZl/v8TlP8kfN1z8N2R"
+				crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+				integrity="sha384-4YZk6z2UQI2e6Ls1Y6ZvQx4C8HhrBDjxkQQ8mlr5Ck8fMI6zZfjB1q5z9v2F9KkN"
+				crossorigin="anonymous"></script>
+			<script>
+				document.getElementById("search-input").addEventListener("input", function () {
+					var searchTerm = this.value.toLowerCase();
+					var rows = document.querySelectorAll("#users-table tbody tr");
+
+					rows.forEach(function (row) {
+						var cells = row.getElementsByTagName("td");
+						var showRow = false;
+
+						for (var i = 0; i < cells.length; i++) {
+							var cellValue = cells[i].textContent.toLowerCase();
+							if (cellValue.includes(searchTerm)) {
+								showRow = true;
+								break;
+							}
+						}
+
+						if (showRow) {
+							row.style.display = "";
+						} else {
+							row.style.display = "none";
+						}
+					});
+				});
+			</script>
 </body>
+
 </html>
